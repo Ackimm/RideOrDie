@@ -31,7 +31,6 @@ Pour l'affichage de la map du moins
 	{
 		for (int j = 0; j < mY; ++j)
 		{ 
-			//drawSky();
 			if(map[i][j] == '!')
 			{
 			
@@ -96,8 +95,11 @@ Pour l'affichage de la map du moins
 	}
 }
 
+
+
 void drawPlayer(player p)
 {
+	
 	int i, j;
 	i = p->pos.x;
 	j = p->pos.y;
@@ -123,3 +125,41 @@ void drawPlayer(player p)
 	
 }
 
+
+void drawEnemy(enemy e)	
+{
+	int i, j;
+	i = e->pos.x;
+	j = e->pos.y;
+	glColor3f(1.0f,0.0F,0.0f);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glTranslatef(j*Square_size,i*Square_size,0.0f);
+	glBegin(GL_QUADS);
+	glVertex3f(0.0f,0.0f,0.0f);
+	glVertex3f(Square_size,0.0f,0.0f);
+	glVertex3f(Square_size,Square_size,0.0f);
+	glVertex3f(0.0f,Square_size,0.0f);
+	glEnd();
+}
+
+void drawAllEnnemis(listeEn e)
+{	
+	enemy first = malloc(sizeof(enemies));
+	enemy next = malloc(sizeof(enemies));
+	first = e->starList;
+	next = e->starList->nextptr;
+	if (e->starList != NULL || e->endList != NULL)
+	{
+		drawEnemy(first);
+		if (e->starList->nextptr != NULL)
+		{
+			drawEnemy(next);
+			while (next->nextptr != NULL)
+			{
+				next = next->nextptr;
+				drawEnemy(next);
+			}
+		}
+	}
+}

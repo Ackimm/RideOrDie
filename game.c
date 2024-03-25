@@ -14,6 +14,7 @@
 #include "drawMap.h"
 #include "player.h" // ?à
 #include "game.h"
+#include "enemies.h"
 
 
 
@@ -50,15 +51,22 @@ void Keyboard(unsigned char key, int x, int y)  // fonction allant gérer les in
 }
 
 
-void game(int mX, int mY, player p)
+void game(int mX, int mY, player p, listeEn e) // ajout listeEn e (+ meme chose dans le h)
 {
 
 
 	// drawWall(map[mX][mY]);			//afficher la carte
 	drawWall(mX,mY);			//afficher la carte // SUB for trying
-
+	printf("drawall");
 	drawPlayer(p);
-	
+	printf("drawplayer");
+	createEnemy(mX);
+	printf("crfeate enemy");
+	initialListEnemies();
+	printf("initialise liste ene");
+	drawAllEnnemis(e);
+	printf("draw all ene");
+
 	
 	glutKeyboardFunc(Keyboard);		//fonction de glut gérant le clavier
 	

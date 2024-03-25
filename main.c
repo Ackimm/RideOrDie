@@ -6,13 +6,15 @@
 #endif
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
 
 #include "loadMap.h"
 #include "drawMap.h"
 #include "game.h"
 #include "player.h"
+#include "enemies.h"
 
-
+// DANS LA VERSION FINALE, LE MAIN NE DOIT CONTENIR QUE LA FONCTION MAIN 
 
 
 
@@ -61,7 +63,8 @@ void Display()
 	
 	//glClearColor(0.0f,0.0f,0.0f,0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    game(MaxX, MaxY, p);
+	printf("display");
+    game(MaxX, MaxY, p, e); // l'ajout du e a fonctionné mais ça plante :'( 
 
 
 	// drawWall(map);
@@ -75,14 +78,20 @@ void Display()
 
 int main(int argc, char *argv[])
 {
-		
+
+	printf("lancement\n");
+
+
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA);
 	glutInitWindowSize((MaxX)*Square_size, (MaxY)*Square_size);
 
 	glutCreateWindow("Ride or Die! A VvV story");
+	srand(time(NULL));
 	loadMap(map);     //Charge la carte
 	p = createPlayer(mX, mY);
+	printf("map chargé, player créé");
+
 
 	initRendering();
 
@@ -90,6 +99,10 @@ int main(int argc, char *argv[])
 
 
 	glutReshapeFunc(handleResize);
+	glutTimerFunc(10, updateEnemies, 1);
+	glutTimerFunc(30, updateNewEnemies, 3);
+	glutTimerFunc(20, updateDeleateEnemies, 4);
+
 	glutIdleFunc(Display);
 	
 

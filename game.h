@@ -11,10 +11,10 @@ extern int mX;
 extern int mY;
 // extern char map[mX][mY];
 
-
+extern listeEn e;
 extern player p;
 void Keyboard(unsigned char key, int x, int y);
-void game(int mX, int mY, player p);
+void game(int mX, int mY, player p, listeEn e);
 
 
 #endif

@@ -22,6 +22,11 @@ struct facingSide
 struct play
 {
 	int vie;
+	int mana;
+	int vitesse;
+	bool mitraillette;
+	bool freezer;
+	bool star;
 	struct position pos;
 	struct facingSide facing;
 };
@@ -34,5 +39,6 @@ void moveLeft(player p);
 void moveRight(player p);
 void moveUp(player p);
 void moveDown(player p);
+extern player p;
 
 #endif

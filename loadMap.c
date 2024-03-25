@@ -11,8 +11,8 @@ int mY = MaxY;
 bool loadMap(char map[MaxX][MaxY])		//fonction qui ouvre le fichier txt et charge la carte dans le tableau
 {
     FILE *f = NULL;
-    f = fopen("map120x140.txt", "r");
-//    f = fopen("map124x124.txt", "r");
+//  f = fopen("map120x140.txt", "r");
+    f = fopen("map124x124.txt", "r");
 
     if(f == NULL)
     {

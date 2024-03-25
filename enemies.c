@@ -5,8 +5,11 @@
 #include <GL/glut.h>
 #endif
 
+
 #include "loadMap.h"
 #include "enemies.h"
+#include "game.h"
+
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -14,7 +17,6 @@
 #include <time.h>
 enemy q;
 listeEn e;
-bool test = false;
 
 listeEn initialListEnemies()
 {

@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#include "loadMap.h"
+// #include "loadMap.h"
 
 char **map;
 int mX;
@@ -20,7 +20,7 @@ bool loadMap(int *maxX, int *maxY)		//fonction qui ouvre le fichier txt et charg
         return false;
     }
     char c;
-    int i=0;
+    int i= 0;
     int j= 0;
     
 /*------------------------

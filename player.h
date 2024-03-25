@@ -1,6 +1,8 @@
 #ifndef _PLAYER_H_
 #define _PLAYER_H_
 
+
+
 struct positionP
 {
 	int x;
@@ -14,7 +16,7 @@ struct play
 };
 
 typedef struct play *player;
-extern player p;
+extern player p; // pour que d'autres fichiers puissent l'utiliser
 
 player createPlayer(int *maxX, int *maxY);
 void moveLeft(player p);

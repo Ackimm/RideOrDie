@@ -6,13 +6,16 @@
 #endif
 #include <stdlib.h>
 #include <stdio.h>
+#include "time.h"
 
 #include "loadMap.h"
-#include "drawMap.h"
+//#include "drawMap.h"
 #include "game.h"
 #include "player.h"
 #include "enemies.h"
-#include "time.h"
+#include "tirs.h"
+
+
 
 void initRendering()
 {
@@ -51,7 +54,9 @@ void Display()
 	
 	glClearColor(0.0f,0.0f,0.0f,0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        game(&mX, &mY, p, e);
+    
+	game(&mX, &mY, p, e, t);
+	
 	//drawWall(mX, mY);
 	glFlush();
 }
@@ -70,21 +75,26 @@ int main(int argc, char *argv[])
 	loadMap(&mX, &mY);
 	p = createPlayer(&mX, &mY);
 	e = initialListEnemies();
+	t = initialListeTirs();
+
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA);
 
 	glutInitWindowSize((mX)*Square_size, mY*Square_size);
 
-	glutCreateWindow("Test");
+	glutCreateWindow("Ride Or Die! A VvV Story");
 
 	initRendering();
 
 	glutDisplayFunc(Display);
 	glutReshapeFunc(handleResize);
 	glutTimerFunc(10, updateEnemies, 1);
-	glutTimerFunc(30, updateNewEnemies, 3);
-	glutTimerFunc(20, updateDeleateEnemies, 4);
+	glutTimerFunc(10, updateNewEnemies, 3);
+	glutTimerFunc(10, updateDeleateEnemies, 4);
+	// tirs:  
+	glutTimerFunc(10, updateTirs, 2);
+	glutTimerFunc(10, updateDeleteTirs, 5);
 	
 	
 

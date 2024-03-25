@@ -1,16 +1,19 @@
 #ifndef _ENEMIES_H_
 #define _ENEMIES_H_
 
-#include <stdlib.h>
+
 #include <stdlib.h>
 #include <stdbool.h>
+
+
+
 
 struct positionE
 {
 	int x;
 	int y;
 };
-typedef struct enemies enemies;
+
 struct enemies
 {
 	int vie;
@@ -19,8 +22,8 @@ struct enemies
 	struct enemies *prevptr;
 	struct enemies *nextptr;
 };
+typedef struct enemies enemies;
 
-typedef struct listeEnemies listeEnemies;
 struct listeEnemies
 {
 	
@@ -29,17 +32,18 @@ struct listeEnemies
 	struct enemies *endList;
 	
 };
-
+typedef struct listeEnemies listeEnemies;
 
 
 typedef struct enemies *enemy; 
 typedef struct listeEnemies *listeEn;
+
 enemy createEnemy(int *maxX);
 listeEn  initialListEnemies();
 void insertionEnemies(listeEn e, enemy q);
 void suppressionEnemies(listeEn e, bool test);
-extern enemy q;
-extern listeEn e;
+extern enemy q; // pour que d'autres fichiers puissent l'utiliser
+extern listeEn e; // pour que d'autres fichiers puissent l'utiliser
 
 
 

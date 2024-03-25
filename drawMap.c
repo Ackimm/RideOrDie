@@ -9,9 +9,12 @@
 #include <stdlib.h>
 
 
-#include "loadMap.h"
+//#include "loadMap.h"
 #include "drawMap.h"
-#include "game.h"
+//#include "game.h"
+//#include "enemies.h"
+//#include "player.h"
+//#include "tirs.h"
 
 
 /*
@@ -167,3 +170,44 @@ void drawAllEnnemis(listeEn e)
 	}
 }
 
+void drawTirs(tirsP p)
+{
+	int i, j;
+	i = p->pos.x;
+	j = p->pos.y;
+	glColor3f(0.0f, 1.0f, 0.5f);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glTranslatef(i*Shoot_size,j*Shoot_size,0.0f);
+	glBegin(GL_QUADS);
+	glVertex3f(0.0f,0.0f,0.0f);
+	glVertex3f(Shoot_size,0.0f,0.0f);
+	glVertex3f(Shoot_size,Shoot_size,0.0f);
+	glVertex3f(0.0f,Shoot_size,0.0f);
+	glEnd();
+}
+
+
+void drawAllTirs(listetirsP t)
+{
+	tirsP first = malloc(sizeof(tirs));
+	tirsP next = malloc(sizeof(tirs));
+	first = t->starList;
+	if (t->starList != NULL && t->starList->nextptr != NULL)
+	{
+	next = t->starList->nextptr;
+	}
+	if (t->starList != NULL || t->endList != NULL)
+	{
+		drawTirs(first);
+		if (t->starList->nextptr != NULL)
+		{
+			drawTirs(next);
+			while (next->nextptr != NULL)
+			{
+				next = next->nextptr;
+				drawTirs(next);
+			}
+		}
+	}
+}

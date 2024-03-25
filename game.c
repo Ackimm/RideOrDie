@@ -9,15 +9,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdbool.h>
 
-#include "loadMap.h"
+
+//#include "loadMap.h"
 #include "drawMap.h"
+#include "player.h"
 #include "enemies.h"
+#include "tirs.h"
+
 
 bool UP = false;
 bool LEFT = false;
 bool RIGHT = false;
 bool DOWN = false;
+bool SHOOT = false;
+bool test;
+
 
 
 void Keyboard(unsigned char key, int x, int y)  // fonction allant gérer les input
@@ -42,11 +50,15 @@ void Keyboard(unsigned char key, int x, int y)  // fonction allant gérer les in
 		case's':
 			DOWN = true;
 			break;
+
+		case 32:
+			SHOOT = true;
+			break;	
 	}	
 }
 
 
-void game(int *maxX, int *maxY, player p, listeEn e)
+void game(int *maxX, int *maxY, player p, listeEn e, listetirsP  t)
 {
 
 
@@ -58,6 +70,12 @@ void game(int *maxX, int *maxY, player p, listeEn e)
 	}		
 
 	
+	if (t->starList != NULL || t->endList != NULL)
+	{
+		drawAllTirs(t);
+	}
+	
+
 	glutKeyboardFunc(Keyboard);		//fonction de glut gérant le clavier
 	
 	if (LEFT == true)
@@ -81,9 +99,14 @@ void game(int *maxX, int *maxY, player p, listeEn e)
 	
 	if (DOWN == true)
 	{
-		
-                moveDown(p);
+		moveDown(p);
 		DOWN = false;
+	}
+
+	if (SHOOT == true)
+	{
+		tirer(p, t);
+		SHOOT=false;
 	}
 
 

@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "enemies.h": "c",
+        "game.h": "c",
+        "drawmap.h": "c",
+        "player.h": "c",
+        "glut.h": "c",
+        "loadmap.h": "c",
+        "tirs.h": "c",
+        "stdbool.h": "c"
+    }
+}

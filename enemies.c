@@ -145,7 +145,7 @@ void updateEnemies(int valeur)
 		}
 	}
 	glutPostRedisplay();
-	glutTimerFunc(200, updateEnemies, 1);
+	glutTimerFunc(50, updateEnemies, 1);
 }
 
 void updateNewEnemies(int valeur)
@@ -163,5 +163,5 @@ void updateDeleateEnemies(int valeur)
 		suppressionEnemies(e, test);
 	}
 	glutPostRedisplay();
-	glutTimerFunc(200, updateDeleateEnemies, 4);
+	glutTimerFunc(50, updateDeleateEnemies, 4);
 }

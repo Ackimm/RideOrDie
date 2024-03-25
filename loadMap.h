@@ -3,20 +3,15 @@
 
 #include <stdbool.h>
 
-// en vrai 124*125 pour le fichier 120*140 horizontal (à creuse...)
-// en vrai 124*126 pour le fichier 124*124 réseau de routes (à creuse...)
-
-#define MaxX 124 // 124 ici c'est x-2 mais ça marche
-#define MaxY 126 // 126 nécessaire de mettre à +2 pour éviter le bug graphique de la diagonale
-
-// #define MaxX 118 // x-2 
-// #define MaxY 100 // y+2
-
+//#define MaxX 40
+//#define MaxY 41
 #define Square_size 10.0
 
+extern char **map;
 
+extern int mX;
+extern int mY;
 
-
-bool loadMap(char map[MaxX][MaxY]);
+bool loadMap(int *maxX, int *maxY);
 
 #endif

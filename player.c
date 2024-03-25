@@ -11,22 +11,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-
 player p;
 
-player createPlayer(int mX, int mY)
+player createPlayer(int *maxX, int *maxY)
 {
 	player p;
 
 	int x = 0, y = 0;
 
-	for (int i = 0; i < mX; ++i)
+	for (int i = 0; i < *maxX; ++i)
 	{
-		for (int j = 0; j < mY; ++j)
+		for (int j = 0; j < *maxY; ++j)
 		{
-//			if(*(*(map + i) + j) == 'X')
-			if(map[i][j] == 'X')
-
+			if(*(*(map + i) + j) == 'X')
 			{
 				x = i;
 				y = j;
@@ -38,7 +35,6 @@ player createPlayer(int mX, int mY)
 	p->vie = 3;
 	p->pos.x = x;
 	p->pos.y = y;
-	p->facing.faceUp=true;
 
 	return p;
 }
@@ -49,16 +45,8 @@ void moveLeft(player p)		//la fonction va vérifier si on peut se déplacer vers
 
 	x = p->pos.x-1;
 	y = p->pos.y;
-
-	p->facing.faceLeft = true;
-	p->facing.faceRight = false;
-	p->facing.faceUp = false;
-	p->facing.faceDown = false;
-	
-
-//	if (*(*(map + x) + y)!='i')
-	if (map[x][y]!='i')
-
+     
+	if (*(*(map + y) + x)!='i') // toujours la même chose ici, c'est (*(*(map + y) + x) renvoie au pointeur de l'élément map[y][x] et non map[x]][y]
 	{
 		p->pos.x = x;
 	}
@@ -68,58 +56,44 @@ void moveLeft(player p)		//la fonction va vérifier si on peut se déplacer vers
 void moveRight(player p)		//la fonction va vérifier si on peut se déplacer vers la droite et le faire le cas échéant
 {
 	int x = 0, y = 0;
-
-
+	
 	x = p->pos.x+1;
 	y = p->pos.y;
 
-	p->facing.faceLeft = false;
-	p->facing.faceRight = true;
-	p->facing.faceUp = false;
-	p->facing.faceDown = false;
-
-	if (map[x][y]!='i')
+   	if (*(*(map + y) + x)!='i' ) // toujours la même chose ici, c'est (*(*(map + y) + x) renvoie au pointeur de l'élément map[y][x] et non map[x]][y]
 	{
 		p->pos.x = x;
 	}
-
+	
 }
 
 
 
 void moveUp(player p)
 {
-	int  x = 0, y = 0;
+ int  x = 0, y = 0;
       
-	x = p->pos.x;
-	y = p->pos.y-1;
+x = p->pos.x;
+y = p->pos.y-1;
 
-	p->facing.faceLeft = false;
-	p->facing.faceRight = false;
-	p->facing.faceUp = true;
-	p->facing.faceDown = false;
 
-	if (map[x][y]!='i')
- 	{
-		p->pos.y = y;
-  	}     
+if (*(*(map + y) + x)!='i') // toujours la même chose ici, c'est (*(*(map + y) + x) renvoie au pointeur de l'élément map[y][x] et non map[x]][y]
+{
+	p->pos.y = y;
+}     
 
 }
 
 void moveDown(player p)
 {
-	int  x = 0, y = 0;
-	
-	x = p->pos.x;
-	y = p->pos.y+1;
+ int  x = 0, y = 0;
 
-	p->facing.faceLeft = false;
-	p->facing.faceRight = false;
-	p->facing.faceUp = false;
-	p->facing.faceDown = true;
-
-	if (map[x][y]!='i')
-	{
-		p->pos.y = y;
-	}
+   x = p->pos.x;
+   y = p->pos.y+1;
+  
+   
+if (*(*(map + y) + x)!='i') // toujours la même chose ici, c'est (*(*(map + y) + x) renvoie au pointeur de l'élément map[y][x] et non map[x]][y]
+{
+	p->pos.y = y;
+}
 }

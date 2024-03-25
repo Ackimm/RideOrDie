@@ -5,10 +5,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-extern char map[MaxX][MaxY];
-extern int mX;
-extern int mY;
-
 struct positionE
 {
 	int x;
@@ -38,12 +34,13 @@ struct listeEnemies
 
 typedef struct enemies *enemy; 
 typedef struct listeEnemies *listeEn;
-enemy createEnemy(int mX); 
+enemy createEnemy(int *maxX);
 listeEn  initialListEnemies();
 void insertionEnemies(listeEn e, enemy q);
 void suppressionEnemies(listeEn e, bool test);
-extern enemy q; // ajouter extern pour décaler en global et déclarer en normal dans le .c
+extern enemy q;
 extern listeEn e;
+
 
 
 void updateEnemies(int valeur);

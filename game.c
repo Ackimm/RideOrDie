@@ -12,11 +12,7 @@
 
 #include "loadMap.h"
 #include "drawMap.h"
-#include "player.h" // ?à
-#include "game.h"
 #include "enemies.h"
-
-
 
 bool UP = false;
 bool LEFT = false;
@@ -46,26 +42,20 @@ void Keyboard(unsigned char key, int x, int y)  // fonction allant gérer les in
 		case's':
 			DOWN = true;
 			break;
-	
 	}	
 }
 
 
-void game(int mX, int mY, player p, listeEn e) // ajout listeEn e (+ meme chose dans le h)
+void game(int *maxX, int *maxY, player p, listeEn e)
 {
 
 
-	// drawWall(map[mX][mY]);			//afficher la carte
-	drawWall(mX,mY);			//afficher la carte // SUB for trying
-	printf("drawall");
+	drawWall(maxX, maxY);			//afficher la carte
 	drawPlayer(p);
-	printf("drawplayer");
-	createEnemy(mX);
-	printf("crfeate enemy");
-	initialListEnemies();
-	printf("initialise liste ene");
-	drawAllEnnemis(e);
-	printf("draw all ene");
+	if (e->starList != NULL || e->endList != NULL)
+	{
+		drawAllEnnemis(e);
+	}		
 
 	
 	glutKeyboardFunc(Keyboard);		//fonction de glut gérant le clavier
@@ -92,7 +82,7 @@ void game(int mX, int mY, player p, listeEn e) // ajout listeEn e (+ meme chose 
 	if (DOWN == true)
 	{
 		
-        moveDown(p);
+                moveDown(p);
 		DOWN = false;
 	}
 

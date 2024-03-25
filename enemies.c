@@ -12,56 +12,9 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <time.h>
-
-
-
 enemy q;
 listeEn e;
 bool test = false;
-
-void updateEnemies(int valeur)
-{
-	q = e->starList;
-	if (e->starList != NULL)
-	{
-		q->pos.y += 1;
-		if (q->pos.y > 124)
-		{
-			q->active = false;
-		}
-		while (q->nextptr != NULL)
-		{
-			q = q->nextptr;
-			q->pos.y +=1;
-			if (q->pos.y > 124)
-			{
-				
-				q->active = false;
-			}
-		}
-	}
-	glutPostRedisplay();
-	glutTimerFunc(200, updateEnemies, 1);
-}
-
-void updateNewEnemies(int valeur)
-{
-	enemy new = createEnemy((mX));
-	insertionEnemies(e, new);
-	glutPostRedisplay();
-	glutTimerFunc(1000, updateNewEnemies, 3);
-}
-
-void updateDeleateEnemies(int valeur)
-{
-	if (e->starList != NULL || e->endList != NULL)
-	{
-		suppressionEnemies(e, test);
-	}
-	glutPostRedisplay();
-	glutTimerFunc(200, updateDeleateEnemies, 4);
-}
-
 
 listeEn initialListEnemies()
 {
@@ -76,10 +29,11 @@ listeEn initialListEnemies()
 	return e;
 }
 
-enemy createEnemy(int mX) // remise du pointeur
+enemy createEnemy(int *maxX)
 {
 	enemy new = malloc(sizeof(enemies));
-	int x = (rand() % (mX + 10) + 1);
+	//int x = (rand() % (*maxX + 10) + 1); // ici faire en sorte d'avoir un nombre en 30 et 94
+	int x = rand()%(94-30)+30;
 	if (new == NULL)
 	{
 		exit(EXIT_FAILURE);
@@ -162,4 +116,50 @@ void suppressionEnemies(listeEn e, bool test)
 			}
 		}
 	}
+}
+
+
+
+void updateEnemies(int valeur)
+{
+	q = e->starList;
+	if (e->starList != NULL)
+	{
+		q->pos.y += 1;
+		if (q->pos.y > 120)
+		{
+			q->pos.y = 2;
+			q->active = false;
+		}
+		while (q->nextptr != NULL)
+		{
+			q = q->nextptr;
+			q->pos.y +=1;
+			if (q->pos.y > 120)
+			{
+				q->pos.y = 2;
+				q->active = false;
+			}
+		}
+	}
+	glutPostRedisplay();
+	glutTimerFunc(200, updateEnemies, 1);
+}
+
+void updateNewEnemies(int valeur)
+{
+	enemy new = createEnemy((&mY));
+	insertionEnemies(e, new);
+	glutPostRedisplay();
+	glutTimerFunc(1000, updateNewEnemies, 3);
+}
+
+void updateDeleateEnemies(int valeur)
+{
+	if (e->starList != NULL || e->endList != NULL)
+	{
+		suppressionEnemies(e, test);
+	}
+	glutPostRedisplay();
+	glutTimerFunc(200, updateDeleateEnemies, 4);
 }

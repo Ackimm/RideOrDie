@@ -11,55 +11,66 @@
 
 #include "loadMap.h"
 #include "drawMap.h"
-#include "player.h"
+#include "game.h"
 
 
-
-
-void drawWall(int mX, int mY)			// fonction qui affiche les murs et les plateformes
-
+/*
+void drawSky()
 {
-
-/* 
-Attention, en C les tableaux à deux dimensions ont le format tableau[y][x]
-Du coup, quand je voudrais faire le changement plus tard, il faut juste intervertir les i & j dans l'affichage et dans les map[i][j]
-Pour l'affichage de la map du moins
+        glBegin(GL_POLYGON); 
+            glColor3f(0.196078,0.6,0.8);
+	
+            glVertex3f(Square_size, 30*Square_size, 1);
+            glVertex3f(Square_size, Square_size, 1);
+            glVertex3f(30*Square_size, 0, 1);
+            glVertex3f(30*Square_size, 30*Square_size, 1);
+        glEnd();
+}
 */
 
-	
-	for (int i = 0; i < mX; ++i)
+
+/*------------------------
+
+*(*(map + i) + j) représente la valeur du caractère à la position (i, j) du tableau à 2 dimensions 
+en sachant que la position (i, j) est la position (y, x) et non (x, y)
+
+------------------------*/
+
+
+void drawWall(int *maxX, int *maxY)			// fonction qui affiche les murs et les plateformes
+{	
+
+	for (int i = 0; i < (*maxY); i++)
 	{
-		for (int j = 0; j < mY; ++j)
-		{ 
-			if(map[i][j] == '!')
+		for (int j = 0; j < (*maxX); j++)
+		{
+			//drawSky();
+			if(*(*(map + i) + j) == '!')
 			{
-			
                 glColor3f(1.0f,1.0f,1.0f);
 				glMatrixMode(GL_MODELVIEW);
 				
 			    glLoadIdentity();
-				glTranslatef(i*Square_size,j*Square_size,0.0f);
+				glTranslatef(j*Square_size,i*Square_size,0.0f); // sur une map carré, la seule chose qui change pour le drawmap c'est ces variables i et j. Il y a aussi quand même les ennemis, les tirs, etc..
 				
 				
 				glBegin(GL_QUADS);
-					glColor3f(1.0,1.0,1.0);
 					glVertex3f(0.0f, 0.0f, 0.0f);
 					glVertex3f(Square_size, 0.0f, 0.0f);
 					glVertex3f(Square_size,Square_size, 0.0f);
 					glVertex3f(0.0f,Square_size, 0.0f);
 
-				glEnd();
-				
+				glEnd();	
 			}
 			
-			
-			if (map[i][j]  == 'o')
+			if(*(*(map + i) + j)  == 'o')
 			{
 				glColor3f(0.6f,1.0f,1.0f);
-
 				glMatrixMode(GL_MODELVIEW);
-				glLoadIdentity();
-				glTranslatef(i*Square_size,j*Square_size,0.0f);
+				
+			    glLoadIdentity();
+				glTranslatef(j*Square_size,i*Square_size,0.0f);
+				
 				
 				glBegin(GL_QUADS);
 					glVertex3f(0.0f, 0.0f, 0.0f);
@@ -67,16 +78,18 @@ Pour l'affichage de la map du moins
 					glVertex3f(Square_size,Square_size, 0.0f);
 					glVertex3f(0.0f,Square_size, 0.0f);
 
-				glEnd();
+
+				glEnd();	
 			}
-			
-			if (map[i][j]  == 'i')
+		
+			if(*(*(map + i) + j) == 'i')
 			{
 				glColor3f(1.0f,0.0f,0.0f);
-
 				glMatrixMode(GL_MODELVIEW);
-				glLoadIdentity();
-				glTranslatef(i*Square_size,j*Square_size,0.0f);
+				
+			    glLoadIdentity();
+				glTranslatef(j*Square_size,i*Square_size,0.0f);
+				
 				
 				glBegin(GL_QUADS);
 					glVertex3f(0.0f, 0.0f, 0.0f);
@@ -84,22 +97,16 @@ Pour l'affichage de la map du moins
 					glVertex3f(Square_size,Square_size, 0.0f);
 					glVertex3f(0.0f,Square_size, 0.0f);
 
-				glEnd();
+				glEnd();	
 			}
-			
-			
 
 			
-			
+		   }
 		}
-	}
 }
-
-
 
 void drawPlayer(player p)
 {
-	
 	int i, j;
 	i = p->pos.x;
 	j = p->pos.y;
@@ -119,12 +126,8 @@ void drawPlayer(player p)
 	glVertex3f(0.0f,Square_size, 0.0f);
 
 	glEnd();
-
-
-	
 	
 }
-
 
 void drawEnemy(enemy e)	
 {
@@ -134,7 +137,7 @@ void drawEnemy(enemy e)
 	glColor3f(1.0f,0.0F,0.0f);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	glTranslatef(j*Square_size,i*Square_size,0.0f);
+	glTranslatef(i*Square_size,j*Square_size,0.0f);
 	glBegin(GL_QUADS);
 	glVertex3f(0.0f,0.0f,0.0f);
 	glVertex3f(Square_size,0.0f,0.0f);
@@ -163,3 +166,4 @@ void drawAllEnnemis(listeEn e)
 		}
 	}
 }
+

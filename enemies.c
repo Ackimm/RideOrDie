@@ -18,6 +18,10 @@
 enemy q;
 listeEn e;
 
+
+// a mettre une limite d'ennemis actifs pour tester le lag
+
+
 listeEn initialListEnemies()
 {
 	listeEn e = malloc(sizeof(listeEnemies));
@@ -73,7 +77,7 @@ void insertionEnemies(listeEn e, enemy base)
 
 void suppressionEnemies(listeEn e, bool test)
 {
-	test = false;
+	//test = false;
 	if (e->starList != NULL)
 	{
 		enemy base = malloc(sizeof(enemies));
@@ -86,30 +90,30 @@ void suppressionEnemies(listeEn e, bool test)
 		{
 			if (base->active == test)
 			{
-				enemy deleate = malloc(sizeof(enemies));
-				deleate = base;
+				enemy delete = malloc(sizeof(enemies));
+				delete = base;
 				base = base->nextptr;
-				if (e->starList == deleate && e->endList == deleate)
+				if (e->starList == delete && e->endList == delete)
 				{
 					e->starList = NULL;
 					e->endList = NULL;
 				}
-				else if (e->starList != deleate && e->endList == deleate)
+				else if (e->starList != delete && e->endList == delete)
 				{
-					e->endList = deleate->prevptr;
+					e->endList = delete->prevptr;
 					e->endList->nextptr = NULL;
 				}
-				else if (e->starList == deleate && e->endList != deleate)
+				else if (e->starList == delete && e->endList != delete)
 				{
-					e->starList  = deleate->nextptr;
+					e->starList  = delete->nextptr;
 					e->starList->prevptr = NULL;
 				}
 				else
 				{
-					deleate->nextptr->prevptr = deleate->prevptr;
-					deleate->prevptr->nextptr = deleate->nextptr;
+					delete->nextptr->prevptr = delete->prevptr;
+					delete->prevptr->nextptr = delete->nextptr;
 				}
-				free(deleate);
+				free(delete);
 				e->quantite--;
 			}
 			else
@@ -156,12 +160,12 @@ void updateNewEnemies(int valeur)
 	glutTimerFunc(1000, updateNewEnemies, 3);
 }
 
-void updateDeleateEnemies(int valeur)
+void updateDeleteEnemies(int valeur)
 {
 	if (e->starList != NULL || e->endList != NULL)
 	{
 		suppressionEnemies(e, test);
 	}
 	glutPostRedisplay();
-	glutTimerFunc(50, updateDeleateEnemies, 4);
+	glutTimerFunc(50, updateDeleteEnemies, 4);
 }

@@ -11,6 +11,8 @@
 
 //#include "loadMap.h"
 #include "drawMap.h"
+#include "motorcycle_yellow.c"
+
 //#include "game.h"
 //#include "enemies.h"
 //#include "player.h"
@@ -40,7 +42,7 @@ en sachant que la position (i, j) est la position (y, x) et non (x, y)
 ------------------------*/
 
 
-void drawWall(int *maxX, int *maxY)			// fonction qui affiche les murs et les plateformes
+void drawWall(int *maxX, int *maxY, float scrolling_value)			// fonction qui affiche les murs et les plateformes
 {	
 
 	for (int i = 0; i < (*maxY); i++)
@@ -76,10 +78,10 @@ void drawWall(int *maxX, int *maxY)			// fonction qui affiche les murs et les pl
 				
 				
 				glBegin(GL_QUADS);
-					glVertex3f(0.0f, 0.0f, 0.0f);
-					glVertex3f(Square_size, 0.0f, 0.0f);
-					glVertex3f(Square_size,Square_size, 0.0f);
-					glVertex3f(0.0f,Square_size, 0.0f);
+					glVertex3f(0.0f , 0.0f + scrolling_value, 0.0f); // coin sup gauche
+					glVertex3f(Square_size , 0.0f+ scrolling_value, 0.0f); // coin sup droit
+					glVertex3f(Square_size  ,Square_size+ scrolling_value, 0.0f); // coin inf droit
+					glVertex3f(0.0f,Square_size+ scrolling_value, 0.0f); // coin inf gauche
 
 
 				glEnd();	
@@ -108,6 +110,9 @@ void drawWall(int *maxX, int *maxY)			// fonction qui affiche les murs et les pl
 		}
 }
 
+
+
+
 void drawPlayer(player p)
 {
 	int i, j;
@@ -115,20 +120,37 @@ void drawPlayer(player p)
 	j = p->pos.y;
 	
 	
-	glColor3f(0.0f,1.0f,0.0f);
+//	glColor3f(0.0f,1.0f,0.0f);
 	
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+
+
+/*test image*/
+	int texture;
+	glGenTextures(1,&texture);
+	glBindTexture(GL_TEXTURE_2D,texture);
+	glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE);
+	gluBuild2DMipmaps(GL_TEXTURE_2D,velo_jaune.bytes_per_pixel, velo_jaune.width, velo_jaune.height,GL_RGB,GL_UNSIGNED_BYTE,velo_jaune.pixel_data);
+	glEnable(GL_TEXTURE_2D);
+
+/*test image*/
+
 	glTranslatef(i*Square_size,j*Square_size,0.0f);
+
+int alternate_size = 15;
 
 	glBegin(GL_QUADS);
 
-	glVertex3f(0.0f, 0.0f, 0.0f);
-	glVertex3f(Square_size, 0.0f, 0.0f);
-	glVertex3f(Square_size,Square_size, 0.0f);
-	glVertex3f(0.0f,Square_size, 0.0f);
+	glTexCoord2f(0.0,1.0); glVertex3f(0.0f, 0.0f, 0.0f);
+	glTexCoord2f(1.0,1.0); glVertex3f(4 * alternate_size, 0.0f, 0.0f);
+	glTexCoord2f(1.0,0.0); glVertex3f(4* alternate_size,10 * alternate_size, 0.0f);
+	glTexCoord2f(0.0,0.0); glVertex3f(0.0f,10* alternate_size, 0.0f);
 
 	glEnd();
+
+	glDisable(GL_TEXTURE_2D); // add
+
 	
 }
 

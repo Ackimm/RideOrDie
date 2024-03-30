@@ -58,11 +58,11 @@ void Keyboard(unsigned char key, int x, int y)  // fonction allant gérer les in
 }
 
 
-void game(int *maxX, int *maxY, player p, listeEn e, listetirsP  t)
+void game(int *maxX, int *maxY, float scrolling_value, player p, listeEn e, listetirsP  t)
 {
 
 
-	drawWall(maxX, maxY);			//afficher la carte
+	drawWall(maxX, maxY, scrolling_value);			//afficher la carte
 	drawPlayer(p);
 	if (e->starList != NULL || e->endList != NULL)
 	{

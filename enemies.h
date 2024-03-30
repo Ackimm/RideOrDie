@@ -49,7 +49,7 @@ extern listeEn e; // pour que d'autres fichiers puissent l'utiliser
 
 void updateEnemies(int valeur);
 void updateNewEnemies(int valeur);
-void updateDeleateEnemies(int valeur);
+void updateDeleteEnemies(int valeur);
 
 
 #endif

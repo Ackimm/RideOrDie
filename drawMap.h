@@ -10,7 +10,7 @@
 
 
 
-void drawWall(int *maxX, int *maxY);
+void drawWall(int *maxX, int *maxY, float scrolling_value);
 void drawPlayer(player p);
 
 void drawEnemy(enemy e);

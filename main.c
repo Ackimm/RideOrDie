@@ -20,9 +20,10 @@
 
 
 int score = 0;
-int life = 100;
+int life = 5;
 int time_elapsed = 0;
 time_t start_time;
+float scrolling_value = 0.0;
 
 void startTimer(){
 	start_time = time(NULL);
@@ -75,7 +76,7 @@ void displayHUD() {
     // Afficher la vie
        glRasterPos2f(0.4, 0.025);// Position du texte pour la vie
     char life_text[100];
-    sprintf(life_text, "Life: %d", life);
+    sprintf(life_text, "Vie: %d", life);
     for (int i = 0; life_text[i] != '\0'; i++) {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, life_text[i]);
     }
@@ -125,13 +126,29 @@ void handleResize(int width,int height)
 	glLoadIdentity();
 	
 	// Set the correct perspective.
-	//gluPerspective(45,ratio,1,100);
+	//gluPerspective(45,aspectRatio,1,100);
 	
-	gluOrtho2D(0, mX * Square_size * aspectRatio, mY * Square_size * aspectRatio, 0);
+//	gluOrtho2D(0, mX * Square_size * aspectRatio, mY * Square_size * aspectRatio, 0);
+	gluOrtho2D(0, (mX-1) * Square_size , mY * Square_size , 0);
 	
+
 	//gluOrtho2D(0, ratio*width, ratio*height, 0);
 		
 }
+
+
+// POUR LE SCROLLING : on va mettre dans le dessin de la map x+scrolling_value et on va augmenter progressivement cette valeur pour obtenir le scrolling
+void updateScrolling(){
+	scrolling_value += 3;
+	if (scrolling_value >=60){
+		scrolling_value = 0.0;			
+	}
+	glutTimerFunc(10, updateScrolling, 5);
+
+}
+
+
+
 
 
 void Display()
@@ -140,7 +157,7 @@ void Display()
 	glClearColor(0.0f,0.0f,0.0f,0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
-	game(&mX, &mY, p, e, t);
+	game(&mX, &mY, scrolling_value, p, e, t);
 	
 
 
@@ -163,7 +180,7 @@ int main(int argc, char *argv[])
 	mX = 124; // valeur réelle 124 pour le verti 
 	mY = 124; // valeur réelle 124 pour le verti 
 
-	srand(time(NULL));
+	//srand(time(NULL));
 	loadMap(&mX, &mY);
 	p = createPlayer(&mX, &mY);
 	e = initialListEnemies();
@@ -174,7 +191,8 @@ int main(int argc, char *argv[])
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA);
 
-	glutInitWindowSize((mX-23.2)*Square_size, mY*Square_size); // le -23 ne fait pas vraiment sens pour moi. je l'ai trouvé en chipotant. A creuser
+//	glutInitWindowSize((mX)*Square_size, mY*Square_size); 
+	glutInitWindowSize(900,600); 
 
 	glutCreateWindow("Ride Or Die! A VvV Story");
 
@@ -186,13 +204,14 @@ int main(int argc, char *argv[])
 
 	glutReshapeFunc(handleResize);
 
-	glutTimerFunc(10, updateEnemies, 1);
-	glutTimerFunc(10, updateNewEnemies, 3);
-	glutTimerFunc(10, updateDeleateEnemies, 4);
+	glutTimerFunc(10, updateEnemies, 0);
+	glutTimerFunc(10, updateNewEnemies, 0);
+	glutTimerFunc(10, updateDeleteEnemies, 0);
 	// tirs:  
-	glutTimerFunc(10, updateTirs, 2);
-	glutTimerFunc(10, updateDeleteTirs, 5);
-	
+	glutTimerFunc(10, updateTirs, 0);
+	glutTimerFunc(10, updateDeleteTirs, 0);
+	// NEW SCROLLING: 
+	glutTimerFunc(10, updateScrolling, 0);
 	
 
 	glEnable(GL_DEPTH_TEST);

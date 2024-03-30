@@ -12,7 +12,7 @@
 extern bool test;
 
 void Keyboard(unsigned char key, int x, int y);
-void game(int *maxX, int *maxY, player p, listeEn e, listetirsP  t);
+void game(int *maxX, int *maxY, float scrolling_value, player p, listeEn e, listetirsP  t);
 
 
 #endif

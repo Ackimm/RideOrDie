@@ -84,30 +84,30 @@ void suppressionTirs(listetirsP t, bool test)
 		{
 			if (base->active == test)
 			{
-				tirsP deleate = malloc(sizeof(tirs));
-				deleate = base;
+				tirsP delete = malloc(sizeof(tirs));
+				delete = base;
 				base = base->nextptr;
-				if (t->starList == deleate && t->endList == deleate)
+				if (t->starList == delete && t->endList == delete)
 				{
 					t->endList = NULL;
 					t->starList = NULL;
 				}
-				else if (t->starList != deleate && t->endList == deleate)
+				else if (t->starList != delete && t->endList == delete)
 				{
-					t->endList = deleate->prevptr;
+					t->endList = delete->prevptr;
 					t->endList->nextptr = NULL;
 				}
-				else if (t->starList == deleate && t->endList != deleate)
+				else if (t->starList == delete && t->endList != delete)
 				{
-					t->starList = deleate->nextptr;
+					t->starList = delete->nextptr;
 					t->starList->prevptr = NULL;
 				}
 				else
 				{
-					deleate->nextptr->prevptr = deleate->prevptr;
-					deleate->prevptr->nextptr = deleate->nextptr;
+					delete->nextptr->prevptr = delete->prevptr;
+					delete->prevptr->nextptr = delete->nextptr;
 				}
-				free(deleate);
+				free(delete);
 				t->quantite--;
 			}
 			else

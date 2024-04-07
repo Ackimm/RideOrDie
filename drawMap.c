@@ -167,8 +167,8 @@ void drawPlayer(player p)
 
 
 	glTexCoord2f(0.0,0.0); glVertex3f(-2.5 * alternate_player_size,12 * alternate_player_size, 0.0f); // sup gauche
-	glTexCoord2f(1.0,0.0); glVertex3f(3.5 * alternate_player_size,12 * alternate_player_size, 0.0f); // sup droit
-	glTexCoord2f(1.0,1.0); glVertex3f(3.5 * alternate_player_size, 0.0f, 0.0f); // inf droit
+	glTexCoord2f(1.0,0.0); glVertex3f(2.5 * alternate_player_size,12 * alternate_player_size, 0.0f); // sup droit
+	glTexCoord2f(1.0,1.0); glVertex3f(2.5 * alternate_player_size, 0.0f, 0.0f); // inf droit
 	glTexCoord2f(0.0,1.0); glVertex3f(-2.5 * alternate_player_size, 0.0f, 0.0f); // inf gauche
 
 
@@ -239,12 +239,12 @@ void drawTirs(tirsP p)
 	glColor3f(0.0f, 1.0f, 0.5f);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	glTranslatef(i*Shoot_size,j*Shoot_size,0.0f);
-	glBegin(GL_QUADS);
+	glTranslatef(i*Square_size,j*Square_size,0.0f);
+	glBegin(GL_QUADS);// note pour plus tard : changer soit en ligne, soit en projectile avec image .c
 	glVertex3f(0.0f,0.0f,0.0f);
-	glVertex3f(Shoot_size,0.0f,0.0f);
-	glVertex3f(Shoot_size,Shoot_size,0.0f);
-	glVertex3f(0.0f,Shoot_size,0.0f);
+	glVertex3f(Shoot_size/2,0.0f,0.0f); 
+	glVertex3f(Shoot_size/2,Shoot_size*2,0.0f);
+	glVertex3f(0.0f,Shoot_size*2,0.0f);
 	glEnd();
 }
 

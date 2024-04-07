@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+#include "constantes.h"
+
+
 // #include "loadMap.h"
 
 char **map;

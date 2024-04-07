@@ -1,14 +1,14 @@
 #ifndef _LOADMAP_H_
 #define _LOADMAP_H_
 
+
+
 #include <stdbool.h>
 
 
 
 //#define MaxX 40
 //#define MaxY 41
-#define Square_size 10.0
-#define Shoot_size 10.0
 
 
 extern char **map;

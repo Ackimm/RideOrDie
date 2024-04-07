@@ -14,9 +14,14 @@
 #include "player.h"
 #include "enemies.h"
 #include "tirs.h"
+#include "constantes.h"
+#include "collision.h" // NEW COLLISION NOT GOOD YET ! 
 
-/*---------------------test du HUD-----------------------
----------------------test du HUD-----------------------*/
+
+
+
+
+
 
 
 int score = 0;
@@ -33,7 +38,7 @@ void startTimer(){
 // Fonction de rappel pour mettre à jour le chronomètre
 void updateTimer(int value) {
     time_elapsed = time(NULL) - start_time ; // Afficher le temps écoulé
-    glutTimerFunc(1000, updateTimer, 0); // Rappeler cette fonction dans 1000 millisecondes (1 seconde)
+    glutTimerFunc(updateFrequency, updateTimer, 0); // rappeler cette fonction récursivement
 }
 
 
@@ -84,7 +89,7 @@ void displayHUD() {
     // Afficher le temps écoulé
       glRasterPos2f(0.6, 0.025); // Position du texte pour le temps écoulé
     char time_text[50];
-	glutTimerFunc(1000, updateTimer, 0);
+	glutTimerFunc(updateFrequency, updateTimer, 0);
     sprintf(time_text, "Time: %d", time_elapsed);
     for (int i = 0; time_text[i] != '\0'; i++) {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, time_text[i]);
@@ -139,11 +144,11 @@ void handleResize(int width,int height)
 
 // POUR LE SCROLLING : on va mettre dans le dessin de la map x+scrolling_value et on va augmenter progressivement cette valeur pour obtenir le scrolling
 void updateScrolling(){
-	scrolling_value += 3;
-	if (scrolling_value >=60){
+	scrolling_value += 5.15;
+	if (scrolling_value >=92 ){
 		scrolling_value = 0.0;			
 	}
-	glutTimerFunc(10, updateScrolling, 5);
+	glutTimerFunc(updateFrequency, updateScrolling, 0);
 
 }
 
@@ -204,14 +209,16 @@ int main(int argc, char *argv[])
 
 	glutReshapeFunc(handleResize);
 
-	glutTimerFunc(10, updateEnemies, 0);
-	glutTimerFunc(10, updateNewEnemies, 0);
-	glutTimerFunc(10, updateDeleteEnemies, 0);
+	glutTimerFunc(updateFrequency, updateEnemies, 0);
+	glutTimerFunc(updateFrequency, updateNewEnemies, 0);
+	glutTimerFunc(updateFrequency, updateDeleteEnemies, 0);
 	// tirs:  
-	glutTimerFunc(10, updateTirs, 0);
-	glutTimerFunc(10, updateDeleteTirs, 0);
+	glutTimerFunc(updateFrequency, updateTirs, 0);
+	glutTimerFunc(updateFrequency, updateDeleteTirs, 0);
 	// NEW SCROLLING: 
-	glutTimerFunc(10, updateScrolling, 0);
+	glutTimerFunc(updateFrequency, updateScrolling, 0);
+	// NEW Collision : 
+	glutTimerFunc(updateFrequency, checkCollision, 0); // NEW COLLISION NOT GOOD YET ! 
 	
 
 	glEnable(GL_DEPTH_TEST);

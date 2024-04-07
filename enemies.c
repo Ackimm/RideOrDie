@@ -9,6 +9,7 @@
 #include "loadMap.h"
 #include "enemies.h"
 #include "game.h"
+#include "constantes.h"
 
 
 #include <stdlib.h>
@@ -35,7 +36,7 @@ listeEn initialListEnemies()
 	return e;
 }
 
-enemy createEnemy(int *maxX)
+enemy createEnemy()
 {
 	enemy new = malloc(sizeof(enemies));
 	//int x = (rand() % (*maxX + 10) + 1); // ici faire en sorte d'avoir un nombre en 30 et 94
@@ -47,6 +48,7 @@ enemy createEnemy(int *maxX)
 	new->vie = 1;
 	new->pos.x = x;
 	new->pos.y = 5;
+	new->speed = 100;
 	new->nextptr = NULL;
 	new->prevptr = NULL;
 	new->active = true;
@@ -55,7 +57,8 @@ enemy createEnemy(int *maxX)
 
 void insertionEnemies(listeEn e, enemy base)
 {
-	enemy new = malloc(sizeof(enemies));
+	// enemy new = malloc(sizeof(enemies)); // save
+	enemy new; // tentaive
 	if (new == NULL)
 	{
 		exit(EXIT_FAILURE);
@@ -77,51 +80,42 @@ void insertionEnemies(listeEn e, enemy base)
 
 void suppressionEnemies(listeEn e, bool test)
 {
-	//test = false;
-	if (e->starList != NULL)
-	{
-		enemy base = malloc(sizeof(enemies));
-		if (base == NULL)
-		{
-			exit(EXIT_FAILURE);
-		}
-		base = e->starList;
-		while (base != NULL)
-		{
-			if (base->active == test)
-			{
-				enemy delete = malloc(sizeof(enemies));
-				delete = base;
-				base = base->nextptr;
-				if (e->starList == delete && e->endList == delete)
-				{
-					e->starList = NULL;
-					e->endList = NULL;
-				}
-				else if (e->starList != delete && e->endList == delete)
-				{
-					e->endList = delete->prevptr;
-					e->endList->nextptr = NULL;
-				}
-				else if (e->starList == delete && e->endList != delete)
-				{
-					e->starList  = delete->nextptr;
-					e->starList->prevptr = NULL;
-				}
-				else
-				{
-					delete->nextptr->prevptr = delete->prevptr;
-					delete->prevptr->nextptr = delete->nextptr;
-				}
-				free(delete);
-				e->quantite--;
-			}
-			else
-			{
-				base = base->nextptr;
-			}
-		}
-	}
+    test = false;
+    if (e->starList != NULL)
+    {
+        enemy base = e->starList;
+        while (base != NULL)
+        {
+            enemy nextEnemy = base->nextptr; // Sauvegarde du prochain ennemi avant de supprimer celui-ci
+            if (base->active == test)
+            {
+                if (e->starList == base && e->endList == base)
+                {
+                    e->starList = NULL;
+                    e->endList = NULL;
+                }
+                else if (e->starList == base)
+                {
+                    e->starList = base->nextptr;
+                    e->starList->prevptr = NULL;
+                }
+                else if (e->endList == base)
+                {
+                    e->endList = base->prevptr;
+                    e->endList->nextptr = NULL;
+                }
+                else
+                {
+                    base->prevptr->nextptr = base->nextptr;
+                    base->nextptr->prevptr = base->prevptr;
+                }
+                free(base); // Libération de la mémoire de l'ennemi supprimé
+                e->quantite--;
+				// printf("Quantité : %i\n",e->quantite); // vérification de la quantité d'ennemis dans la chaine
+            }
+            base = nextEnemy; // Passage à l'ennemi suivant dans la liste
+        }
+    }
 }
 
 
@@ -132,7 +126,7 @@ void updateEnemies(int valeur)
 	if (e->starList != NULL)
 	{
 		q->pos.y += 1;
-		if (q->pos.y > 120)
+		if (q->pos.y > 120 || q->vie == 0) // passé à 30 pour tester
 		{
 			q->pos.y = 2;
 			q->active = false;
@@ -141,7 +135,7 @@ void updateEnemies(int valeur)
 		{
 			q = q->nextptr;
 			q->pos.y +=1;
-			if (q->pos.y > 120)
+			if (q->pos.y > 120 || q->vie == 0) // passé à 30 pour tester
 			{
 				q->pos.y = 2;
 				q->active = false;
@@ -149,15 +143,15 @@ void updateEnemies(int valeur)
 		}
 	}
 	glutPostRedisplay();
-	glutTimerFunc(50, updateEnemies, 1);
+	glutTimerFunc(enemySpeed, updateEnemies, 0);
 }
 
 void updateNewEnemies(int valeur)
 {
-	enemy new = createEnemy((&mY));
+	enemy new = createEnemy();
 	insertionEnemies(e, new);
 	glutPostRedisplay();
-	glutTimerFunc(1000, updateNewEnemies, 3);
+	glutTimerFunc(updateNewEnemy, updateNewEnemies, 0);
 }
 
 void updateDeleteEnemies(int valeur)
@@ -167,5 +161,5 @@ void updateDeleteEnemies(int valeur)
 		suppressionEnemies(e, test);
 	}
 	glutPostRedisplay();
-	glutTimerFunc(50, updateDeleteEnemies, 4);
+	glutTimerFunc(updateFrequency, updateDeleteEnemies, 0);
 }

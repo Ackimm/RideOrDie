@@ -9,18 +9,19 @@ FLAGGLUT=-Wno-deprecated-declarations -framework OpenGL -framework GLUT
 endif
 
 FLAG=-Wall -std=c99
-SRCS= player.c enemies.c game.c drawMap.c loadMap.c tirs.c main.c 
+SRCS= player.c enemies.c game.c drawMap.c loadMap.c tirs.c collision.c main.c 
 OBJET = $(SRCS:.c=.o)
 EXEC= program
 
 
 
-all: $(EXEC)
+all: clean $(EXEC)
 
-$(EXEC): $(SRCS)
-	$(CC) -c $(SRCS) $(FLAG) $(FLAGGLUT)
+$(EXEC): $(OBJET)
 	$(CC) -o $(EXEC) $(OBJET) $(FLAG) $(FLAGGLUT)
 	
 clean:
-	rm -rf $(EXEC)
-	rm -rf *.o
+	$(MAKE) -f Makefile clean_internal
+
+clean_internal:
+	rm -rf $(EXEC) $(OBJET)

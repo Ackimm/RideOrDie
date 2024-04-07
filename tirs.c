@@ -9,7 +9,7 @@
 #include "tirs.h"
 #include "game.h"
 #include "player.h"
-
+#include "constantes.h"
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -53,7 +53,8 @@ tirsP createTirs(player p)
 
 void insertionTirs(listetirsP t, tirsP base)
 {
-	tirsP new = malloc(sizeof(tirs));
+	// tirsP new = malloc(sizeof(tirs)); //save
+	tirsP new; //tentative
 	if (new == NULL)
 	{
 		exit(EXIT_FAILURE);
@@ -78,13 +79,16 @@ void suppressionTirs(listetirsP t, bool test)
 	test = false;
 	if (t->starList != NULL)
 	{
-		tirsP base = malloc(sizeof(tirs));
+		// tirsP base = malloc(sizeof(tirs)); //save
+		tirsP base; //tentative
+		
 		base = t->starList;
 		while (base != NULL)
 		{
 			if (base->active == test)
 			{
-				tirsP delete = malloc(sizeof(tirs));
+				// tirsP delete = malloc(sizeof(tirs)); //save
+				tirsP delete; //tenative
 				delete = base;
 				base = base->nextptr;
 				if (t->starList == delete && t->endList == delete)
@@ -109,6 +113,7 @@ void suppressionTirs(listetirsP t, bool test)
 				}
 				free(delete);
 				t->quantite--;
+				// printf("Quantité : %i\n",t->quantite); // vérification de la quantité de tirs dans la chaine
 			}
 			else
 			{
@@ -136,7 +141,7 @@ void updateTirs(int valeur)
 	if (t->starList != NULL)
 	{
 		r->pos.y -= 1;
-		if (r->pos.y < 1)
+		if (r->pos.y < 2) // passé à 30 pour tester
 		{
 			r->pos.y = 0;
 			r->active = false;
@@ -145,7 +150,7 @@ void updateTirs(int valeur)
 		{
 			r = r->nextptr;
 			r->pos.y -= 1;
-			if (r->pos.y < 1)
+			if (r->pos.y < 2) // passé à 30 pour tester
 			{
 				r->pos.y = 0;
 				r->active = false;
@@ -153,7 +158,7 @@ void updateTirs(int valeur)
 		}
 	}
 	glutPostRedisplay();
-	glutTimerFunc(5, updateTirs, 2);
+	glutTimerFunc(tirsSpeed, updateTirs, 0);
 }
 
 
@@ -164,7 +169,7 @@ void updateDeleteTirs(int valeur)
 		suppressionTirs(t, test);
 	}
 	glutPostRedisplay();
-	glutTimerFunc(5, updateDeleteTirs, 5);
+	glutTimerFunc(updateFrequency, updateDeleteTirs, 0);
 }
 
 

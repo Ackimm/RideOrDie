@@ -9,23 +9,15 @@
 #include "time.h"
 
 #include "loadMap.h"
-//#include "drawMap.h"
 #include "game.h"
 #include "player.h"
 #include "enemies.h"
 #include "tirs.h"
 #include "constantes.h"
-#include "collision.h" // NEW COLLISION NOT GOOD YET ! 
+#include "collision.h" 
 
 
 
-
-
-
-
-
-int score = 0;
-int life = 5;
 int time_elapsed = 0;
 time_t start_time;
 float scrolling_value = 0.0;
@@ -58,7 +50,7 @@ void displayHUD() {
 
 	glBegin(GL_QUADS);
 		glVertex2f(0.0, 0.0); // coin sup gauche (puis dans le sens des aiguilles d'une montre)
-		glVertex2f(1.0, 0.0); //coin sup droit
+		glVertex2f(1.0, 0.0); // coin sup droit
 		glVertex2f(1.0, 0.05); // coin inf droit
 		glVertex2f(0.0, 0.05); // coin inf gauche
     glEnd();
@@ -81,7 +73,7 @@ void displayHUD() {
     // Afficher la vie
        glRasterPos2f(0.4, 0.025);// Position du texte pour la vie
     char life_text[100];
-    sprintf(life_text, "Vie: %d", life);
+    sprintf(life_text, "Vie: %d", p->vie);
     for (int i = 0; life_text[i] != '\0'; i++) {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, life_text[i]);
     }
@@ -164,11 +156,7 @@ void Display()
     
 	game(&mX, &mY, scrolling_value, p, e, t);
 	
-
-
-	
-	//drawWall(mX, mY);
- 	displayHUD(); // associe le HUD au premier ennemi de la listeEn au lieu de le fixer en haut de l'écran
+ 	displayHUD(); 
 	glutSwapBuffers();
 	//glFlush();
 }

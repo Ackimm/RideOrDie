@@ -7,7 +7,8 @@
         "glut.h": "c",
         "loadmap.h": "c",
         "tirs.h": "c",
-        "stdbool.h": "c"
+        "stdbool.h": "c",
+        "time.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

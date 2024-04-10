@@ -132,7 +132,6 @@ void tirer(player p, listetirsP t)
 	insertionTirs(t, new);
 }
 
-// TIRS de main
 
 
 void updateTirs(int valeur)
@@ -150,7 +149,7 @@ void updateTirs(int valeur)
 		{
 			r = r->nextptr;
 			r->pos.y -= 1;
-			if (r->pos.y < 2) // passé à 30 pour tester
+			if (r->pos.y < 2) 
 			{
 				r->pos.y = 0;
 				r->active = false;

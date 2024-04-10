@@ -13,6 +13,8 @@
 #include "drawMap.h"
 #include "constantes.h"
 #include "velo_jaune4.c"
+#include "land_grass04.c"
+
 
 //#include "game.h"
 //#include "enemies.h"
@@ -75,35 +77,74 @@ void drawWall(int *maxX, int *maxY, float scrolling_value)			// fonction qui aff
 				glMatrixMode(GL_MODELVIEW);
 				
 			    glLoadIdentity();
-				glTranslatef(j*Square_size,i*Square_size,0.0f);
+				glTranslatef(j*Square_size,i*Square_size+scrolling_value,0.0f);
 				
-				
+glBegin(GL_QUADS);
+					glVertex3f(0.0f, 0.0f, 0.0f);
+					glVertex3f(Square_size, 0.0f, 0.0f);
+					glVertex3f(Square_size,Square_size, 0.0f);
+					glVertex3f(0.0f,Square_size, 0.0f);
+
+				glEnd();
+
+				/*
 				glBegin(GL_QUADS);
 					glVertex3f(0.0f , 0.0f + scrolling_value, 0.0f); // coin sup gauche
 					glVertex3f(Square_size , 0.0f+ scrolling_value, 0.0f); // coin sup droit
 					glVertex3f(Square_size  ,Square_size+ scrolling_value, 0.0f); // coin inf droit
 					glVertex3f(0.0f,Square_size+ scrolling_value, 0.0f); // coin inf gauche
-
-
 				glEnd();	
+				*/
 			}
 		
 			if(*(*(map + i) + j) == 'i')
 			{
 				glColor3f(1.0f,0.0f,0.0f);
 				glMatrixMode(GL_MODELVIEW);
+				glLoadIdentity();
 				
-			    glLoadIdentity();
+						
+				/*--------------test image---------------------
+				int texture;
+
+				
+
+				glGenTextures(1,&texture);
+				glBindTexture(GL_TEXTURE_2D,texture);
+				glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE);
+				gluBuild2DMipmaps(GL_TEXTURE_2D,grass.bytes_per_pixel, grass.width, grass.height,GL_RGB,GL_UNSIGNED_BYTE,grass.pixel_data);
+				glEnable(GL_TEXTURE_2D);
+
+				
+				glDisable( GL_BLEND );// rajout pour tester la transparence
+
+			----------------------test image-------------------------*/
+
 				glTranslatef(j*Square_size,i*Square_size,0.0f);
-				
-				
 				glBegin(GL_QUADS);
 					glVertex3f(0.0f, 0.0f, 0.0f);
 					glVertex3f(Square_size, 0.0f, 0.0f);
 					glVertex3f(Square_size,Square_size, 0.0f);
 					glVertex3f(0.0f,Square_size, 0.0f);
 
-				glEnd();	
+				glEnd();
+
+			//	glDisable(GL_TEXTURE_2D); // add
+
+						
+				// ancien code ci-dessous	
+				/*	
+					
+					
+					glBegin(GL_QUADS);
+						glVertex3f(0.0f, 0.0f, 0.0f);
+						glVertex3f(Square_size, 0.0f, 0.0f);
+						glVertex3f(Square_size,Square_size, 0.0f);
+						glVertex3f(0.0f,Square_size, 0.0f);
+
+					glEnd();	
+
+					*/
 			}
 
 			
@@ -111,6 +152,42 @@ void drawWall(int *maxX, int *maxY, float scrolling_value)			// fonction qui aff
 		}
 }
 
+	
+
+/*
+alternative qui ne fonctionne pas bizarre
+
+
+void drawWall(int *maxX, int *maxY, float scrolling_value) {
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
+    for (int i = 0; i < *maxY; i++) {
+        for (int j = 0; j < *maxX; j++) {
+            char currentCell = *(*(map + i) + j);
+
+            if (currentCell == '!') {
+                glColor3f(1.0f, 1.0f, 1.0f);
+            } else if (currentCell == 'o') {
+                glColor3f(0.6f, 1.0f, 1.0f);
+            } else if (currentCell == 'i') {
+                glColor3f(1.0f, 0.0f, 0.0f);
+            }
+
+            glPushMatrix();
+            glTranslatef(j * Square_size, i * Square_size + scrolling_value, 0.0f);
+            glBegin(GL_QUADS);
+            glVertex3f(0.0f, 0.0f, 0.0f);
+            glVertex3f(Square_size, 0.0f, 0.0f);
+            glVertex3f(Square_size, Square_size, 0.0f);
+            glVertex3f(0.0f, Square_size, 0.0f);
+            glEnd();
+            glPopMatrix();
+        }
+    }
+}
+
+*/
 
 
 
@@ -148,22 +225,6 @@ void drawPlayer(player p)
 
 	glBegin(GL_QUADS);
 
-/*
-	glTexCoord2f(0.0,1.0); glVertex3f(0.0f, 0.0f, 0.0f);
-	glTexCoord2f(1.0,1.0); glVertex3f(4 * alternate_player_size, 0.0f, 0.0f);
-	glTexCoord2f(1.0,0.0); glVertex3f(4* alternate_player_size,10 * alternate_player_size, 0.0f);
-	glTexCoord2f(0.0,0.0); glVertex3f(0.0f,10* alternate_player_size, 0.0f);
-
-
-// actuel works : 
-
-	glTexCoord2f(0.0,0.0); glVertex3f(0.0f,10* alternate_player_size, 0.0f);
-	glTexCoord2f(1.0,0.0); glVertex3f(4* alternate_player_size,10 * alternate_player_size, 0.0f);
-	glTexCoord2f(1.0,1.0); glVertex3f(4 * alternate_player_size, 0.0f, 0.0f);
-	glTexCoord2f(0.0,1.0); glVertex3f(0.0f, 0.0f, 0.0f);
-*/
-
-//NEW : 
 
 
 	glTexCoord2f(0.0,0.0); glVertex3f(-2.5 * alternate_player_size,12 * alternate_player_size, 0.0f); // sup gauche
@@ -242,8 +303,8 @@ void drawTirs(tirsP p)
 	glTranslatef(i*Square_size,j*Square_size,0.0f);
 	glBegin(GL_QUADS);// note pour plus tard : changer soit en ligne, soit en projectile avec image .c
 	glVertex3f(0.0f,0.0f,0.0f);
-	glVertex3f(Shoot_size/2,0.0f,0.0f); 
-	glVertex3f(Shoot_size/2,Shoot_size*2,0.0f);
+	glVertex3f(Shoot_size,0.0f,0.0f); 
+	glVertex3f(Shoot_size,Shoot_size*2,0.0f);
 	glVertex3f(0.0f,Shoot_size*2,0.0f);
 	glEnd();
 }

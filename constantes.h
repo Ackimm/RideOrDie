@@ -3,13 +3,15 @@
 
 
 #define sec_in_millisec 1000
-#define FPS 10
+#define FPS 20
 #define updateFrequency (sec_in_millisec/FPS)
+
 /*#define updateNewEnemy 1000
 #define enemySpeed 30
 #define tirsSpeed 10
 */
-#define updateNewEnemy 5000
+
+#define updateNewEnemy 1000
 #define enemySpeed updateFrequency
 #define tirsSpeed updateFrequency
 

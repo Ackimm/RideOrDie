@@ -1,0 +1,256 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  us/call  us/call  name    
+ 67.16      0.45     0.45     3770   119.36   119.36  drawWall
+ 32.84      0.67     0.22                             _init
+  0.00      0.67     0.00    16571     0.00     0.00  drawEnemy
+  0.00      0.67     0.00     5080     0.00     0.00  drawTirs
+  0.00      0.67     0.00     3770     0.00     0.00  displayHUD
+  0.00      0.67     0.00     3770     0.00     0.00  drawPlayer
+  0.00      0.67     0.00     3770     0.00   119.36  game
+  0.00      0.67     0.00     3759     0.00     0.00  drawAllEnnemis
+  0.00      0.67     0.00     1334     0.00     0.00  drawAllTirs
+  0.00      0.67     0.00      817     0.00     0.00  suppressionEnemies
+  0.00      0.67     0.00      468     0.00     0.00  suppressionTirs
+  0.00      0.67     0.00      200     0.00     0.00  moveLeft
+  0.00      0.67     0.00      186     0.00     0.00  moveRight
+  0.00      0.67     0.00       76     0.00     0.00  createEnemy
+  0.00      0.67     0.00       76     0.00     0.00  insertionEnemies
+  0.00      0.67     0.00       57     0.00     0.00  createTirs
+  0.00      0.67     0.00       57     0.00     0.00  insertionTirs
+  0.00      0.67     0.00       57     0.00     0.00  tirer
+  0.00      0.67     0.00        1     0.00     0.00  createPlayer
+  0.00      0.67     0.00        1     0.00     0.00  initRendering
+  0.00      0.67     0.00        1     0.00     0.00  initialListEnemies
+  0.00      0.67     0.00        1     0.00     0.00  initialListeTirs
+  0.00      0.67     0.00        1     0.00     0.00  loadMap
+  0.00      0.67     0.00        1     0.00     0.00  startTimer
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+Copyright (C) 2012-2022 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 4 byte(s) for 1.49% of 0.67 seconds
+
+index % time    self  children    called     name
+                0.45    0.00    3770/3770        game [2]
+[1]     67.2    0.45    0.00    3770         drawWall [1]
+-----------------------------------------------
+                0.00    0.45    3770/3770        Display [3]
+[2]     67.2    0.00    0.45    3770         game [2]
+                0.45    0.00    3770/3770        drawWall [1]
+                0.00    0.00    3770/3770        drawPlayer [8]
+                0.00    0.00    3759/3759        drawAllEnnemis [9]
+                0.00    0.00    1334/1334        drawAllTirs [10]
+                0.00    0.00     200/200         moveLeft [13]
+                0.00    0.00     186/186         moveRight [14]
+                0.00    0.00      57/57          tirer [19]
+-----------------------------------------------
+                                                 <spontaneous>
+[3]     67.2    0.00    0.45                 Display [3]
+                0.00    0.45    3770/3770        game [2]
+                0.00    0.00    3770/3770        displayHUD [7]
+-----------------------------------------------
+                                                 <spontaneous>
+[4]     32.8    0.22    0.00                 _init [4]
+-----------------------------------------------
+                0.00    0.00   16571/16571       drawAllEnnemis [9]
+[5]      0.0    0.00    0.00   16571         drawEnemy [5]
+-----------------------------------------------
+                0.00    0.00    5080/5080        drawAllTirs [10]
+[6]      0.0    0.00    0.00    5080         drawTirs [6]
+-----------------------------------------------
+                0.00    0.00    3770/3770        Display [3]
+[7]      0.0    0.00    0.00    3770         displayHUD [7]
+-----------------------------------------------
+                0.00    0.00    3770/3770        game [2]
+[8]      0.0    0.00    0.00    3770         drawPlayer [8]
+-----------------------------------------------
+                0.00    0.00    3759/3759        game [2]
+[9]      0.0    0.00    0.00    3759         drawAllEnnemis [9]
+                0.00    0.00   16571/16571       drawEnemy [5]
+-----------------------------------------------
+                0.00    0.00    1334/1334        game [2]
+[10]     0.0    0.00    0.00    1334         drawAllTirs [10]
+                0.00    0.00    5080/5080        drawTirs [6]
+-----------------------------------------------
+                0.00    0.00     817/817         updateDeleteEnemies [38]
+[11]     0.0    0.00    0.00     817         suppressionEnemies [11]
+-----------------------------------------------
+                0.00    0.00     468/468         updateDeleteTirs [39]
+[12]     0.0    0.00    0.00     468         suppressionTirs [12]
+-----------------------------------------------
+                0.00    0.00     200/200         game [2]
+[13]     0.0    0.00    0.00     200         moveLeft [13]
+-----------------------------------------------
+                0.00    0.00     186/186         game [2]
+[14]     0.0    0.00    0.00     186         moveRight [14]
+-----------------------------------------------
+                0.00    0.00      76/76          updateNewEnemies [41]
+[15]     0.0    0.00    0.00      76         createEnemy [15]
+-----------------------------------------------
+                0.00    0.00      76/76          updateNewEnemies [41]
+[16]     0.0    0.00    0.00      76         insertionEnemies [16]
+-----------------------------------------------
+                0.00    0.00      57/57          tirer [19]
+[17]     0.0    0.00    0.00      57         createTirs [17]
+-----------------------------------------------
+                0.00    0.00      57/57          tirer [19]
+[18]     0.0    0.00    0.00      57         insertionTirs [18]
+-----------------------------------------------
+                0.00    0.00      57/57          game [2]
+[19]     0.0    0.00    0.00      57         tirer [19]
+                0.00    0.00      57/57          createTirs [17]
+                0.00    0.00      57/57          insertionTirs [18]
+-----------------------------------------------
+                0.00    0.00       1/1           main [34]
+[20]     0.0    0.00    0.00       1         createPlayer [20]
+-----------------------------------------------
+                0.00    0.00       1/1           main [34]
+[21]     0.0    0.00    0.00       1         initRendering [21]
+-----------------------------------------------
+                0.00    0.00       1/1           main [34]
+[22]     0.0    0.00    0.00       1         initialListEnemies [22]
+-----------------------------------------------
+                0.00    0.00       1/1           main [34]
+[23]     0.0    0.00    0.00       1         initialListeTirs [23]
+-----------------------------------------------
+                0.00    0.00       1/1           main [34]
+[24]     0.0    0.00    0.00       1         loadMap [24]
+-----------------------------------------------
+                0.00    0.00       1/1           main [34]
+[25]     0.0    0.00    0.00       1         startTimer [25]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function is in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+Copyright (C) 2012-2022 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+Index by function name
+
+   [4] _init                   [8] drawPlayer             [18] insertionTirs
+  [15] createEnemy             [6] drawTirs               [24] loadMap
+  [20] createPlayer            [1] drawWall               [13] moveLeft
+  [17] createTirs              [2] game                   [14] moveRight
+   [7] displayHUD             [21] initRendering          [25] startTimer
+   [9] drawAllEnnemis         [22] initialListEnemies     [11] suppressionEnemies
+  [10] drawAllTirs            [23] initialListeTirs       [12] suppressionTirs
+   [5] drawEnemy              [16] insertionEnemies       [19] tirer

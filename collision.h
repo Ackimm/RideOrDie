@@ -9,7 +9,7 @@
 #include "tirs.h"
 #include "constantes.h"
 
-
+extern int score;
 
 void checkCollision(int valeur);
 

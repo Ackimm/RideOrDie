@@ -17,6 +17,7 @@
 #include "player.h"
 #include "enemies.h"
 #include "tirs.h"
+#include "menu.h"
 
 
 bool UP = false;
@@ -77,6 +78,7 @@ void game(int *maxX, int *maxY, float scrolling_value, player p, listeEn e, list
 	
 
 	glutKeyboardFunc(Keyboard);		//fonction de glut gérant le clavier
+	
 	
 	if (LEFT == true)
 	{

@@ -7,6 +7,7 @@
 #include "tirs.h"
 
 
+extern float scrolling_value;
 
 
 

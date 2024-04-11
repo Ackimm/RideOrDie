@@ -15,6 +15,7 @@
 #include "tirs.h"
 #include "constantes.h"
 #include "collision.h" 
+#include "menu.h" 
 
 
 
@@ -153,10 +154,9 @@ void Display()
 	
 	glClearColor(0.0f,0.0f,0.0f,0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    
+   // drawMenu();
 	game(&mX, &mY, scrolling_value, p, e, t);
-	
- 	displayHUD(); 
+	displayHUD(); 
 	glutSwapBuffers();
 	//glFlush();
 }

@@ -3,7 +3,7 @@
 
 
 #define sec_in_millisec 1000
-#define FPS 20
+#define FPS 60
 #define updateFrequency (sec_in_millisec/FPS)
 
 /*#define updateNewEnemy 1000

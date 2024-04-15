@@ -62,9 +62,10 @@ void displayHUD() {
 
 
 
+    glColor3f(1.0f, 1.0f, 1.0f); 
+	
  	// Afficher le score
-    glColor3f(1.0f, 1.0f, 1.0f); // Couleur blanche pour le texte
-    glRasterPos2f(0.2, 0.025); // Position du texte pour le score
+    glRasterPos2f(0.2, 0.025); 
     char score_text[50];
     sprintf(score_text, "Score: %d", score);
     for (int i = 0; score_text[i] != '\0'; i++) {
@@ -72,7 +73,7 @@ void displayHUD() {
     }
     
     // Afficher la vie
-       glRasterPos2f(0.4, 0.025);// Position du texte pour la vie
+       glRasterPos2f(0.4, 0.025);
     char life_text[100];
     sprintf(life_text, "Vie: %d", p->vie);
     for (int i = 0; life_text[i] != '\0'; i++) {
@@ -80,7 +81,7 @@ void displayHUD() {
     }
     
     // Afficher le temps écoulé
-      glRasterPos2f(0.6, 0.025); // Position du texte pour le temps écoulé
+      glRasterPos2f(0.6, 0.025); 
     char time_text[50];
 	glutTimerFunc(updateFrequency, updateTimer, 0);
     sprintf(time_text, "Time: %d", time_elapsed);
@@ -110,8 +111,7 @@ void initRendering()
 void handleResize(int width,int height)
 {
 
-	// Prevent a divide by zero, when window is too short
-	// (you cant make a window of zero width).
+	
 	if (height == 0)
 		height = 1;
 	//float ratio =  width * 1.0 / height;
@@ -123,7 +123,6 @@ void handleResize(int width,int height)
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	
-	// Set the correct perspective.
 	//gluPerspective(45,aspectRatio,1,100);
 	
 //	gluOrtho2D(0, mX * Square_size * aspectRatio, mY * Square_size * aspectRatio, 0);
@@ -165,14 +164,10 @@ void Display()
 
 int main(int argc, char *argv[])
 {
+
+	mX = 124;  
+	mY = 124; 
 	
-// en vrai 124*125 pour le fichier 120*140 horizontal (à creuse...)
-// en vrai 124*126 pour le fichier 124*124 réseau de routes (à creuse...)
-// valeurs origine pour map 1 : 30 * 41 
-
-	mX = 124; // valeur réelle 124 pour le verti 
-	mY = 124; // valeur réelle 124 pour le verti 
-
 	//srand(time(NULL));
 	loadMap(&mX, &mY);
 	p = createPlayer(&mX, &mY);

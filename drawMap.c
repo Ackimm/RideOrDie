@@ -16,25 +16,6 @@
 #include "land_grass04.c"
 
 
-//#include "game.h"
-//#include "enemies.h"
-//#include "player.h"
-//#include "tirs.h"
-
-
-/*
-void drawSky()
-{
-        glBegin(GL_POLYGON); 
-            glColor3f(0.196078,0.6,0.8);
-	
-            glVertex3f(Square_size, 30*Square_size, 1);
-            glVertex3f(Square_size, Square_size, 1);
-            glVertex3f(30*Square_size, 0, 1);
-            glVertex3f(30*Square_size, 30*Square_size, 1);
-        glEnd();
-}
-*/
 
 
 /*------------------------
@@ -59,7 +40,7 @@ void drawWall(int *maxX, int *maxY, float scrolling_value)			// fonction qui aff
 				glMatrixMode(GL_MODELVIEW);
 				
 			    glLoadIdentity();
-				glTranslatef(j*Square_size,i*Square_size,0.0f); // sur une map carré, la seule chose qui change pour le drawmap c'est ces variables i et j. Il y a aussi quand même les ennemis, les tirs, etc..
+				glTranslatef(j*Square_size,i*Square_size,0.0f); // ici j et i sont inversés, il faudra encore un peu creuser pour comprendre pourquoi ça marche mieux ainsi
 				
 				
 				glBegin(GL_QUADS);
@@ -79,7 +60,7 @@ void drawWall(int *maxX, int *maxY, float scrolling_value)			// fonction qui aff
 			    glLoadIdentity();
 				glTranslatef(j*Square_size,i*Square_size+scrolling_value,0.0f);
 				
-glBegin(GL_QUADS);
+				glBegin(GL_QUADS);
 					glVertex3f(0.0f, 0.0f, 0.0f);
 					glVertex3f(Square_size, 0.0f, 0.0f);
 					glVertex3f(Square_size,Square_size, 0.0f);
@@ -87,14 +68,7 @@ glBegin(GL_QUADS);
 
 				glEnd();
 
-				/*
-				glBegin(GL_QUADS);
-					glVertex3f(0.0f , 0.0f + scrolling_value, 0.0f); // coin sup gauche
-					glVertex3f(Square_size , 0.0f+ scrolling_value, 0.0f); // coin sup droit
-					glVertex3f(Square_size  ,Square_size+ scrolling_value, 0.0f); // coin inf droit
-					glVertex3f(0.0f,Square_size+ scrolling_value, 0.0f); // coin inf gauche
-				glEnd();	
-				*/
+				
 			}
 		
 			if(*(*(map + i) + j) == 'i')
@@ -104,7 +78,7 @@ glBegin(GL_QUADS);
 				glLoadIdentity();
 				
 						
-				/*--------------test image---------------------
+				/*--------------test image--------------------- (n'a pas fonctionné correctement, à revoir)
 				int texture;
 
 				
@@ -155,7 +129,7 @@ glBegin(GL_QUADS);
 	
 
 /*
-alternative qui ne fonctionne pas bizarre
+alternative qui ne fonctionne pas mais que je trouve plus logique, plus directe
 
 
 void drawWall(int *maxX, int *maxY, float scrolling_value) {

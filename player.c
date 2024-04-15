@@ -40,7 +40,7 @@ player createPlayer(int *maxX, int *maxY)
 	return p;
 }
 
-void moveLeft(player p)		//la fonction va vérifier si on peut se déplacer vers la gauche et le faire le cas échéant
+void moveLeft(player p)		
 {
 	int x = 0, y = 0;
 
@@ -54,7 +54,7 @@ void moveLeft(player p)		//la fonction va vérifier si on peut se déplacer vers
 
 }
 
-void moveRight(player p)		//la fonction va vérifier si on peut se déplacer vers la droite et le faire le cas échéant
+void moveRight(player p)		
 {
 	int x = 0, y = 0;
 	

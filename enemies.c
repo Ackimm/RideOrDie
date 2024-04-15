@@ -20,8 +20,6 @@ enemy q;
 listeEn e;
 
 
-// a mettre une limite d'ennemis actifs pour tester le lag
-
 
 listeEn initialListEnemies()
 {
@@ -109,8 +107,8 @@ void suppressionEnemies(listeEn e, bool test)
                     base->prevptr->nextptr = base->nextptr;
                     base->nextptr->prevptr = base->prevptr;
                 }
-                free(base); // Libération de la mémoire de l'ennemi supprimé
-                e->quantite--;
+              	free(base); // Libération de la mémoire de l'ennemi supprimé
+				e->quantite--;
 				// printf("Quantité : %i\n",e->quantite); // vérification de la quantité d'ennemis dans la chaine
             }
             base = nextEnemy; // Passage à l'ennemi suivant dans la liste
@@ -126,7 +124,7 @@ void updateEnemies(int valeur)
 	if (e->starList != NULL)
 	{
 		q->pos.y += 1;
-		if (q->pos.y > 120 || q->vie == 0) // passé à 30 pour tester
+		if (q->pos.y > 120 || q->vie == 0) 
 		{
 			q->pos.y = 2;
 			q->active = false;
@@ -135,7 +133,7 @@ void updateEnemies(int valeur)
 		{
 			q = q->nextptr;
 			q->pos.y +=1;
-			if (q->pos.y > 120 || q->vie == 0) // passé à 30 pour tester
+			if (q->pos.y > 120 || q->vie == 0) 
 			{
 				q->pos.y = 2;
 				q->active = false;

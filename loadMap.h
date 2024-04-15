@@ -7,9 +7,6 @@
 
 
 
-//#define MaxX 40
-//#define MaxY 41
-
 
 extern char **map;
 

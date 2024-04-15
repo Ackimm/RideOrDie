@@ -112,6 +112,7 @@ void suppressionTirs(listetirsP t, bool test)
 					delete->prevptr->nextptr = delete->nextptr;
 				}
 				free(delete);
+				
 				t->quantite--;
 				// printf("Quantité : %i\n",t->quantite); // vérification de la quantité de tirs dans la chaine
 			}

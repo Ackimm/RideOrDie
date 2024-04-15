@@ -17,9 +17,7 @@ enum{
     menu_4
 };
 
-//void drawButton(int x, int y, int width, int height, const char* label);
 void drawMenu();
 void mouseClick(int button, int state, int x, int y);
-//void vMouseMotion(int x, int y);
 
 #endif

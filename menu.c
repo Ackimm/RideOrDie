@@ -129,48 +129,6 @@ glColor3f(1.0f, 1.0f, 1.0f); // Couleur blanche pour le texte
 
 
 
-
-/*
-const int windowWidth = 900;
-const int windowHeight = 600;
-
-// Dimensions et position des boutons
-const int buttonWidth = 200;
-const int buttonHeight = 50;
-const int buttonSpacing = 20;
-const int buttonPosX = (windowWidth - buttonWidth) / 2;
-const int buttonPosYStart = (windowHeight - (4 * buttonHeight + 3 * buttonSpacing)) / 2;
-
-// Fonction de dessin d'un bouton
-void drawButton(int x, int y, int longueur, int hauteur, const char* label) {
-    glBegin(GL_QUADS);
-    glVertex2i(x, y);
-    glVertex2i(x + longueur, y);
-    glVertex2i(x + longueur, y + hauteur);
-    glVertex2i(x, y + hauteur);
-    glEnd();
-
-    glColor3f(0.0f, 0.0f, 0.0f);
-    glRasterPos2i(x + (longueur - glutBitmapLength(GLUT_BITMAP_HELVETICA_18, (unsigned char*)label)) / 2, y + hauteur / 2 - 8);
-    glutBitmapString(GLUT_BITMAP_HELVETICA_18, (unsigned char*)label);
-}
-
-// Fonction de dessin de l'écran d'accueil
-void drawMenu() {
-    glClear(GL_COLOR_BUFFER_BIT);
-
-    // Dessiner les boutons
-    glColor3f(0.5f, 0.5f, 0.5f); // Couleur des boutons
-    drawButton(buttonPosX, buttonPosYStart, buttonWidth, buttonHeight, "Jouer");
-    drawButton(buttonPosX, buttonPosYStart + (buttonHeight + buttonSpacing), buttonWidth, buttonHeight, "Options");
-    drawButton(buttonPosX, buttonPosYStart + 2 * (buttonHeight + buttonSpacing), buttonWidth, buttonHeight, "Scores");
-    drawButton(buttonPosX, buttonPosYStart + 3 * (buttonHeight + buttonSpacing), buttonWidth, buttonHeight, "Quitter");
-
-    glFlush();
-}
-
-// Fonction de gestion du clic de la souris
-*/
 void mouseClick(int button, int state, int x, int y) {
 
     int windowWidth = glutGet(GLUT_WINDOW_WIDTH);
@@ -197,29 +155,11 @@ void mouseClick(int button, int state, int x, int y) {
                 
             }
             else{
-                printf("X : %f, Y = %f\n", xN, yN);
+                printf("X : %f, Y = %f\n", xN, yN); // test en attendant de mettre des autres boutons 
                 fflush(stdout);
 
             }    
-            /*    // Ajoutez ici le code à exécuter lorsque le bouton "Jouer" est cliqué
-            } else if (y >= buttonPosYStart + (buttonHeight + buttonSpacing) &&
-                       y <= buttonPosYStart + (buttonHeight + buttonSpacing) + buttonHeight) {
-                // Clic sur le bouton "Options"
-                printf("Bouton Options cliqué!\n");
-                // Ajoutez ici le code à exécuter lorsque le bouton "Options" est cliqué
-            } else if (y >= buttonPosYStart + 2 * (buttonHeight + buttonSpacing) &&
-                       y <= buttonPosYStart + 2 * (buttonHeight + buttonSpacing) + buttonHeight) {
-                // Clic sur le bouton "Scores"
-                printf("Bouton Scores cliqué!\n");
-                // Ajoutez ici le code à exécuter lorsque le bouton "Scores" est cliqué
-            } else if (y >= buttonPosYStart + 3 * (buttonHeight + buttonSpacing) &&
-                       y <= buttonPosYStart + 3 * (buttonHeight + buttonSpacing) + buttonHeight) {
-                // Clic sur le bouton "Quitter"
-                printf("Bouton Quitter cliqué!\n");
-                exit(0); // Quitter le programme
-                
-                
-                */
+        
             }
         }
     }

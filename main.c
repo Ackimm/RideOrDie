@@ -28,12 +28,13 @@ void startTimer(){
 
 }
 
+/*
 // Fonction de rappel pour mettre à jour le chronomètre
 void updateTimer(int value) {
     time_elapsed = time(NULL) - start_time ; // Afficher le temps écoulé
-    glutTimerFunc(updateFrequency, updateTimer, 0); // rappeler cette fonction récursivement
+    glutTimerFunc(1000, updateTimer, 0); // rappeler cette fonction récursivement
 }
-
+*/
 
 void displayHUD() {
 
@@ -58,12 +59,11 @@ void displayHUD() {
 
 
 
-	
-
-
 
     glColor3f(1.0f, 1.0f, 1.0f); 
 	
+
+
  	// Afficher le score
     glRasterPos2f(0.2, 0.025); 
     char score_text[50];
@@ -83,7 +83,8 @@ void displayHUD() {
     // Afficher le temps écoulé
       glRasterPos2f(0.6, 0.025); 
     char time_text[50];
-	glutTimerFunc(updateFrequency, updateTimer, 0);
+	time_elapsed = time(NULL) - start_time ;
+	//glutTimerFunc(1000, updateTimer, 0);
     sprintf(time_text, "Time: %d", time_elapsed);
     for (int i = 0; time_text[i] != '\0'; i++) {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, time_text[i]);
@@ -154,7 +155,11 @@ void Display()
 	glClearColor(0.0f,0.0f,0.0f,0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
    // drawMenu();
-	game(&mX, &mY, scrolling_value, p, e, t);
+	game(&mX, &mY, scrolling_value, p, e, t); // save
+		// game(&mX, &mY, scrolling_value, p, e);
+
+	//game(&mX, &mY, scrolling_value, p);
+
 	displayHUD(); 
 	glutSwapBuffers();
 	//glFlush();
@@ -170,7 +175,7 @@ int main(int argc, char *argv[])
 	
 	//srand(time(NULL));
 	loadMap(&mX, &mY);
-	p = createPlayer(&mX, &mY);
+	 p= createPlayer(&mX, &mY);
 	e = initialListEnemies();
 	t = initialListeTirs();
 
@@ -201,7 +206,7 @@ int main(int argc, char *argv[])
 	// NEW SCROLLING: 
 	glutTimerFunc(updateFrequency, updateScrolling, 0);
 	// NEW Collision : 
-	glutTimerFunc(updateFrequency, checkCollision, 0); // NEW COLLISION NOT GOOD YET ! 
+	glutTimerFunc(updateFrequency, checkCollision, 0); 
 	
 
 	glEnable(GL_DEPTH_TEST);

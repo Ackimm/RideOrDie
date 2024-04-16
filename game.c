@@ -59,8 +59,12 @@ void Keyboard(unsigned char key, int x, int y)  // fonction allant gérer les in
 }
 
 
-void game(int *maxX, int *maxY, float scrolling_value, player p, listeEn e, listetirsP  t)
+void game(int *maxX, int *maxY, float scrolling_value, player p, listeEn e, listetirsP  t) //save 
+//void game(int *maxX, int *maxY, float scrolling_value, player p)
+//void game(int *maxX, int *maxY, float scrolling_value, player p, listeEn e)
+
 {
+
 
 
 	drawWall(maxX, maxY, scrolling_value);			//afficher la carte

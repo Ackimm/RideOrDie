@@ -16,7 +16,8 @@ player p;
 
 player createPlayer(int *maxX, int *maxY)
 {
-	player p;
+	
+//	player p;
 
 	int x = 0, y = 0;
 
@@ -31,8 +32,8 @@ player createPlayer(int *maxX, int *maxY)
 			}
 		}
 	}
+player p = malloc(sizeof(player));
 
-	p = malloc(sizeof(player));
 	p->vie = 3;
 	p->pos.x = x;
 	p->pos.y = y;

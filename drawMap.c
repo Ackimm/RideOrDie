@@ -59,7 +59,9 @@ void drawWall(int *maxX, int *maxY, float scrolling_value)			// fonction qui aff
 				
 			    glLoadIdentity();
 				glTranslatef(j*Square_size,i*Square_size+scrolling_value,0.0f);
-				
+//				glTranslatef(j*Square_size,i*Square_size,0.0f);
+
+
 				glBegin(GL_QUADS);
 					glVertex3f(0.0f, 0.0f, 0.0f);
 					glVertex3f(Square_size, 0.0f, 0.0f);
@@ -178,7 +180,7 @@ void drawPlayer(player p)
 	glLoadIdentity();
 
 
-/*test image*/
+//test image
 	int texture;
 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // rajout pour tester la transparence
@@ -193,7 +195,7 @@ void drawPlayer(player p)
 	
 	glDisable( GL_BLEND );// rajout pour tester la transparence
 
-/*test image*/
+//test image
 
 	glTranslatef(i*Square_size,j*Square_size,0.0f);
 

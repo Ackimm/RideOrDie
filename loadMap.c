@@ -13,6 +13,8 @@ int mY;
 bool loadMap(int *maxX, int *maxY)		//fonction qui ouvre le fichier txt et charge la carte dans le tableau
 {
     map = malloc(sizeof(char *) * (*maxY));	
+  
+    	
     FILE *f = NULL;
     // f = fopen("map1.txt", "r");
 	// f = fopen("map124x124.txt", "r");
@@ -34,7 +36,7 @@ en sachant que la position (i, j) est la position (y, x) et non (x, y)
 	
 	for(i = 0; i < (*maxY); i++)
 	{
-		*(map + i) = malloc(sizeof(char *) * (*maxX));	
+	*(map + i) = malloc(sizeof(char *) * (*maxX));	
 			for(j = 0; j < (*maxX); j++)
 			{		
 				c = fgetc(f);

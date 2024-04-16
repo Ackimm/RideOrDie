@@ -57,10 +57,10 @@ void insertionEnemies(listeEn e, enemy base)
 {
 	// enemy new = malloc(sizeof(enemies)); // save
 	enemy new; // tentaive
-	if (new == NULL)
+	/*if (new == NULL)
 	{
 		exit(EXIT_FAILURE);
-	}
+	}*/
 	new = base;
 	if (e->starList == NULL || e->endList == NULL)
 	{
@@ -107,7 +107,7 @@ void suppressionEnemies(listeEn e, bool test)
                     base->prevptr->nextptr = base->nextptr;
                     base->nextptr->prevptr = base->prevptr;
                 }
-              	free(base); // Libération de la mémoire de l'ennemi supprimé
+              	free(base); // Libération de la mémoire relatif à une unité enemy
 				e->quantite--;
 				// printf("Quantité : %i\n",e->quantite); // vérification de la quantité d'ennemis dans la chaine
             }

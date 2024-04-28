@@ -18,6 +18,7 @@
 #include "enemies.h"
 #include "tirs.h"
 #include "menu.h"
+#include "gameInitAndTimers.h"
 
 
 bool UP = false;
@@ -26,7 +27,10 @@ bool RIGHT = false;
 bool DOWN = false;
 bool SHOOT = false;
 bool test;
-
+bool enPause;
+bool gameOver = false;
+int start_pause_time;
+int end_pause_time;
 
 
 void Keyboard(unsigned char key, int x, int y)  // fonction allant gérer les input
@@ -34,29 +38,54 @@ void Keyboard(unsigned char key, int x, int y)  // fonction allant gérer les in
 	switch(key)
 	{
 		case 27:
-			exit(0);
+			//exit(0); // pour quitter le jeu
+
+			if (gameOver == false){ 
+				enPause = !enPause;
+				printf("Bool enPause = %i\n", enPause);
+				fflush(stdout);
+				if (enPause == false){
+					gameTimers();
+					int end_pause_time = time(NULL);
+					if (currentMenu==pauseMenu){
+						changerMenu(nouvellePartie);
+
+					}
+				}		
+				else{
+					changerMenu(pauseMenu);
+					int start_pause_time = time(NULL);
+				}
+			}
+			break;
 
 		case'z':
-			UP = true;
+			if (enPause == false && gameOver == false) 
+				UP = true;
 			break;
 
 		case'q':
-			LEFT = true;
+			if (enPause == false && gameOver == false) 
+				LEFT = true;
 			break;
 
 		case'd':
-			RIGHT = true;
+			if (enPause == false && gameOver == false) 
+				RIGHT = true;
 			break;
 
 		case's':
-			DOWN = true;
+			if (enPause == false && gameOver == false) 
+				DOWN = true;
 			break;
 
 		case 32:
-			SHOOT = true;
+			if (enPause == false && gameOver == false) 
+				SHOOT = true;
 			break;	
 	}	
 }
+
 
 
 void game(int *maxX, int *maxY, float scrolling_value, player p, listeEn e, listetirsP  t) //save 
@@ -65,6 +94,7 @@ void game(int *maxX, int *maxY, float scrolling_value, player p, listeEn e, list
 
 {
 
+	glutMouseFunc(mouseClick);//pour tenter de pouvoir cliquer sur les boutons du gameOver menu mais ne fonctionne pas
 
 
 	drawWall(maxX, maxY, scrolling_value);			//afficher la carte
@@ -115,6 +145,8 @@ void game(int *maxX, int *maxY, float scrolling_value, player p, listeEn e, list
 		SHOOT=false;
 	}
 
-
+	if (gameOver == true)
+		changerMenu(gameOverMenu);
+		
 	glutPostRedisplay();
 }

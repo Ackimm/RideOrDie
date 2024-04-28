@@ -158,7 +158,9 @@ void updateTirs(int valeur)
 		}
 	}
 	glutPostRedisplay();
-	glutTimerFunc(tirsSpeed, updateTirs, 0);
+	
+	if (enPause == false && gameOver == false) 
+		glutTimerFunc(tirsSpeed, updateTirs, 0);
 }
 
 
@@ -169,7 +171,9 @@ void updateDeleteTirs(int valeur)
 		suppressionTirs(t, test);
 	}
 	glutPostRedisplay();
-	glutTimerFunc(updateFrequency, updateDeleteTirs, 0);
+
+	if (enPause == false && gameOver == false) 
+		glutTimerFunc(updateFrequency, updateDeleteTirs, 0);
 }
 
 

@@ -13,6 +13,7 @@ struct play
 {
 	int vie;
 	struct positionP pos;
+	int bubbles;
 };
 
 typedef struct play *player;

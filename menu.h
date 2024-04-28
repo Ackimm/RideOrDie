@@ -9,15 +9,15 @@
 #include "drawMap.h"
 
 
-enum{
-    menu_0,
-    menu_1,
-    menu_2,
-    menu_3,
-    menu_4
-};
+typedef enum {menuAccueil = 1, nouvellePartie = 2, continuerPartie = 3, highScores = 4, parametres = 5, quitter = 6, gameOverMenu = 7, pauseMenu} menu; // eventuelluellement bouger pause et gameOver dans une autre enum gameState par la suite
+extern menu currentMenu;
+
 
 void drawMenu();
+void drawScores();
+void drawParametres();
 void mouseClick(int button, int state, int x, int y);
+void changerMenu(menu nouveauMenuCourrant);
+
 
 #endif

@@ -16,92 +16,11 @@
 #include "constantes.h"
 #include "collision.h" 
 #include "menu.h" 
+#include "gameInitAndTimers.h" 
 
 
 
-int time_elapsed = 0;
-time_t start_time;
-float scrolling_value = 0.0;
-
-void startTimer(){
-	start_time = time(NULL);
-
-}
-
-/*
-// Fonction de rappel pour mettre à jour le chronomètre
-void updateTimer(int value) {
-    time_elapsed = time(NULL) - start_time ; // Afficher le temps écoulé
-    glutTimerFunc(1000, updateTimer, 0); // rappeler cette fonction récursivement
-}
-*/
-
-void displayHUD() {
-
-    glMatrixMode(GL_PROJECTION);
-	glPushMatrix();
-	glLoadIdentity();
-	gluOrtho2D(0.0, 1.0, 1.0, 0.0);
-
-	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
-	glLoadIdentity();
-
-    glColor4f(0.0, 1.0, 1.0, 0.0); 	// transparence ne marche pas pour le moment, à vérifier
-
-
-	glBegin(GL_QUADS);
-		glVertex2f(0.0, 0.0); // coin sup gauche (puis dans le sens des aiguilles d'une montre)
-		glVertex2f(1.0, 0.0); // coin sup droit
-		glVertex2f(1.0, 0.05); // coin inf droit
-		glVertex2f(0.0, 0.05); // coin inf gauche
-    glEnd();
-
-
-
-
-    glColor3f(1.0f, 1.0f, 1.0f); 
-	
-
-
- 	// Afficher le score
-    glRasterPos2f(0.2, 0.025); 
-    char score_text[50];
-    sprintf(score_text, "Score: %d", score);
-    for (int i = 0; score_text[i] != '\0'; i++) {
-        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, score_text[i]);
-    }
-    
-    // Afficher la vie
-       glRasterPos2f(0.4, 0.025);
-    char life_text[100];
-    sprintf(life_text, "Vie: %d", p->vie);
-    for (int i = 0; life_text[i] != '\0'; i++) {
-        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, life_text[i]);
-    }
-    
-    // Afficher le temps écoulé
-      glRasterPos2f(0.6, 0.025); 
-    char time_text[50];
-	time_elapsed = time(NULL) - start_time ;
-	//glutTimerFunc(1000, updateTimer, 0);
-    sprintf(time_text, "Time: %d", time_elapsed);
-    for (int i = 0; time_text[i] != '\0'; i++) {
-        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, time_text[i]);
-    }
-
-
-
-
-
-
-	glMatrixMode(GL_PROJECTION);
-	glPopMatrix();
-	glMatrixMode(GL_MODELVIEW);
-	glPopMatrix();
-
-}
-
+   
 
 void initRendering()
 {
@@ -112,84 +31,199 @@ void initRendering()
 void handleResize(int width,int height)
 {
 
-	
 	if (height == 0)
 		height = 1;
-	//float ratio =  width * 1.0 / height;
-  	  float aspectRatio = (float)width / (float)height;
-
-
-
+  	  
+	float aspectRatio = (float)width / (float)height;
 	glViewport(0, 0, width, height);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	
-	//gluPerspective(45,aspectRatio,1,100);
-	
-//	gluOrtho2D(0, mX * Square_size * aspectRatio, mY * Square_size * aspectRatio, 0);
 	gluOrtho2D(0, (mX-1) * Square_size , mY * Square_size , 0);
+
+}
+
+
+
+
+void DisplayMenu()
+{
 	
+	glClearColor(0.0f,0.0f,0.0f,0.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    drawMenu();
 
-	//gluOrtho2D(0, ratio*width, ratio*height, 0);
-		
+	glutSwapBuffers();
 }
 
 
-// POUR LE SCROLLING : on va mettre dans le dessin de la map x+scrolling_value et on va augmenter progressivement cette valeur pour obtenir le scrolling
-void updateScrolling(){
-	scrolling_value += 5.15;
-	if (scrolling_value >=92 ){
-		scrolling_value = 0.0;			
-	}
-	glutTimerFunc(updateFrequency, updateScrolling, 0);
+void DisplayNewGame()
+{
+	//glutMouseFunc(mouseClick);//pour tenter de pouvoir cliquer sur les boutons du gameOver menu mais ne fonctionne pas
 
+	glClearColor(0.0f,0.0f,0.0f,0.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  
+	game(&mX, &mY, scrolling_value, p, e, t); // save
+	displayHUD(); 
+
+	//displayGameOver(); 
+
+	glutSwapBuffers();
+	
 }
 
+void DisplayGameOverMenu()
+{
+	
+	//glutMouseFunc(mouseClick);pour tenter de pouvoir cliquer sur les boutons du gameOver menu mais ne fonctionne pas
 
+	glClearColor(0.0f,0.0f,0.0f,0.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	game(&mX, &mY, scrolling_value, p, e, t); // save
+	displayHUD(); 
+	displayGameOver(); 
+
+	glutSwapBuffers();
+	
+}
+
+void DisplayPauseMenu()
+{
+
+	//glutMouseFunc(mouseClick);pour tenter de pouvoir cliquer sur les boutons du gameOver menu mais ne fonctionne pas
+
+	glClearColor(0.0f,0.0f,0.0f,0.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	game(&mX, &mY, scrolling_value, p, e, t); // save
+	displayHUD(); 
+	displayPauseButtons(); 
+
+	glutSwapBuffers();
+	
+}
+
+void DisplayContinueGame()
+{
+	
+	glClearColor(0.0f,0.0f,0.0f,0.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  
+	game(&mX, &mY, scrolling_value, p, e, t); // save
+	displayHUD(); 
+	glutSwapBuffers();
+	
+}
+
+void DisplayParametres()
+{
+	glClearColor(0.0f,0.0f,0.0f,0.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+   	drawParametres();
+	glutSwapBuffers();
+}
+
+void DisplayScores()
+{
+	glClearColor(0.0f,0.0f,0.0f,0.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+   	drawScores();
+	glutSwapBuffers();
+}
 
 
 
 void Display()
 {
+
+	switch (currentMenu)
+	{
+	case nouvellePartie:
+	//	startTimer();
+	//	initGameParametres();
+	//	gameTimers();
+
+			// introduire une nouvelle fonction destroy all qui détruit toutes le slistes chaines + remise à zero du timer, de la vie, position etc... 
+
+
+//	glutReshapeFunc(handleResize);
+
+		DisplayNewGame();
+		
+	break;
+
+	case continuerPartie:
+		//startTimer(); // ne fonctionne pas
+		//initGameParametres();
+		//gameTimers();
+		//	glutReshapeFunc(handleResize);
+
+
+		DisplayNewGame();
+		
+	break;
+
+	case highScores:
+		glutReshapeFunc(handleResize);
+		DisplayScores();
+	break;
+
+	case parametres:
+		glutReshapeFunc(handleResize);
+		DisplayParametres();
+	break;
+
+	case menuAccueil:
+		glutReshapeFunc(handleResize);
+		DisplayMenu();
+	break;		
+
+	case gameOverMenu:
+		glutReshapeFunc(handleResize);
+		DisplayGameOverMenu();
+	break;		
+
+	case pauseMenu:
+		glutReshapeFunc(handleResize);
+		DisplayPauseMenu();
+	break;	
+
+	case quitter:
+		exit(0);		
+	break;	
+
+	default:
+		glutReshapeFunc(handleResize);
+		DisplayMenu();
+	break;
+	}
+
 	
-	glClearColor(0.0f,0.0f,0.0f,0.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-   // drawMenu();
-	game(&mX, &mY, scrolling_value, p, e, t); // save
-		// game(&mX, &mY, scrolling_value, p, e);
-
-	//game(&mX, &mY, scrolling_value, p);
-
-	displayHUD(); 
-	glutSwapBuffers();
-	//glFlush();
 }
+
 
 
 
 int main(int argc, char *argv[])
 {
 
+	
 	mX = 124;  
 	mY = 124; 
-	
-	//srand(time(NULL));
-	loadMap(&mX, &mY);
-	 p= createPlayer(&mX, &mY);
-	e = initialListEnemies();
-	t = initialListeTirs();
 
-	startTimer();
+	loadMap(&mX, &mY);
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA);
 
-//	glutInitWindowSize((mX)*Square_size, mY*Square_size); 
 	glutInitWindowSize(900,600); 
 
 	glutCreateWindow("Ride Or Die! A VvV Story");
 
 	initRendering();
+
+
+	
+
 
 	glutDisplayFunc(Display);
 
@@ -197,17 +231,19 @@ int main(int argc, char *argv[])
 
 	glutReshapeFunc(handleResize);
 
-	glutTimerFunc(updateFrequency, updateEnemies, 0);
-	glutTimerFunc(updateFrequency, updateNewEnemies, 0);
-	glutTimerFunc(updateFrequency, updateDeleteEnemies, 0);
-	// tirs:  
-	glutTimerFunc(updateFrequency, updateTirs, 0);
-	glutTimerFunc(updateFrequency, updateDeleteTirs, 0);
-	// NEW SCROLLING: 
-	glutTimerFunc(updateFrequency, updateScrolling, 0);
-	// NEW Collision : 
-	glutTimerFunc(updateFrequency, checkCollision, 0); 
-	
+
+
+	//test de replacement de ces éléments 
+
+
+		startTimer();
+		initGameParametres();
+		gameTimers();
+
+
+
+	//fin de test
+
 
 	glEnable(GL_DEPTH_TEST);
 	

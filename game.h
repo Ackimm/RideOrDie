@@ -7,15 +7,21 @@
 #include "player.h"
 #include "enemies.h"
 #include "tirs.h"
+#include "menu.h"
+
 
 
 extern bool test;
+extern bool enPause;
+extern bool gameOver;
+extern int start_pause_time;
+extern int end_pause_time;
+
+
 
 void Keyboard(unsigned char key, int x, int y);
-void game(int *maxX, int *maxY, float scrolling_value, player p, listeEn e, listetirsP  t); //save
-//void game(int *maxX, int *maxY, float scrolling_value, player p);
+void game(int *maxX, int *maxY, float scrolling_value, player p, listeEn e, listetirsP  t); 
 
-//void game(int *maxX, int *maxY, float scrolling_value, player p, listeEn e); //save
 
 
 

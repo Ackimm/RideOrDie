@@ -10,6 +10,8 @@
 #include "tirs.h"
 #include "player.h"
 #include "constantes.h"
+#include "drawMap.h"
+#include "game.h"
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -61,13 +63,17 @@ void checkCollision(int valeur) {
                 
                     p->vie--;
                     currentEnemy->vie--;
+                    if (p->vie == 0){
+                        gameOver = true;
+                        displayGameOver();
+                    }
                 }
             
 
             currentEnemy = currentEnemy->nextptr;
     }
 
-
-    glutTimerFunc(updateFrequency, checkCollision, 0);
+	if (enPause == false && gameOver == false) 
+        glutTimerFunc(updateFrequency, checkCollision, 0);
 }
 

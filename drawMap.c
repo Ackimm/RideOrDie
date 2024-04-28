@@ -9,14 +9,18 @@
 #include <stdlib.h>
 
 
-//#include "loadMap.h"
 #include "drawMap.h"
+#include "game.h"
+#include "collision.h"
+#include "gameInitAndTimers.h"
+
+
 #include "constantes.h"
 #include "velo_jaune4.c"
 #include "land_grass04.c"
 
 
-
+float scrolling_value = 0.0;
 
 /*------------------------
 
@@ -79,22 +83,7 @@ void drawWall(int *maxX, int *maxY, float scrolling_value)			// fonction qui aff
 				glMatrixMode(GL_MODELVIEW);
 				glLoadIdentity();
 				
-						
-				/*--------------test image--------------------- (n'a pas fonctionné correctement, à revoir)
-				int texture;
-
-				
-
-				glGenTextures(1,&texture);
-				glBindTexture(GL_TEXTURE_2D,texture);
-				glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE);
-				gluBuild2DMipmaps(GL_TEXTURE_2D,grass.bytes_per_pixel, grass.width, grass.height,GL_RGB,GL_UNSIGNED_BYTE,grass.pixel_data);
-				glEnable(GL_TEXTURE_2D);
-
-				
-				glDisable( GL_BLEND );// rajout pour tester la transparence
-
-			----------------------test image-------------------------*/
+					
 
 				glTranslatef(j*Square_size,i*Square_size,0.0f);
 				glBegin(GL_QUADS);
@@ -105,22 +94,7 @@ void drawWall(int *maxX, int *maxY, float scrolling_value)			// fonction qui aff
 
 				glEnd();
 
-			//	glDisable(GL_TEXTURE_2D); // add
-
-						
-				// ancien code ci-dessous	
-				/*	
-					
-					
-					glBegin(GL_QUADS);
-						glVertex3f(0.0f, 0.0f, 0.0f);
-						glVertex3f(Square_size, 0.0f, 0.0f);
-						glVertex3f(Square_size,Square_size, 0.0f);
-						glVertex3f(0.0f,Square_size, 0.0f);
-
-					glEnd();	
-
-					*/
+			
 			}
 
 			
@@ -130,40 +104,16 @@ void drawWall(int *maxX, int *maxY, float scrolling_value)			// fonction qui aff
 
 	
 
-/*
-alternative qui ne fonctionne pas mais que je trouve plus logique, plus directe
+void updateScrolling(){
+	scrolling_value += 5.15;
+	if (scrolling_value >=92 ){
+		scrolling_value = 0.0;			
+	}
+	
+	if (enPause == false && gameOver == false) 
+		glutTimerFunc(updateFrequency, updateScrolling, 0);
 
-
-void drawWall(int *maxX, int *maxY, float scrolling_value) {
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-
-    for (int i = 0; i < *maxY; i++) {
-        for (int j = 0; j < *maxX; j++) {
-            char currentCell = *(*(map + i) + j);
-
-            if (currentCell == '!') {
-                glColor3f(1.0f, 1.0f, 1.0f);
-            } else if (currentCell == 'o') {
-                glColor3f(0.6f, 1.0f, 1.0f);
-            } else if (currentCell == 'i') {
-                glColor3f(1.0f, 0.0f, 0.0f);
-            }
-
-            glPushMatrix();
-            glTranslatef(j * Square_size, i * Square_size + scrolling_value, 0.0f);
-            glBegin(GL_QUADS);
-            glVertex3f(0.0f, 0.0f, 0.0f);
-            glVertex3f(Square_size, 0.0f, 0.0f);
-            glVertex3f(Square_size, Square_size, 0.0f);
-            glVertex3f(0.0f, Square_size, 0.0f);
-            glEnd();
-            glPopMatrix();
-        }
-    }
 }
-
-*/
 
 
 
@@ -310,4 +260,273 @@ void drawAllTirs(listetirsP t)
 			}
 		}
 	}
+}
+
+
+void displayHUD() {
+
+    glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+	glLoadIdentity();
+	gluOrtho2D(0.0, 1.0, 1.0, 0.0);
+
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glLoadIdentity();
+
+    glColor4f(0.0, 1.0, 1.0, 0.0); 	// transparence ne marche pas pour le moment, à vérifier
+
+
+	glBegin(GL_QUADS);
+		glVertex2f(0.0, 0.0); // coin sup gauche (puis dans le sens des aiguilles d'une montre)
+		glVertex2f(1.0, 0.0); // coin sup droit
+		glVertex2f(1.0, 0.05); // coin inf droit
+		glVertex2f(0.0, 0.05); // coin inf gauche
+    glEnd();
+
+
+
+
+    glColor3f(1.0f, 1.0f, 1.0f); 
+	
+
+
+    
+    // Afficher la vie
+       glRasterPos2f(0.1, 0.025);
+    char life_text[100];
+    sprintf(life_text, "Vie: %d", p->vie);
+    for (int i = 0; life_text[i] != '\0'; i++) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, life_text[i]);
+    }
+    
+	   // Affiche le nombre de MagicBubbles
+       glRasterPos2f(0.3, 0.025);
+    char bubbles_text[100];
+    sprintf(bubbles_text, "Magic Bubbles: %d", p->bubbles);
+    for (int i = 0; bubbles_text[i] != '\0'; i++) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, bubbles_text[i]);
+    }
+
+
+
+	   // Afficher le statut de pause
+	if (enPause == true){
+		glRasterPos2f(0.5, 0.025);
+		char pause_text[100];
+		sprintf(pause_text, "Pause !");
+		for (int i = 0; pause_text[i] != '\0'; i++) {
+			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, pause_text[i]);
+		}
+	}
+
+
+ 
+//TIMER fonctionnelle mais besoin de rajouter le pause timer --> pour plus tard, non prioritaire
+
+    // Afficher le temps écoulé
+      glRasterPos2f(0.7, 0.025); 
+    char time_text[50];
+
+
+	int last_paused_time = end_pause_time - start_pause_time;
+	int total_paused_time =+ last_paused_time;
+
+
+
+
+	if (enPause != true && gameOver != true){
+		time_elapsed = time(NULL) - start_time - total_paused_time;
+
+		sprintf(time_text, "Time: %d", time_elapsed);
+		for (int i = 0; time_text[i] != '\0'; i++) {
+			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, time_text[i]);
+		}
+	}
+	else{
+		clock_t time_at_pause = time(NULL);
+		time_elapsed = time_at_pause - start_time - total_paused_time;
+		sprintf(time_text, "Time: %d", time_elapsed);
+		for (int i = 0; time_text[i] != '\0'; i++) {
+			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, time_text[i]);
+		}
+	}	
+    
+
+	
+
+
+ 	// Afficher le score
+    glRasterPos2f(0.9, 0.025); 
+    char score_text[50];
+    sprintf(score_text, "Score: %d", score);
+    for (int i = 0; score_text[i] != '\0'; i++) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, score_text[i]);
+    }
+
+	
+
+
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+	glMatrixMode(GL_MODELVIEW);
+	glPopMatrix();
+
+}
+
+
+
+
+void displayGameOver() {
+
+
+    glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+	glLoadIdentity();
+	gluOrtho2D(0.0, 1.0, 1.0, 0.0);
+
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glLoadIdentity();
+
+    glColor4f(0.5, 0.5, 0.5, 0.0); 	// transparence ne marche pas pour le moment, à vérifier
+
+	glBegin(GL_QUADS);
+		glVertex2f(0.35, 0.15); // coin sup gauche (puis dans le sens des aiguilles d'une montre)
+		glVertex2f(0.65, 0.15); // coin sup droit
+		glVertex2f(0.65, 0.25); // coin inf droit
+		glVertex2f(0.35, 0.25); // coin inf gauche
+    glEnd();
+
+
+	glBegin(GL_QUADS);
+		glVertex2f(0.35, 0.65); // coin sup gauche (puis dans le sens des aiguilles d'une montre)
+		glVertex2f(0.65, 0.65); // coin sup droit
+		glVertex2f(0.65, 0.55); // coin inf droit
+		glVertex2f(0.35, 0.55); // coin inf gauche
+    glEnd();
+
+glBegin(GL_QUADS);
+		glVertex2f(0.35, 0.45); // coin sup gauche (puis dans le sens des aiguilles d'une montre)
+		glVertex2f(0.65, 0.45); // coin sup droit
+		glVertex2f(0.65, 0.35); // coin inf droit
+		glVertex2f(0.35, 0.35); // coin inf gauche
+    glEnd();
+
+
+   glColor3f(1.0f, 0.0f, 0.0f); 
+
+
+   	// Game OVER
+    glRasterPos2f(0.45, 0.20); 
+    char game_over_text[50];
+    sprintf(game_over_text, "GAME OVER !");
+    for (int i = 0; game_over_text[i] != '\0'; i++) { 
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, game_over_text[i]);
+    }
+
+	glColor3f(1.0f, 1.0f, 1.0f); 
+	// Reprendre la partie
+    glRasterPos2f(0.45, 0.40); 
+    char nouvelle_partie_text[50];
+    sprintf(nouvelle_partie_text, "Lancer une nouvelle partie");
+    for (int i = 0; nouvelle_partie_text[i] != '\0'; i++) { 
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, nouvelle_partie_text[i]);
+    }
+
+
+	// Retourner au menu principal
+    glRasterPos2f(0.45, 0.60); 
+    char revenir_menu_texte[50];
+    sprintf(revenir_menu_texte, "Revenir au menu principal");
+    for (int i = 0; revenir_menu_texte[i] != '\0'; i++) { 
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, revenir_menu_texte[i]);
+    }
+
+
+ 
+
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+	glMatrixMode(GL_MODELVIEW);
+	glPopMatrix();
+
+}
+
+
+
+
+void displayPauseButtons() {
+
+
+    glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+	glLoadIdentity();
+	gluOrtho2D(0.0, 1.0, 1.0, 0.0);
+
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glLoadIdentity();
+
+    glColor4f(0.5, 0.5, 0.5, 0.0); 	// transparence ne marche pas pour le moment, à vérifier
+
+
+	glBegin(GL_QUADS);
+		glVertex2f(0.35, 0.15); // coin sup gauche (puis dans le sens des aiguilles d'une montre)
+		glVertex2f(0.65, 0.15); // coin sup droit
+		glVertex2f(0.65, 0.25); // coin inf droit
+		glVertex2f(0.35, 0.25); // coin inf gauche
+    glEnd();
+
+	glBegin(GL_QUADS);
+		glVertex2f(0.35, 0.65); // coin sup gauche (puis dans le sens des aiguilles d'une montre)
+		glVertex2f(0.65, 0.65); // coin sup droit
+		glVertex2f(0.65, 0.55); // coin inf droit
+		glVertex2f(0.35, 0.55); // coin inf gauche
+    glEnd();
+
+glBegin(GL_QUADS);
+		glVertex2f(0.35, 0.45); // coin sup gauche (puis dans le sens des aiguilles d'une montre)
+		glVertex2f(0.65, 0.45); // coin sup droit
+		glVertex2f(0.65, 0.35); // coin inf droit
+		glVertex2f(0.35, 0.35); // coin inf gauche
+    glEnd();
+
+
+   glColor3f(1.0f, 1.0f, 1.0f); 
+
+
+     	// Game OVER
+    glRasterPos2f(0.45, 0.20); 
+    char game_over_text[50];
+    sprintf(game_over_text, "Pause !");
+    for (int i = 0; game_over_text[i] != '\0'; i++) { 
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, game_over_text[i]);
+    }
+	
+	// Reprendre la partie
+    glRasterPos2f(0.45, 0.40); 
+    char reprendre_text[50];
+    sprintf(reprendre_text, "Reprendre la partie (p)");
+    for (int i = 0; reprendre_text[i] != '\0'; i++) { 
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, reprendre_text[i]);
+    }
+
+
+	// Retourner au menu principal
+    glRasterPos2f(0.45, 0.60); 
+    char revenir_menu_texte[50];
+    sprintf(revenir_menu_texte, "Revenir au menu principal");
+    for (int i = 0; revenir_menu_texte[i] != '\0'; i++) { 
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, revenir_menu_texte[i]);
+    }
+
+
+ 
+
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+	glMatrixMode(GL_MODELVIEW);
+	glPopMatrix();
+
 }

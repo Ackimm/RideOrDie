@@ -8,7 +8,9 @@
         "loadmap.h": "c",
         "tirs.h": "c",
         "stdbool.h": "c",
-        "time.h": "c"
+        "time.h": "c",
+        "collision.h": "c",
+        "gameinitandtimers.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

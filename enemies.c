@@ -141,7 +141,10 @@ void updateEnemies(int valeur)
 		}
 	}
 	glutPostRedisplay();
-	glutTimerFunc(enemySpeed, updateEnemies, 0);
+
+	if (enPause == false && gameOver == false) 
+		glutTimerFunc(enemySpeed, updateEnemies, 0);
+	
 }
 
 void updateNewEnemies(int valeur)
@@ -149,7 +152,9 @@ void updateNewEnemies(int valeur)
 	enemy new = createEnemy();
 	insertionEnemies(e, new);
 	glutPostRedisplay();
-	glutTimerFunc(updateNewEnemy, updateNewEnemies, 0);
+
+	if (enPause == false && gameOver == false) 
+		glutTimerFunc(updateNewEnemy, updateNewEnemies, 0);
 }
 
 void updateDeleteEnemies(int valeur)
@@ -159,5 +164,7 @@ void updateDeleteEnemies(int valeur)
 		suppressionEnemies(e, test);
 	}
 	glutPostRedisplay();
-	glutTimerFunc(updateFrequency, updateDeleteEnemies, 0);
+
+	if (enPause == false && gameOver == false) 
+		glutTimerFunc(updateFrequency, updateDeleteEnemies, 0);
 }

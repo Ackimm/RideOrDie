@@ -56,3 +56,35 @@ void gameTimers(){
 		glutTimerFunc(updateFrequency, checkCollision, 0); 
 	
 }
+
+
+
+
+
+void reinitializeGame(){
+	
+	// réinit du joueur
+	p->vie = 1;
+	p->pos.x = 62;
+	p->pos.y = 62 ;
+	p->bubbles = 5;
+
+	
+	// réinit du score
+	score = 0;
+
+	// reinit du timer
+	time_elapsed = 0; 
+
+
+
+	// réinit des tirs et des ennemis
+	reInit = true;
+
+
+
+}
+
+
+
+

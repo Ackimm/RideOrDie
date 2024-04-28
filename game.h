@@ -14,6 +14,10 @@
 extern bool test;
 extern bool enPause;
 extern bool gameOver;
+extern bool reInit;
+extern bool hasReInit;
+
+
 extern int start_pause_time;
 extern int end_pause_time;
 

@@ -10,6 +10,8 @@
 #include "enemies.h"
 #include "game.h"
 #include "constantes.h"
+#include "gameInitAndTimers.h"
+
 
 
 #include <stdlib.h>
@@ -18,6 +20,7 @@
 #include <time.h>
 enemy q;
 listeEn e;
+bool FinishedInitEnnemis;
 
 
 
@@ -124,7 +127,7 @@ void updateEnemies(int valeur)
 	if (e->starList != NULL)
 	{
 		q->pos.y += 1;
-		if (q->pos.y > 120 || q->vie == 0) 
+		if (q->pos.y > 120 || q->vie == 0 || reInit == true) 
 		{
 			q->pos.y = 2;
 			q->active = false;
@@ -133,7 +136,7 @@ void updateEnemies(int valeur)
 		{
 			q = q->nextptr;
 			q->pos.y +=1;
-			if (q->pos.y > 120 || q->vie == 0) 
+			if (q->pos.y > 120 || q->vie == 0 || reInit == true) 
 			{
 				q->pos.y = 2;
 				q->active = false;
@@ -145,15 +148,24 @@ void updateEnemies(int valeur)
 	if (enPause == false && gameOver == false) 
 		glutTimerFunc(enemySpeed, updateEnemies, 0);
 	
+	if (reInit==true)
+		FinishedInitEnnemis = true;
+
+		
+	if (FinishedInitTirs==true && FinishedInitEnnemis==true)
+		reInit=false;
+
+
 }
 
 void updateNewEnemies(int valeur)
 {
-	enemy new = createEnemy();
-	insertionEnemies(e, new);
-	glutPostRedisplay();
-
-	if (enPause == false && gameOver == false) 
+	if (reInit != true){
+		enemy new = createEnemy();
+		insertionEnemies(e, new);
+		glutPostRedisplay();
+	}
+	if (enPause == false && gameOver == false  && reInit == false) 
 		glutTimerFunc(updateNewEnemy, updateNewEnemies, 0);
 }
 

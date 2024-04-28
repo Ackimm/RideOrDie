@@ -14,6 +14,9 @@
 #include "loadMap.h"
 #include "drawMap.h"
 #include "gameInitAndTimers.h"
+#include "bestScores.h"
+#include "collision.h"
+
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -27,7 +30,11 @@ menu currentMenu = menuAccueil;
 
 void drawMenu() {
 
+    printf("impression du menu\n");
+
     glutMouseFunc(mouseClick);
+
+
 
     glMatrixMode(GL_PROJECTION);
 	glPushMatrix();
@@ -36,6 +43,11 @@ void drawMenu() {
 
 	glMatrixMode(GL_MODELVIEW);
 	
+
+//-----------------
+	glPushMatrix();
+	glLoadIdentity();
+
 
 
     glColor4f(0.0, 1.0, 1.0, 0.0); 	// transparence ne marche pas pour le moment, à vérifier
@@ -150,6 +162,9 @@ void drawMenu() {
 	glMatrixMode(GL_MODELVIEW);
 	glPopMatrix();
 
+// TEST ---------------
+  //  glutPostRedisplay();
+
 }
 
 
@@ -165,6 +180,10 @@ void drawScores() {
 	gluOrtho2D(0.0, 1.0, 1.0, 0.0);
 
 	glMatrixMode(GL_MODELVIEW);
+
+//-----------------
+	glPushMatrix();
+	glLoadIdentity();
 	
 
 
@@ -181,6 +200,14 @@ void drawScores() {
 
  		    glColor4f(0.0, 0.0, 5.0, 5.0);
 
+      glBegin(GL_QUADS);
+		glVertex2f(0.5*longueur_bouton, hauteur_bouton); // coin sup gauche (puis dans le sens des aiguilles d'une montre)
+		glVertex2f((2.5*longueur_bouton), hauteur_bouton); // coin sup droit
+		glVertex2f((2.5*longueur_bouton), (8*hauteur_bouton)); // coin inf droit
+		glVertex2f(0.5*longueur_bouton, (8*hauteur_bouton)); // coin inf gauche
+    glEnd();
+
+
     glBegin(GL_QUADS);
 		glVertex2f(0.5*longueur_bouton, 9*hauteur_bouton); // coin sup gauche (puis dans le sens des aiguilles d'une montre)
 		glVertex2f((2.5*longueur_bouton), 9*hauteur_bouton); // coin sup droit
@@ -190,7 +217,45 @@ void drawScores() {
     
         glColor3f(1.0f, 1.0f, 1.0f); // Couleur blanche pour le texte
 
-      glRasterPos2f(0.47, 0.86363636); // Position du texte pour le temps écoulé
+
+     glRasterPos2f(0.47, 0.2); 
+    char best_score_1_label[50];
+    sprintf(best_score_1_label, "%d", bestScores[4]);
+    for (int i = 0; best_score_1_label[i] != '\0'; i++) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, best_score_1_label[i]);
+    }
+
+       glRasterPos2f(0.47, 0.3); 
+    char best_score_2_label[50];
+    sprintf(best_score_2_label, "%d", bestScores[3]);
+    for (int i = 0; best_score_2_label[i] != '\0'; i++) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, best_score_2_label[i]);
+    }
+
+       glRasterPos2f(0.47, 0.4); 
+    char best_score_3_label[50];
+    sprintf(best_score_3_label, "%d", bestScores[2]);
+    for (int i = 0; best_score_3_label[i] != '\0'; i++) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, best_score_3_label[i]);
+    }
+
+       glRasterPos2f(0.47, 0.5); 
+    char best_score_4_label[50];
+    sprintf(best_score_4_label, "%d", bestScores[1]);
+    for (int i = 0; best_score_4_label[i] != '\0'; i++) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, best_score_4_label[i]);
+    }
+
+       glRasterPos2f(0.47, 0.6); 
+    char best_score_5_label[50];
+    sprintf(best_score_5_label, "%d", bestScores[0]);
+    for (int i = 0; best_score_5_label[i] != '\0'; i++) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, best_score_5_label[i]);
+    }
+
+
+
+      glRasterPos2f(0.47, 0.86363636); 
     char label_retour_menu[50];
     sprintf(label_retour_menu, "Revenir au menu principal");
     for (int i = 0; label_retour_menu[i] != '\0'; i++) {
@@ -218,6 +283,10 @@ void drawParametres() {
 	gluOrtho2D(0.0, 1.0, 1.0, 0.0);
 
 	glMatrixMode(GL_MODELVIEW);
+
+//-----------------
+	glPushMatrix();
+	glLoadIdentity();
 	
 
 
@@ -373,7 +442,6 @@ void mouseClick(int button, int state, int x, int y) {
             // Vérification du clic sur les boutons
             if (xN >= 0.5*longueur_bouton && xN <= 2*5*longueur_bouton) {
                 if (yN >= 9*hauteur_bouton && yN <= 10*hauteur_bouton) {
-                    // Clic sur le bouton "Jouer"
                     printf("Retour au menu!\n");
 
                     changerMenu(menuAccueil); // ici il faudrait faire le lien avec le main où on déclare l'extern
@@ -459,11 +527,11 @@ void mouseClick(int button, int state, int x, int y) {
                
 
                 if (yN >= 0.55 && yN <= 0.65) {
-                    printf("Retourner au menu principal\n");
+                    printf("Terminer la partie et retourner au menu principal\n");
                     fflush(stdout);
                     // ajouter la fonction de sauvegarde des scores
                     // ajotuer la fonction de réinitialisation
-
+            		updateBestScores(score);
                     changerMenu(menuAccueil); // ici il faudrait faire le lien avec le main où on déclare l'extern
                  
                     
@@ -487,9 +555,18 @@ void mouseClick(int button, int state, int x, int y) {
                
                
                 if (yN >= 0.35 && yN <= 0.45) { 
+                    
+                    hasReInit = false;
+                    gameOver = false;
+                    reinitializeGame();
 
-                    printf("Relancer une nouvelle partie de la pause\n");
-                    fflush(stdout);
+                    changerMenu(nouvellePartie);
+                   // reinitializeGame();
+                    hasReInit = true;
+
+
+
+                   
                 }
                
 

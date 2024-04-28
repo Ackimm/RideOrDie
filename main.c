@@ -50,7 +50,9 @@ void DisplayMenu()
 	
 	glClearColor(0.0f,0.0f,0.0f,0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    drawMenu();
+    	
+
+	drawMenu();
 
 	glutSwapBuffers();
 }
@@ -64,6 +66,7 @@ void DisplayNewGame()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   
 	game(&mX, &mY, scrolling_value, p, e, t); // save
+	
 	displayHUD(); 
 
 	//displayGameOver(); 
@@ -163,27 +166,27 @@ void Display()
 	break;
 
 	case highScores:
-		glutReshapeFunc(handleResize);
+	//	glutReshapeFunc(handleResize);
 		DisplayScores();
 	break;
 
 	case parametres:
-		glutReshapeFunc(handleResize);
+	//	glutReshapeFunc(handleResize);
 		DisplayParametres();
 	break;
 
 	case menuAccueil:
-		glutReshapeFunc(handleResize);
+	//	glutReshapeFunc(handleResize);
 		DisplayMenu();
 	break;		
 
 	case gameOverMenu:
-		glutReshapeFunc(handleResize);
+	//	glutReshapeFunc(handleResize);
 		DisplayGameOverMenu();
 	break;		
 
 	case pauseMenu:
-		glutReshapeFunc(handleResize);
+	//	glutReshapeFunc(handleResize);
 		DisplayPauseMenu();
 	break;	
 
@@ -192,7 +195,7 @@ void Display()
 	break;	
 
 	default:
-		glutReshapeFunc(handleResize);
+	//	glutReshapeFunc(handleResize);
 		DisplayMenu();
 	break;
 	}

@@ -20,6 +20,8 @@
 #define Shoot_size 10.0
 #define alternate_player_size 10
 
+#define nbBestScores 5
+
 
 
 #endif

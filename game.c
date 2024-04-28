@@ -19,6 +19,9 @@
 #include "tirs.h"
 #include "menu.h"
 #include "gameInitAndTimers.h"
+#include "collision.h"
+#include "bestScores.h"
+
 
 
 bool UP = false;
@@ -29,6 +32,9 @@ bool SHOOT = false;
 bool test;
 bool enPause;
 bool gameOver = false;
+bool reInit = false;
+bool hasReInit = false;
+
 int start_pause_time;
 int end_pause_time;
 
@@ -37,10 +43,10 @@ void Keyboard(unsigned char key, int x, int y)  // fonction allant gérer les in
 {
 	switch(key)
 	{
-		case 27:
-			//exit(0); // pour quitter le jeu
+		case 27: // ESC
+			
 
-			if (gameOver == false){ 
+			if (gameOver == false && currentMenu==nouvellePartie){ 
 				enPause = !enPause;
 				printf("Bool enPause = %i\n", enPause);
 				fflush(stdout);
@@ -78,6 +84,12 @@ void Keyboard(unsigned char key, int x, int y)  // fonction allant gérer les in
 			if (enPause == false && gameOver == false) 
 				DOWN = true;
 			break;
+
+		case'r':
+			if (enPause == false && gameOver == false) 
+				reinitializeGame();
+			break;
+
 
 		case 32:
 			if (enPause == false && gameOver == false) 
@@ -147,6 +159,12 @@ void game(int *maxX, int *maxY, float scrolling_value, player p, listeEn e, list
 
 	if (gameOver == true)
 		changerMenu(gameOverMenu);
+
+	if (hasReInit == false){
+		reinitializeGame();
+		hasReInit = true;
+	}
+
 		
 	glutPostRedisplay();
 }

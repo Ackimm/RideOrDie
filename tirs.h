@@ -44,6 +44,8 @@ void tirer(player p, listetirsP t);
 extern tirsP r; // pour que d'autres fichiers puissent l'utiliser
 extern listetirsP t; // pour que d'autres fichiers puissent l'utiliser
 
+extern bool FinishedInitTirs;
+
 
 void updateTirs(int valeur);
 void updateDeleteTirs(int valeur);

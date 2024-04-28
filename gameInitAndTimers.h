@@ -15,7 +15,7 @@ extern int time_elapsed;
 void initGameParametres();
 void gameTimers();
 void startTimer();
-
+void reinitializeGame();
 
 
 #endif

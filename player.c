@@ -34,12 +34,13 @@ player createPlayer(int *maxX, int *maxY)
 	}
 player p = malloc(sizeof(player));
 
-	p->vie = 1;
+	p->vie = 1000;
 	p->pos.x = x;
 	p->pos.y = y;
 	p->bubbles = 5;
 	return p;
 }
+
 
 void moveLeft(player p)		
 {

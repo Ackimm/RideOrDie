@@ -10,6 +10,8 @@
 #include "game.h"
 #include "player.h"
 #include "constantes.h"
+#include "gameInitAndTimers.h"
+
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -19,6 +21,9 @@
 
 tirsP r;
 listetirsP t;
+
+bool FinishedInitTirs;
+
 
 listetirsP  initialListeTirs()
 {
@@ -114,7 +119,6 @@ void suppressionTirs(listetirsP t, bool test)
 				free(delete);
 				
 				t->quantite--;
-				// printf("Quantité : %i\n",t->quantite); // vérification de la quantité de tirs dans la chaine
 			}
 			else
 			{
@@ -141,26 +145,34 @@ void updateTirs(int valeur)
 	if (t->starList != NULL)
 	{
 		r->pos.y -= 1;
-		if (r->pos.y < 2) // passé à 30 pour tester
+		if (r->pos.y < 2 || reInit == true) 
 		{
 			r->pos.y = 0;
 			r->active = false;
 		}
+		
 		while (r->nextptr != NULL)
 		{
 			r = r->nextptr;
 			r->pos.y -= 1;
-			if (r->pos.y < 2) 
+			if (r->pos.y < 2 || reInit == true) 
 			{
 				r->pos.y = 0;
 				r->active = false;
 			}
 		}
 	}
+	
 	glutPostRedisplay();
 	
 	if (enPause == false && gameOver == false) 
 		glutTimerFunc(tirsSpeed, updateTirs, 0);
+	
+	if (reInit==true)
+		FinishedInitTirs = true;
+	if (FinishedInitTirs==true && FinishedInitEnnemis==true)
+		reInit=false;
+
 }
 
 

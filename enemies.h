@@ -46,7 +46,7 @@ void suppressionEnemies(listeEn e, bool test);
 extern enemy q; // pour que d'autres fichiers puissent l'utiliser
 extern listeEn e; // pour que d'autres fichiers puissent l'utiliser
 
-
+extern bool FinishedInitEnnemis;
 
 void updateEnemies(int valeur);
 void updateNewEnemies(int valeur);

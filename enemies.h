@@ -6,7 +6,14 @@
 #include <stdbool.h>
 
 
-
+typedef enum {
+    black = 1,
+    blue = 2,
+    green = 3,
+    red = 4,
+	yellow = 5,
+    
+} couleurV;
 
 struct positionE
 {
@@ -20,6 +27,9 @@ struct enemies
 	struct positionE pos;
 	bool active;
 	int speed; // inutile pour le moment
+	int hauteur;
+	int largeur;
+	couleurV couleur;
 	struct enemies *prevptr;
 	struct enemies *nextptr;
 };

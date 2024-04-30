@@ -13,6 +13,8 @@ struct play
 {
 	int vie;
 	struct positionP pos;
+	int largeur;
+	int hauteur;
 	int bubbles;
 };
 

@@ -6,6 +6,13 @@
 #endif
 
 
+#include <stdlib.h>
+#include <stdio.h>
+#include <stdbool.h>
+#include <time.h>
+#include <math.h>
+
+
 #include "loadMap.h"
 #include "enemies.h"
 #include "game.h"
@@ -14,10 +21,7 @@
 
 
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include <time.h>
+
 enemy q;
 listeEn e;
 bool FinishedInitEnnemis;
@@ -50,6 +54,11 @@ enemy createEnemy()
 	new->pos.x = x;
 	new->pos.y = 5;
 	new->speed = 100;
+	new->largeur = 6;
+	new->hauteur = 18;
+
+	new->couleur = (1+rand()%5);
+
 	new->nextptr = NULL;
 	new->prevptr = NULL;
 	new->active = true;
@@ -127,6 +136,17 @@ void updateEnemies(int valeur)
 	if (e->starList != NULL)
 	{
 		q->pos.y += 1;
+
+/*-----------Tentative de ciblage du joueur mais problème ---------*/
+
+//		if (p->pos.x > q->pos.x)
+//			q->pos.x += 0.0000001;
+//		else if (p->pos.x < q->pos.x) 	
+//			q->pos.x -= 0.0000001;
+
+/*-----------Tentative de ciblage du joueur mais problème ---------*/
+
+
 		if (q->pos.y > 120 || q->vie == 0 || reInit == true) 
 		{
 			q->pos.y = 2;
@@ -136,6 +156,17 @@ void updateEnemies(int valeur)
 		{
 			q = q->nextptr;
 			q->pos.y +=1;
+
+/*-----------Tentative de ciblage du joueur mais problème ---------*/
+
+//			if (p->pos.x > q->pos.x)
+//				q->pos.x += 0.0000001;
+//			else if (p->pos.x < q->pos.x) 	
+//				q->pos.x -= 0.0000001;
+
+/*-----------Tentative de ciblage du joueur mais problème ---------*/
+
+
 			if (q->pos.y > 120 || q->vie == 0 || reInit == true) 
 			{
 				q->pos.y = 2;
@@ -160,7 +191,7 @@ void updateEnemies(int valeur)
 
 void updateNewEnemies(int valeur)
 {
-	if (reInit != true){
+	if (reInit == false && enPause == false ){
 		enemy new = createEnemy();
 		insertionEnemies(e, new);
 		glutPostRedisplay();

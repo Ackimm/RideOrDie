@@ -46,7 +46,7 @@ void Keyboard(unsigned char key, int x, int y)  // fonction allant gérer les in
 		case 27: // ESC
 			
 
-			if (gameOver == false && currentMenu==nouvellePartie){ 
+			if (gameOver == false && (currentMenu==nouvellePartie || currentMenu == pauseMenu)){ 
 				enPause = !enPause;
 				printf("Bool enPause = %i\n", enPause);
 				fflush(stdout);

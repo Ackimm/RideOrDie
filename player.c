@@ -19,24 +19,29 @@ player createPlayer(int *maxX, int *maxY)
 	
 //	player p;
 
-	int x = 0, y = 0;
-
-	for (int i = 0; i < *maxX; ++i)
-	{
-		for (int j = 0; j < *maxY; ++j)
-		{
-			if(*(*(map + i) + j) == 'X')
-			{
-				x = i;
-				y = j;
-			}
-		}
-	}
+//	int x = 0, y = 0;
+//
+//	for (int i = 0; i < *maxX; ++i)
+//	{
+//		for (int j = 0; j < *maxY; ++j)
+//		{
+//			if(*(*(map + i) + j) == 'X')
+//			{
+//				x = i;
+//				y = j;
+//			}
+//		}
+//	}
 player p = malloc(sizeof(player));
 
 	p->vie = 1000;
-	p->pos.x = x;
-	p->pos.y = y;
+//	p->pos.x = x;
+//	p->pos.y = y;
+	p->pos.x = 20;
+	p->pos.y = 20;
+
+	p->largeur = 4;
+	p->hauteur = 12;
 	p->bubbles = 5;
 	return p;
 }
@@ -49,7 +54,7 @@ void moveLeft(player p)
 	x = p->pos.x-1;
 	y = p->pos.y;
      
-	if (*(*(map + y) + x)!='i') // toujours la même chose ici, c'est (*(*(map + y) + x) renvoie au pointeur de l'élément map[y][x] et non map[x]][y]
+	if (*(*(map + y) + x)!='g') // toujours la même chose ici, c'est (*(*(map + y) + x) renvoie au pointeur de l'élément map[y][x] et non map[x]][y]
 	{
 		p->pos.x = x;
 	}
@@ -63,7 +68,7 @@ void moveRight(player p)
 	x = p->pos.x+1;
 	y = p->pos.y;
 
-   	if (*(*(map + y) + x)!='i' ) // toujours la même chose ici, c'est (*(*(map + y) + x) renvoie au pointeur de l'élément map[y][x] et non map[x]][y]
+   	if (*(*(map + y) + x)!='d' ) // toujours la même chose ici, c'est (*(*(map + y) + x) renvoie au pointeur de l'élément map[y][x] et non map[x]][y]
 	{
 		p->pos.x = x;
 	}
@@ -80,7 +85,7 @@ x = p->pos.x;
 y = p->pos.y-1;
 
 
-if (*(*(map + y) + x)!='i') // toujours la même chose ici, c'est (*(*(map + y) + x) renvoie au pointeur de l'élément map[y][x] et non map[x]][y]
+if (*(*(map + y) + x)!='!') // toujours la même chose ici, c'est (*(*(map + y) + x) renvoie au pointeur de l'élément map[y][x] et non map[x]][y]
 {
 	p->pos.y = y;
 }     
@@ -95,7 +100,7 @@ void moveDown(player p)
    y = p->pos.y+1;
   
    
-if (*(*(map + y) + x)!='i') // toujours la même chose ici, c'est (*(*(map + y) + x) renvoie au pointeur de l'élément map[y][x] et non map[x]][y]
+if (*(*(map + y) + x)!='!') // toujours la même chose ici, c'est (*(*(map + y) + x) renvoie au pointeur de l'élément map[y][x] et non map[x]][y]
 {
 	p->pos.y = y;
 }

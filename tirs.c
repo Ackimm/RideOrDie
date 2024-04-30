@@ -50,6 +50,8 @@ tirsP createTirs(player p)
 	}
 	new->pos.x = x;
 	new->pos.y = y;
+	new->largeur = 2; 
+	new->hauteur = 6;
 	new->nextptr = NULL;
 	new->prevptr = NULL;
 	new->active = true;

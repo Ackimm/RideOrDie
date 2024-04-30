@@ -6,13 +6,19 @@
 #define FPS 60
 #define updateFrequency (sec_in_millisec/FPS)
 
+// #define  updateFrequencyScrolling updateFrequency
+#define  updateFrequencyScrolling 10
+
+
 /*#define updateNewEnemy 1000
 #define enemySpeed 30
 #define tirsSpeed 10
 */
 
-#define updateNewEnemy 1000
-#define enemySpeed updateFrequency
+#define updateNewEnemy 800
+//#define enemySpeed updateFrequency
+#define enemySpeed 8
+
 #define tirsSpeed updateFrequency
 
 

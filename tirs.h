@@ -19,6 +19,8 @@ struct tirs
 {
 	struct positionT pos;
 	bool active;
+	int largeur;
+	int hauteur;
 	struct tirs *prevptr;
 	struct tirs *nextptr;
 };

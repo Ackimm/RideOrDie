@@ -17,7 +17,10 @@
 
 #include "constantes.h"
 #include "velo_jaune4.c"
-#include "land_grass04.c"
+
+
+#include "textures.h"
+
 
 
 float scrolling_value = 0.0;
@@ -30,8 +33,7 @@ en sachant que la position (i, j) est la position (y, x) et non (x, y)
 ------------------------*/
 
 
-void drawWall(int *maxX, int *maxY, float scrolling_value)			// fonction qui affiche les murs et les plateformes
-{	
+void drawWall(int *maxX, int *maxY, float scrolling_value){			// fonction qui affiche les murs et les plateformes	
 
 	for (int i = 0; i < (*maxY); i++)
 	{
@@ -55,7 +57,7 @@ void drawWall(int *maxX, int *maxY, float scrolling_value)			// fonction qui aff
 
 				glEnd();	
 			}
-			
+			/*
 			if(*(*(map + i) + j)  == 'o')
 			{
 				glColor3f(0.6f,1.0f,1.0f);
@@ -76,33 +78,150 @@ void drawWall(int *maxX, int *maxY, float scrolling_value)			// fonction qui aff
 
 				
 			}
-		
-			if(*(*(map + i) + j) == 'i')
-			{
-				glColor3f(1.0f,0.0f,0.0f);
-				glMatrixMode(GL_MODELVIEW);
-				glLoadIdentity();
+		*/
+
+
+
+
+			if(*(*(map + i) + j) == 'b'){
+
+			glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+			glTranslatef(j*Square_size,i*Square_size+scrolling_value,0.0f);
+			
+			glBindTexture(GL_TEXTURE_2D, texture_route_bande_centrale); 
 				
-					
+			
+			glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE); // ajout
+			glDisable( GL_BLEND );// rajout pour tester la transparence
+			glEnable(GL_TEXTURE_2D); // aj
 
-				glTranslatef(j*Square_size,i*Square_size,0.0f);
-				glBegin(GL_QUADS);
-					glVertex3f(0.0f, 0.0f, 0.0f);
-					glVertex3f(Square_size, 0.0f, 0.0f);
-					glVertex3f(Square_size,Square_size, 0.0f);
-					glVertex3f(0.0f,Square_size, 0.0f);
+			glBegin(GL_QUADS);
+				glTexCoord2f(0.0f, 0.0f); glVertex2f(0.0f, 0.0f);
+				glTexCoord2f(1.0f, 0.0f); glVertex2f(Square_size, 0.0f);
+				glTexCoord2f(1.0f, 1.0f); glVertex2f(Square_size, Square_size);
+				glTexCoord2f(0.0f, 1.0f); glVertex2f(0.0f, Square_size);
+			glEnd();
 
-				glEnd();
 
+			glDisable(GL_TEXTURE_2D); // add
+			}
+
+
+
+			if(*(*(map + i) + j) == 'r'){
+
+			glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+			glTranslatef(j*Square_size,i*Square_size+scrolling_value,0.0f);
+			
+			glBindTexture(GL_TEXTURE_2D, texture_route_dirt); 
+				
+			
+			glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE); // ajout
+			glDisable( GL_BLEND );// rajout pour tester la transparence
+			glEnable(GL_TEXTURE_2D); // aj
+
+			glBegin(GL_QUADS);
+				glTexCoord2f(0.0f, 0.0f); glVertex2f(0.0f, 0.0f);
+				glTexCoord2f(1.0f, 0.0f); glVertex2f(Square_size, 0.0f);
+				glTexCoord2f(1.0f, 1.0f); glVertex2f(Square_size, Square_size);
+				glTexCoord2f(0.0f, 1.0f); glVertex2f(0.0f, Square_size);
+			glEnd();
+
+
+			glDisable(GL_TEXTURE_2D); // add
+			}
+
+
+
+
+
+
+			if(*(*(map + i) + j) == 'h'){
+
+			
+			glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+			glTranslatef(j*Square_size,i*Square_size+scrolling_value,0.0f);
+			
+
+					glBindTexture(GL_TEXTURE_2D, texture_herbe_1); 
+				
+			
+			glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE); // ajout
+			glDisable( GL_BLEND );// rajout pour tester la transparence
+			glEnable(GL_TEXTURE_2D); // aj
+
+			glBegin(GL_QUADS);
+				glTexCoord2f(0.0f, 0.0f); glVertex2f(0.0f, 0.0f);
+				glTexCoord2f(1.0f, 0.0f); glVertex2f(Square_size, 0.0f);
+				glTexCoord2f(1.0f, 1.0f); glVertex2f(Square_size, Square_size);
+				glTexCoord2f(0.0f, 1.0f); glVertex2f(0.0f, Square_size);
+			glEnd();
+
+
+			glDisable(GL_TEXTURE_2D); // add
 			
 			}
 
-			
-		   }
-		}
-}
 
-	
+			if(*(*(map + i) + j) == 'g'){
+
+			
+			glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+			glTranslatef(j*Square_size,i*Square_size+scrolling_value,0.0f);
+			
+
+					glBindTexture(GL_TEXTURE_2D, texture_bord_route_gauche); 
+				
+			
+			glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE); // ajout
+			glDisable( GL_BLEND );// rajout pour tester la transparence
+			glEnable(GL_TEXTURE_2D); // aj
+
+			glBegin(GL_QUADS);
+				glTexCoord2f(0.0f, 0.0f); glVertex2f(0.0f, 0.0f);
+				glTexCoord2f(1.0f, 0.0f); glVertex2f(Square_size, 0.0f);
+				glTexCoord2f(1.0f, 1.0f); glVertex2f(Square_size, Square_size);
+				glTexCoord2f(0.0f, 1.0f); glVertex2f(0.0f, Square_size);
+			glEnd();
+
+
+			glDisable(GL_TEXTURE_2D); // add
+
+ 			}
+
+
+			if(*(*(map + i) + j) == 'd'){
+
+			
+			glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+			glTranslatef(j*Square_size,i*Square_size+scrolling_value,0.0f);
+			
+
+					glBindTexture(GL_TEXTURE_2D, texture_bord_route_droite); 
+				
+			
+			glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE); // ajout
+			glDisable( GL_BLEND );// rajout pour tester la transparence
+			glEnable(GL_TEXTURE_2D); // aj
+
+			glBegin(GL_QUADS);
+				glTexCoord2f(0.0f, 0.0f); glVertex2f(0.0f, 0.0f);
+				glTexCoord2f(1.0f, 0.0f); glVertex2f(Square_size, 0.0f);
+				glTexCoord2f(1.0f, 1.0f); glVertex2f(Square_size, Square_size);
+				glTexCoord2f(0.0f, 1.0f); glVertex2f(0.0f, Square_size);
+			glEnd();
+
+
+			glDisable(GL_TEXTURE_2D); // add
+			}
+		}
+	}
+}	
 
 void updateScrolling(){
 	scrolling_value += 5.15;
@@ -111,7 +230,7 @@ void updateScrolling(){
 	}
 	
 	if (enPause == false && gameOver == false) 
-		glutTimerFunc(updateFrequency, updateScrolling, 0);
+		glutTimerFunc(updateFrequencyScrolling, updateScrolling, 0);
 
 }
 
@@ -119,6 +238,49 @@ void updateScrolling(){
 
 void drawPlayer(player p)
 {
+
+	int i, j, l, h;
+	i = p->pos.x;
+	j = p->pos.y;
+	l = p->largeur;
+	h = p->hauteur;
+
+
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glTranslatef(i*Square_size,j*Square_size,0.0f);
+	
+
+	glBindTexture(GL_TEXTURE_2D, texture_joueur_1); 
+			
+
+	glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE); // ajout
+	glEnable( GL_BLEND );// rajout pour tester la transparence
+	glEnable(GL_TEXTURE_2D); // aj
+
+    glBegin(GL_QUADS);
+		glTexCoord2f(0.0f, 0.0f); glVertex2f(-(l/2) * Square_size, (h/2) * Square_size);
+		glTexCoord2f(1.0f, 0.0f); glVertex2f((l/2) * Square_size, (h/2) * Square_size);
+		glTexCoord2f(1.0f, 1.0f); glVertex2f((l/2) * Square_size,-(h/2) * Square_size);
+		glTexCoord2f(0.0f, 1.0f); glVertex2f(-(l/2) * Square_size, -(h/2) * Square_size);
+    glEnd();
+
+	glDisable( GL_BLEND );
+
+	glDisable(GL_TEXTURE_2D); // add
+
+/*
+
+
+
+
+
+
+
+
+
+
 	int i, j;
 	i = p->pos.x;
 	j = p->pos.y;
@@ -165,34 +327,88 @@ void drawPlayer(player p)
 
 	glDisable(GL_TEXTURE_2D); // add
 
-	
+	*/
 }
 
 void drawEnemy(enemy e)	
 {
-	int i, j;
+	int i, j, l, h, c;
 	i = e->pos.x;
 	j = e->pos.y;
-	glColor3f(1.0f,0.0F,0.0f);
+	l = e->largeur;
+	h = e->hauteur;
+	c = e->couleur;
+	//glColor3f(1.0f,0.0F,0.0f);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	glTranslatef(i*Square_size,j*Square_size,0.0f);
-	glBegin(GL_QUADS);
-	/*
-	glVertex3f(0.0f,0.0f,0.0f); // coin supérieur gauche
-	glVertex3f(Square_size,0.0f,0.0f); // coin supérieur droit
-	glVertex3f(Square_size,Square_size,0.0f); // coin inférieur droit
-	glVertex3f(0.0f,Square_size,0.0f); // coin inférieur gauche
-	*/
-// alternative : 
+	
 
-	glVertex3f(-2 * Square_size, 2 * Square_size,0.0f); // coin supérieur gauche
-	glVertex3f(2 * Square_size, 2 * Square_size,0.0f); // coin supérieur droit
-	glVertex3f(2 * Square_size,-2 * Square_size,0.0f); // coin inférieur droit
-	glVertex3f(-2 * Square_size, -2 * Square_size,0.0f); // coin inférieur gauche
+	switch (c) {
+		case 1:
+			glBindTexture(GL_TEXTURE_2D, texture_voiture_1); 
+			break;
+		case 2:
+			glBindTexture(GL_TEXTURE_2D, texture_voiture_2); 
+			break;
+		case 3:
+			glBindTexture(GL_TEXTURE_2D, texture_voiture_3); 
+			break;
+		case 4:
+			glBindTexture(GL_TEXTURE_2D, texture_voiture_4); 
+			break;
+		default:
+			glBindTexture(GL_TEXTURE_2D, texture_voiture_5); 
+			break;
+	}
+
+	//glBindTexture(GL_TEXTURE_2D, textureID1); // Utiliser la texture 1 pour l'ennemi
+
+
+	glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE); // ajout
+	
+	glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_TEXTURE_2D); // aj
+
+    glBegin(GL_QUADS);
+		glTexCoord2f(0.0f, 0.0f); glVertex2f(-(l/2) * Square_size, (h/2) * Square_size);
+		glTexCoord2f(1.0f, 0.0f); glVertex2f((l/2) * Square_size, (h/2) * Square_size);
+		glTexCoord2f(1.0f, 1.0f); glVertex2f((l/2) * Square_size,-(h/2) * Square_size);
+		glTexCoord2f(0.0f, 1.0f); glVertex2f(-(l/2) * Square_size, -(h/2) * Square_size);
+    glEnd();
+
+	glDisable( GL_BLEND );// rajout pour tester la transparence
+	glDisable(GL_TEXTURE_2D); // add
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* --------- save de l'ennemi sans image qui fonctionne bien
+
+	glBegin(GL_QUADS);
+		glVertex3f(-2 * Square_size, 2 * Square_size,0.0f); // coin supérieur gauche
+		glVertex3f(2 * Square_size, 2 * Square_size,0.0f); // coin supérieur droit
+		glVertex3f(2 * Square_size,-2 * Square_size,0.0f); // coin inférieur droit
+		glVertex3f(-2 * Square_size, -2 * Square_size,0.0f); // coin inférieur gauche
 
 	glEnd();
-
+*/
 }
 
 void drawAllEnnemis(listeEn e)
@@ -220,10 +436,43 @@ void drawAllEnnemis(listeEn e)
 
 void drawTirs(tirsP p)
 {
-	int i, j;
+	int i, j, l, h;
 	i = p->pos.x;
 	j = p->pos.y;
+	l = p->largeur;
+	h = p->hauteur;
+
+
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glTranslatef(i*Square_size,j*Square_size,0.0f);
+	
+
+	glBindTexture(GL_TEXTURE_2D, texture_tir_joueur); 
+			
+
+	glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE); // ajout
+	glEnable( GL_BLEND );// rajout pour tester la transparence
+	glEnable(GL_TEXTURE_2D); // aj
+
+    glBegin(GL_QUADS);
+		glTexCoord2f(0.0f, 0.0f); glVertex2f(-(l/2) * Square_size, (h/2) * Square_size);
+		glTexCoord2f(1.0f, 0.0f); glVertex2f((l/2) * Square_size, (h/2) * Square_size);
+		glTexCoord2f(1.0f, 1.0f); glVertex2f((l/2) * Square_size,-(h/2) * Square_size);
+		glTexCoord2f(0.0f, 1.0f); glVertex2f(-(l/2) * Square_size, -(h/2) * Square_size);
+    glEnd();
+
+	glDisable( GL_BLEND );
+
+	glDisable(GL_TEXTURE_2D); // add
+
+
+
+
+	/*
 	glColor3f(0.0f, 1.0f, 0.5f);
+	
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	glTranslatef(i*Square_size,j*Square_size,0.0f);
@@ -233,6 +482,14 @@ void drawTirs(tirsP p)
 	glVertex3f(Shoot_size,Shoot_size*2,0.0f);
 	glVertex3f(0.0f,Shoot_size*2,0.0f);
 	glEnd();
+
+*/
+
+
+
+
+
+
 }
 
 
@@ -280,8 +537,8 @@ void displayHUD() {
 	glBegin(GL_QUADS);
 		glVertex2f(0.0, 0.0); // coin sup gauche (puis dans le sens des aiguilles d'une montre)
 		glVertex2f(1.0, 0.0); // coin sup droit
-		glVertex2f(1.0, 0.05); // coin inf droit
-		glVertex2f(0.0, 0.05); // coin inf gauche
+		glVertex2f(1.0, 0.085); // coin inf droit
+		glVertex2f(0.0, 0.085); // coin inf gauche
     glEnd();
 
 
@@ -530,3 +787,5 @@ glBegin(GL_QUADS);
 	glPopMatrix();
 
 }
+
+

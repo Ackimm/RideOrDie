@@ -6,8 +6,9 @@
 #endif
 #include <stdlib.h>
 #include <stdio.h>
-#include "time.h"
 
+#include "time.h"
+#include "SOIL.h"
 #include "loadMap.h"
 #include "game.h"
 #include "player.h"
@@ -17,6 +18,9 @@
 #include "collision.h" 
 #include "menu.h" 
 #include "gameInitAndTimers.h" 
+#include "textures.h" 
+
+
 
 
 
@@ -221,6 +225,7 @@ int main(int argc, char *argv[])
 	glutInitWindowSize(900,600); 
 
 	glutCreateWindow("Ride Or Die! A VvV Story");
+	initTextures();
 
 	initRendering();
 

@@ -67,12 +67,8 @@ enemy createEnemy()
 
 void insertionEnemies(listeEn e, enemy base)
 {
-	// enemy new = malloc(sizeof(enemies)); // save
-	enemy new; // tentaive
-	/*if (new == NULL)
-	{
-		exit(EXIT_FAILURE);
-	}*/
+	enemy new; 
+
 	new = base;
 	if (e->starList == NULL || e->endList == NULL)
 	{
@@ -137,19 +133,10 @@ void updateEnemies(int valeur)
 	{
 		q->pos.y += 1;
 
-/*-----------Tentative de ciblage du joueur mais problème ---------*/
-
-//		if (p->pos.x > q->pos.x)
-//			q->pos.x += 0.0000001;
-//		else if (p->pos.x < q->pos.x) 	
-//			q->pos.x -= 0.0000001;
-
-/*-----------Tentative de ciblage du joueur mais problème ---------*/
-
 
 		if (q->pos.y > 120 || q->vie == 0 || reInit == true) 
 		{
-			q->pos.y = 2;
+			//q->pos.y = 2;
 			q->active = false;
 		}
 		while (q->nextptr != NULL)
@@ -157,19 +144,10 @@ void updateEnemies(int valeur)
 			q = q->nextptr;
 			q->pos.y +=1;
 
-/*-----------Tentative de ciblage du joueur mais problème ---------*/
-
-//			if (p->pos.x > q->pos.x)
-//				q->pos.x += 0.0000001;
-//			else if (p->pos.x < q->pos.x) 	
-//				q->pos.x -= 0.0000001;
-
-/*-----------Tentative de ciblage du joueur mais problème ---------*/
-
 
 			if (q->pos.y > 120 || q->vie == 0 || reInit == true) 
 			{
-				q->pos.y = 2;
+			//	q->pos.y = 2;
 				q->active = false;
 			}
 		}
@@ -183,7 +161,7 @@ void updateEnemies(int valeur)
 		FinishedInitEnnemis = true;
 
 		
-	if (FinishedInitTirs==true && FinishedInitEnnemis==true)
+	if (FinishedInitTirs==true && FinishedInitEnnemis==true && FinishedInitObstacles==true && FinishedInitBubbles==true)
 		reInit=false;
 
 

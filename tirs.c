@@ -43,11 +43,14 @@ tirsP createTirs(player p)
 {
 	int x = (p->pos.x);
 	int y = ((p->pos.y));
+
 	tirsP new = malloc(sizeof(tirs));
+	
 	if (new == NULL)
 	{
 		exit(EXIT_FAILURE);
 	}
+	
 	new->pos.x = x;
 	new->pos.y = y;
 	new->largeur = 2; 
@@ -172,7 +175,7 @@ void updateTirs(int valeur)
 	
 	if (reInit==true)
 		FinishedInitTirs = true;
-	if (FinishedInitTirs==true && FinishedInitEnnemis==true)
+	if (FinishedInitTirs==true && FinishedInitEnnemis==true && FinishedInitObstacles==true && FinishedInitBubbles==true)
 		reInit=false;
 
 }

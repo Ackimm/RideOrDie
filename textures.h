@@ -25,6 +25,15 @@ extern GLuint texture_bord_route_droite;
 extern GLuint texture_tir_joueur;
 
 
+// tir bubble : 
+extern GLuint texture_tir_bubble;
+
+
+// obstacle: 
+extern GLuint texture_obstacle;
+extern GLuint texture_obstacle_bubbled;
+
+
 
 // Fonction pour initialiser les textures
 void initTextures();

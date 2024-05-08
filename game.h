@@ -27,6 +27,10 @@ void Keyboard(unsigned char key, int x, int y);
 void game(int *maxX, int *maxY, float scrolling_value, player p, listeEn e, listetirsP  t); 
 
 
-
+//test keystate - ne fonciotnne pas pour le moment
+void specialKeys(int key, int x, int y);
+void updateFastMov(int value);
+void keyboardDown(unsigned char key, int x, int y);
+void keyboardUp(unsigned char key, int x, int y);
 
 #endif

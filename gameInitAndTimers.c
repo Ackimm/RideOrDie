@@ -18,7 +18,8 @@
 #include "time.h"
 #include "collision.h"
 #include "game.h"
-
+#include "obstacles.h"
+#include "bubbles.h"
 
 
 
@@ -36,24 +37,58 @@ void startTimer(){
 void initGameParametres(){
     
 		
-
 		p= createPlayer(&mX, &mY);
 		e = initialListEnemies();
 		t = initialListeTirs();
+		liste_obs = initialListObstacles();
+		liste_bub = initialListBubbles();
 }
 
 
 void gameTimers(){
 	
 
-
-		glutTimerFunc(updateFrequency, updateEnemies, 0);
-		glutTimerFunc(updateFrequency, updateNewEnemies, 0);
+		// Timers relatifs aux ennemis
+		glutTimerFunc(enemySpeed, updateEnemies, 0);
+		glutTimerFunc(updateNewEnemy, updateNewEnemies, 0);
 		glutTimerFunc(updateFrequency, updateDeleteEnemies, 0);
-		glutTimerFunc(updateFrequency, updateTirs, 0);
+
+		// Timers relatifs aux obstacles
+		glutTimerFunc(FreqUpdateObstacles, updateObstacles, 0);
+		glutTimerFunc(updateFrequency, updateNewObstacles, 0);
+		glutTimerFunc(updateFrequency, updateDeleteObstacles, 0);
+
+		// Timers relatifs aux tirs normaux
+		glutTimerFunc(tirsSpeed, updateTirs, 0);
 		glutTimerFunc(updateFrequency, updateDeleteTirs, 0);
+
+		// Timers relatifs aux tirs normaux
+		glutTimerFunc(tirsSpeed, updateBubbles, 0);
+		glutTimerFunc(updateFrequency, updateDeleteBubbles, 0);
+
+		// Autres timers
 		glutTimerFunc(updateFrequency, updateScrolling, 0);
-		glutTimerFunc(updateFrequency, checkCollision, 0); 
+
+		// Collisions
+			// concernant le joueur : 
+				glutTimerFunc(updateFrequency, checkCollisionJoueurVSennemi, 0);
+				glutTimerFunc(updateFrequency, checkCollisionJoueurVSobstacle, 0);
+				//glutTimerFunc(updateFrequency, checkCollisionJoueurVStirEnnemi, 0);
+
+			// concernant la bubble : 
+				glutTimerFunc(updateFrequency, checkCollisionBubbleVSobstacle, 0);
+			
+			// concernant les tirs : 
+				glutTimerFunc(updateFrequency, checkCollisionTirVSobstacle, 0);
+				glutTimerFunc(updateFrequency, checkCollisionTirVSennemi, 0);
+
+			// concernant les obstacles et ennemis : 
+				glutTimerFunc(updateFrequency, checkCollisionEnnemiVSobstacle, 0);
+							
+
+		// ajout pour les touches keystates
+		glutTimerFunc(1000, updateFastMov, 0);  // Appel récursif pour mettre à jour à intervalles réguliers
+
 	
 }
 
@@ -64,7 +99,7 @@ void gameTimers(){
 void reinitializeGame(){
 	
 	// réinit du joueur
-	p->vie = 5;
+	p->vie = 1000;
 	p->pos.x = 62;
 	p->pos.y = 62 ;
 	p->bubbles = 5;

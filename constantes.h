@@ -16,10 +16,12 @@
 */
 
 #define updateNewEnemy 800
-//#define enemySpeed updateFrequency
-#define enemySpeed 8
+#define enemySpeed 12
 
-#define tirsSpeed updateFrequency
+#define tirsSpeed 8
+
+#define FreqUpdateNewObstacles 800
+#define FreqUpdateObstacles 25
 
 
 #define Square_size 10.0

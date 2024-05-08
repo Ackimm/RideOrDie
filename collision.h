@@ -11,8 +11,17 @@
 
 extern int score;
 
-void checkCollision(int valeur);
+void checkCollisionJoueurVSennemi(int valeur);
+void checkCollisionJoueurVSobstacle(int valeur);
+//void checkCollisionJoueurVStirEnnemi(int valeur);
 
+void checkCollisionEnnemiVSobstacle(int valeur);
+
+
+void checkCollisionBubbleVSobstacle(int valeur);
+
+void checkCollisionTirVSennemi(int valeur);
+void checkCollisionTirVSobstacle(int valeur);
 
 #endif
 

@@ -33,6 +33,13 @@ GLuint texture_joueur_1;
 // tir joueur : 
 GLuint texture_tir_joueur;
 
+// tir bubble : 
+GLuint texture_tir_bubble;
+
+// obstacle: 
+GLuint texture_obstacle;
+GLuint texture_obstacle_bubbled;
+
 
 
 void initTextures() {
@@ -44,16 +51,27 @@ void initTextures() {
     texture_bord_route_gauche = loadTexture("images/terrain/land_grass_gauche.png");
     texture_bord_route_droite = loadTexture("images/terrain/land_grass_droite.png");
     texture_route_bande_centrale = loadTexture("images/terrain/land_dirt_bande_centrale.png");
+  
     // voitures : 
     texture_voiture_1 = loadTexture("images/voitures/car_black_3.png");
     texture_voiture_2 = loadTexture("images/voitures/car_blue_3.png");
     texture_voiture_3 = loadTexture("images/voitures/car_green_3.png");
     texture_voiture_4 = loadTexture("images/voitures/car_red_3.png");
     texture_voiture_5 = loadTexture("images/voitures/car_yellow_3.png");
+  
     // joueur : 
     texture_joueur_1 = loadTexture("images/joueur/biker_poke_mini.png");
+  
     // tirs
     texture_tir_joueur = loadTexture("images/tir/tank_bullet3.png");
+  
+    // bubbles
+    texture_tir_bubble = loadTexture("images/bubbles/planet00-b.png");
+  
+    // obstacle
+    texture_obstacle = loadTexture("images/obstacles/crate133.png");
+    texture_obstacle_bubbled = loadTexture("images/obstacles/crate_bubbled133.png");
+
 }
 
 GLuint loadTexture(const char* filename) {

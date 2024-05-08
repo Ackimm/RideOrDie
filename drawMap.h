@@ -5,6 +5,8 @@
 #include "player.h"
 #include "enemies.h"
 #include "tirs.h"
+#include "obstacles.h"
+#include "bubbles.h"
 
 
 extern float scrolling_value;
@@ -23,6 +25,13 @@ void drawAllEnnemis(listeEn e);
 
 void drawTirs(tirsP p);
 void drawAllTirs(listetirsP t);
+
+void drawObstacle(obstacle obs);
+void drawAllObstacles(listeObs liste_obs);	
+
+void drawBubble(bubble bub);
+void drawAllBubbles(listeBub liste_bub);	
+
 
 void displayHUD();
 void displayGameOver();

@@ -1,3 +1,5 @@
+
+
 #ifdef __APPLE_CC__
 #include <OpenGL/OpenGL.h>
 #include <GLUT/glut.h>
@@ -17,10 +19,16 @@
 #include "player.h"
 #include "enemies.h"
 #include "tirs.h"
+
+
 #include "menu.h"
 #include "gameInitAndTimers.h"
 #include "collision.h"
 #include "bestScores.h"
+
+
+//#include "obstacles.h"
+//#include "bubbles.h"
 
 
 
@@ -29,6 +37,7 @@ bool LEFT = false;
 bool RIGHT = false;
 bool DOWN = false;
 bool SHOOT = false;
+bool BUBBLE_SHOT = false;
 bool test;
 bool enPause;
 bool gameOver = false;
@@ -38,6 +47,10 @@ bool hasReInit = false;
 int start_pause_time;
 int end_pause_time;
 
+//ajout pour keystate
+bool keyStates[256] = {false};  // Tableau pour suivre l'état des touches
+
+//listeBub liste_bub; 
 
 void Keyboard(unsigned char key, int x, int y)  // fonction allant gérer les input
 {
@@ -95,21 +108,21 @@ void Keyboard(unsigned char key, int x, int y)  // fonction allant gérer les in
 			if (enPause == false && gameOver == false) 
 				SHOOT = true;
 			break;	
+
+			case'e':
+		if (enPause == false && gameOver == false) 
+			BUBBLE_SHOT = true;
+		break;	
 	}	
 }
 
 
 
-void game(int *maxX, int *maxY, float scrolling_value, player p, listeEn e, listetirsP  t) //save 
-//void game(int *maxX, int *maxY, float scrolling_value, player p)
-//void game(int *maxX, int *maxY, float scrolling_value, player p, listeEn e)
-
-{
-
-	glutMouseFunc(mouseClick);//pour tenter de pouvoir cliquer sur les boutons du gameOver menu mais ne fonctionne pas
+void game(int *maxX, int *maxY, float scrolling_value, player p, listeEn e, listetirsP t) {
+	glutMouseFunc(mouseClick);
 
 
-	drawWall(maxX, maxY, scrolling_value);			//afficher la carte
+	drawWall(maxX, maxY, scrolling_value);			
 	drawPlayer(p);
 	if (e->starList != NULL || e->endList != NULL)
 	{
@@ -122,40 +135,92 @@ void game(int *maxX, int *maxY, float scrolling_value, player p, listeEn e, list
 		drawAllTirs(t);
 	}
 	
-
-	glutKeyboardFunc(Keyboard);		//fonction de glut gérant le clavier
-	
-	
-	if (LEFT == true)
+	if (liste_obs->premier != NULL)
 	{
-		
-		moveLeft(p);		//va se déplacer vers la gauche si on appuie sur q
-		LEFT = false;
-		
-	}
-	if (RIGHT == true)
-	{
-		
-		moveRight(p);		//va se déplacer vers la droite si on apppuie sur d
-		RIGHT = false;
-	}
-	if (UP == true)
-	{
-		moveUp(p);
-		UP = false;
-	}
-	
-	if (DOWN == true)
-	{
-		moveDown(p);
-		DOWN = false;
+		drawAllObstacles(liste_obs);
 	}
 
-	if (SHOOT == true)
+	if (liste_bub->premier != NULL)
 	{
-		tirer(p, t);
-		SHOOT=false;
+		drawAllBubbles(liste_bub);
 	}
+    
+    
+	glutKeyboardFunc(keyboardDown);
+    glutKeyboardUpFunc(keyboardUp);
+
+  
+	glutPostRedisplay();
+	
+	}
+
+void updateFastMov(int value) {
+  
+    if (enPause == false && gameOver == false) {
+					
+					
+		if (keyStates['z']) {
+			moveUp(p);
+		}
+
+		if (keyStates['s']) {
+			moveDown(p);
+		}
+	
+		if (keyStates['q']) {
+			moveLeft(p);
+		}
+		if (keyStates['d']) {
+			moveRight(p);
+		}
+
+		
+		if (keyStates['r']) {
+			reinitializeGame();
+			keyStates['r'] = false;	
+		}
+
+		if (keyStates[' ']) {
+			tirer(p, t);
+			keyStates[' '] = false;	
+		}
+
+		if (keyStates['e']) {
+			shootBubble(p);
+			keyStates['e'] = false;	
+		}
+	}
+
+
+
+
+		if (keyStates[27]) {
+
+
+			if (gameOver == false && (currentMenu==nouvellePartie || currentMenu == pauseMenu)){ 
+				enPause = !enPause;
+				printf("Bool enPause = %i\n", enPause);
+				fflush(stdout);
+				if (enPause == false){
+					gameTimers();
+					int end_pause_time = time(NULL);
+					if (currentMenu==pauseMenu){
+						changerMenu(nouvellePartie);
+
+					}
+				}		
+				else{
+					changerMenu(pauseMenu);
+					int start_pause_time = time(NULL);
+				}
+			}
+		keyStates[27] = false;	
+		}
+
+	
+
+	
+
 
 	if (gameOver == true)
 		changerMenu(gameOverMenu);
@@ -165,6 +230,19 @@ void game(int *maxX, int *maxY, float scrolling_value, player p, listeEn e, list
 		hasReInit = true;
 	}
 
-		
-	glutPostRedisplay();
+
+if (enPause == false && gameOver == false) 
+   glutTimerFunc(updateFrequency, updateFastMov, 0);  
+
+
+}
+
+
+void keyboardDown(unsigned char key, int x, int y) {
+	keyStates[key] = true;
+}
+
+
+void keyboardUp(unsigned char key, int x, int y) {
+    keyStates[key] = false;
 }

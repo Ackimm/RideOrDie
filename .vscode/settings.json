@@ -10,7 +10,8 @@
         "stdbool.h": "c",
         "time.h": "c",
         "collision.h": "c",
-        "gameinitandtimers.h": "c"
+        "gameinitandtimers.h": "c",
+        "constantes.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

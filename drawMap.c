@@ -18,6 +18,8 @@
 #include "constantes.h"
 #include "velo_jaune4.c"
 
+#include "obstacles.h"
+#include "bubbles.h"
 
 #include "textures.h"
 
@@ -39,7 +41,6 @@ void drawWall(int *maxX, int *maxY, float scrolling_value){			// fonction qui af
 	{
 		for (int j = 0; j < (*maxX); j++)
 		{
-			//drawSky();
 			if(*(*(map + i) + j) == '!')
 			{
                 glColor3f(1.0f,1.0f,1.0f);
@@ -57,31 +58,7 @@ void drawWall(int *maxX, int *maxY, float scrolling_value){			// fonction qui af
 
 				glEnd();	
 			}
-			/*
-			if(*(*(map + i) + j)  == 'o')
-			{
-				glColor3f(0.6f,1.0f,1.0f);
-				glMatrixMode(GL_MODELVIEW);
-				
-			    glLoadIdentity();
-				glTranslatef(j*Square_size,i*Square_size+scrolling_value,0.0f);
-//				glTranslatef(j*Square_size,i*Square_size,0.0f);
-
-
-				glBegin(GL_QUADS);
-					glVertex3f(0.0f, 0.0f, 0.0f);
-					glVertex3f(Square_size, 0.0f, 0.0f);
-					glVertex3f(Square_size,Square_size, 0.0f);
-					glVertex3f(0.0f,Square_size, 0.0f);
-
-				glEnd();
-
-				
-			}
-		*/
-
-
-
+			
 
 			if(*(*(map + i) + j) == 'b'){
 
@@ -270,64 +247,7 @@ void drawPlayer(player p)
 
 	glDisable(GL_TEXTURE_2D); // add
 
-/*
 
-
-
-
-
-
-
-
-
-
-	int i, j;
-	i = p->pos.x;
-	j = p->pos.y;
-	
-	
-//	glColor3f(0.0f,1.0f,0.0f);
-	
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-
-
-//test image
-	int texture;
-
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // rajout pour tester la transparence
-	glEnable( GL_BLEND );// rajout pour tester la transparence
-
-	glGenTextures(1,&texture);
-	glBindTexture(GL_TEXTURE_2D,texture);
-	glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE);
-	gluBuild2DMipmaps(GL_TEXTURE_2D,velo_jaune.bytes_per_pixel, velo_jaune.width, velo_jaune.height,GL_RGB,GL_UNSIGNED_BYTE,velo_jaune.pixel_data);
-	glEnable(GL_TEXTURE_2D);
-
-	
-	glDisable( GL_BLEND );// rajout pour tester la transparence
-
-//test image
-
-	glTranslatef(i*Square_size,j*Square_size,0.0f);
-
-	glBegin(GL_QUADS);
-
-
-
-	glTexCoord2f(0.0,0.0); glVertex3f(-2.5 * alternate_player_size,12 * alternate_player_size, 0.0f); // sup gauche
-	glTexCoord2f(1.0,0.0); glVertex3f(2.5 * alternate_player_size,12 * alternate_player_size, 0.0f); // sup droit
-	glTexCoord2f(1.0,1.0); glVertex3f(2.5 * alternate_player_size, 0.0f, 0.0f); // inf droit
-	glTexCoord2f(0.0,1.0); glVertex3f(-2.5 * alternate_player_size, 0.0f, 0.0f); // inf gauche
-
-
-
-
-	glEnd();
-
-	glDisable(GL_TEXTURE_2D); // add
-
-	*/
 }
 
 void drawEnemy(enemy e)	
@@ -384,39 +304,13 @@ void drawEnemy(enemy e)
 	glDisable( GL_BLEND );// rajout pour tester la transparence
 	glDisable(GL_TEXTURE_2D); // add
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* --------- save de l'ennemi sans image qui fonctionne bien
-
-	glBegin(GL_QUADS);
-		glVertex3f(-2 * Square_size, 2 * Square_size,0.0f); // coin supérieur gauche
-		glVertex3f(2 * Square_size, 2 * Square_size,0.0f); // coin supérieur droit
-		glVertex3f(2 * Square_size,-2 * Square_size,0.0f); // coin inférieur droit
-		glVertex3f(-2 * Square_size, -2 * Square_size,0.0f); // coin inférieur gauche
-
-	glEnd();
-*/
 }
 
 void drawAllEnnemis(listeEn e)
 {	
-	//enemy first = malloc(sizeof(enemies)); // save
-	//enemy next = malloc(sizeof(enemies)); //save
-	enemy first; // tentative
-	enemy next; // tentative
+
+	enemy first; 
+	enemy next; 
 	first = e->starList;
 	next = e->starList->nextptr;
 	if (e->starList != NULL || e->endList != NULL)
@@ -465,25 +359,8 @@ void drawTirs(tirsP p)
 
 	glDisable( GL_BLEND );
 
-	glDisable(GL_TEXTURE_2D); // add
+	glDisable(GL_TEXTURE_2D); 
 
-
-
-
-	/*
-	glColor3f(0.0f, 1.0f, 0.5f);
-	
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	glTranslatef(i*Square_size,j*Square_size,0.0f);
-	glBegin(GL_QUADS);// note pour plus tard : changer soit en ligne, soit en projectile avec image .c
-	glVertex3f(0.0f,0.0f,0.0f);
-	glVertex3f(Shoot_size,0.0f,0.0f); 
-	glVertex3f(Shoot_size,Shoot_size*2,0.0f);
-	glVertex3f(0.0f,Shoot_size*2,0.0f);
-	glEnd();
-
-*/
 
 
 
@@ -518,6 +395,197 @@ void drawAllTirs(listetirsP t)
 		}
 	}
 }
+
+
+
+
+
+
+
+
+void drawBubble(bubble bub)
+{
+	int i, j, l, h;
+	i = bub->pos.x;
+	j = bub->pos.y;
+	l = bub->largeur;
+	h = bub->hauteur;
+
+
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glTranslatef(i*Square_size,j*Square_size,0.0f);
+	
+
+	glBindTexture(GL_TEXTURE_2D, texture_tir_bubble); 
+			
+
+	glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE); // ajout
+	glEnable( GL_BLEND );// rajout pour tester la transparence
+	glEnable(GL_TEXTURE_2D); // aj
+
+    glBegin(GL_QUADS);
+		glTexCoord2f(0.0f, 0.0f); glVertex2f(-(l/2) * Square_size, (h/2) * Square_size);
+		glTexCoord2f(1.0f, 0.0f); glVertex2f((l/2) * Square_size, (h/2) * Square_size);
+		glTexCoord2f(1.0f, 1.0f); glVertex2f((l/2) * Square_size,-(h/2) * Square_size);
+		glTexCoord2f(0.0f, 1.0f); glVertex2f(-(l/2) * Square_size, -(h/2) * Square_size);
+    glEnd();
+
+	glDisable( GL_BLEND );
+
+	glDisable(GL_TEXTURE_2D); // add
+
+
+}
+
+
+void drawAllBubbles(listeBub liste_bub)
+{
+	
+	bubble first;
+	bubble next;
+	first = liste_bub->premier;
+	if (liste_bub->premier != NULL && liste_bub->premier->suivant != NULL)
+	{
+	next = liste_bub->premier->suivant;
+	}
+	if (liste_bub->premier != NULL)
+	{
+		drawBubble(first);
+		if (liste_bub->premier->suivant != NULL)
+		{
+			drawBubble(next);
+			while (next->suivant != NULL)
+			{
+				next = next->suivant;
+				drawBubble(next);
+			}
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+void drawObstacle(obstacle obs)
+{
+	int i, j, l, h;
+	i = obs->pos.x;
+	j = obs->pos.y;
+	l = obs->largeur;
+	h = obs->hauteur;
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glTranslatef(i*Square_size,j*Square_size,0.0f);
+	
+	if (obs->bubbled == true)
+		glBindTexture(GL_TEXTURE_2D, texture_obstacle_bubbled); 
+	else 
+		glBindTexture(GL_TEXTURE_2D, texture_obstacle); 
+
+	glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE); 
+	
+	glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_TEXTURE_2D); 
+
+    glBegin(GL_QUADS);
+		glTexCoord2f(0.0f, 0.0f); glVertex2f(-(l/2) * Square_size, (h/2) * Square_size);
+		glTexCoord2f(1.0f, 0.0f); glVertex2f((l/2) * Square_size, (h/2) * Square_size);
+		glTexCoord2f(1.0f, 1.0f); glVertex2f((l/2) * Square_size,-(h/2) * Square_size);
+		glTexCoord2f(0.0f, 1.0f); glVertex2f(-(l/2) * Square_size, -(h/2) * Square_size);
+    glEnd();
+
+	glDisable(GL_BLEND);
+	glDisable(GL_TEXTURE_2D); 
+
+}
+
+
+void drawAllObstacles(listeObs liste_obs)
+{	
+
+	obstacle first; 
+	obstacle next; 
+	first = liste_obs->premier;
+	next = liste_obs->premier->suivant;
+	if (liste_obs->premier != NULL)
+	{
+		drawObstacle(first);
+		if (liste_obs->premier->suivant != NULL)
+		{
+			drawObstacle(next);
+			while (next->suivant != NULL)
+			{
+				next = next->suivant;
+				drawObstacle(next);
+			}
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 void displayHUD() {

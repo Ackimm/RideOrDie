@@ -30,8 +30,6 @@ menu currentMenu = menuAccueil;
 
 void drawMenu() {
 
-    printf("impression du menu\n");
-
     glutMouseFunc(mouseClick);
 
 

@@ -11,6 +11,7 @@
 #include "player.h"
 #include "constantes.h"
 #include "gameInitAndTimers.h"
+#include "fireEnnemi.h"
 
 
 #include <stdlib.h>
@@ -175,8 +176,10 @@ void updateTirs(int valeur)
 	
 	if (reInit==true)
 		FinishedInitTirs = true;
-	if (FinishedInitTirs==true && FinishedInitEnnemis==true && FinishedInitObstacles==true && FinishedInitBubbles==true)
-		reInit=false;
+	//if (FinishedInitTirs==true && FinishedInitEnnemis==true && FinishedInitObstacles==true && FinishedInitBubbles==true && FinishedInitTirsEnnemi==true)	
+//if (FinishedInitTirs==true && FinishedInitEnnemis==true && FinishedInitObstacles==true && FinishedInitBubbles==true && FinishedInitTirsEnnemi==true)	
+	if (FinishedInitTirs==true && FinishedInitEnnemis==true)	
+				reInit=false;
 
 }
 

@@ -15,12 +15,16 @@
 #define tirsSpeed 10
 */
 
-#define updateNewEnemy 800
-#define enemySpeed 12
+#define updateNewEnemy 800 // 800
+#define enemySpeed 12 //12
+#define FreqUpdateNewTirEnnemi 800 // 800
+
 
 #define tirsSpeed 8
+#define tirsEnnemiSpeed 6
 
-#define FreqUpdateNewObstacles 800
+
+#define FreqUpdateNewObstacles 800 //800
 #define FreqUpdateObstacles 25
 
 

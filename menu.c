@@ -28,6 +28,9 @@ float hauteur_bouton = 0.0909f;
 
 menu currentMenu = menuAccueil;
 
+difficulte currentDifficulte;
+
+
 void drawMenu() {
 
     glutMouseFunc(mouseClick);
@@ -311,9 +314,33 @@ void drawParametres() {
     
         glColor3f(1.0f, 1.0f, 1.0f); // Couleur blanche pour le texte
 
-      glRasterPos2f(0.47, 0.86363636); // Position du texte pour le temps écoulé
+      glRasterPos2f(0.47, 1-0.86363636); // Position du texte pour le temps écoulé
     char label_changer_difficulte[50];
-    sprintf(label_changer_difficulte, "Changer la difficulte");
+
+
+	switch(currentDifficulte)
+	{
+		/*case 1: 
+			sprintf(label_changer_difficulte, "Trop facile");
+		break;
+*/
+		case 2: 
+			sprintf(label_changer_difficulte, "Mouais");
+		break;
+
+        case 3: 
+			sprintf(label_changer_difficulte, "La on parle");
+		break;
+
+        case 4: 
+			sprintf(label_changer_difficulte, "RIDE OR DIE !");
+		break;
+
+        default: 
+			sprintf(label_changer_difficulte, "Trop facile");
+		break;
+    }
+  //  sprintf(label_changer_difficulte, "Changer la difficulte");
     for (int i = 0; label_changer_difficulte[i] != '\0'; i++) {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, label_changer_difficulte[i]);
     }
@@ -383,8 +410,15 @@ void mouseClick(int button, int state, int x, int y) {
             // Vérification du clic sur les boutons
             if (xN >= longueur_bouton && xN <= 2*longueur_bouton) {
                 if (yN >= hauteur_bouton && yN <= 2*hauteur_bouton) {
-                    // Clic sur le bouton "Jouer"
-                    printf("Bouton Jouer cliqué!\n");
+                               
+                   enPause = false;
+                   gameOver = true;  
+                   // initGameParametres();
+                    updateBestScores(score);
+                    reinitializeGame();
+                    gameTimers();
+
+                   // reInit = false;
 
                     changerMenu(nouvellePartie); // ici il faudrait faire le lien avec le main où on déclare l'extern
                     printf("Menu sélectionné : %d\n", currentMenu);
@@ -395,7 +429,15 @@ void mouseClick(int button, int state, int x, int y) {
                 else if (yN >= 3*hauteur_bouton && yN <= 4*hauteur_bouton) {
 
                     printf("X : %f, Y = %f\n", xN, yN); // test en attendant de mettre des autres boutons 
-                    changerMenu(continuerPartie); // ici il faudrait faire le lien avec le main où on déclare l'extern
+                  //  if (gameOver != true && p->pos.x != 1)
+                     //  gameTimers();
+                    if (gameOver == true || p->pos.x == 1)
+                        reinitializeGame();
+                        
+                    enPause = false;
+                                           gameTimers();
+
+                    changerMenu(nouvellePartie); // ici il faudrait faire le lien avec le main où on déclare l'extern
                     printf("Menu sélectionné : %d\n", currentMenu);
                     fflush(stdout);
 
@@ -443,7 +485,7 @@ void mouseClick(int button, int state, int x, int y) {
                     printf("Retour au menu!\n");
 
                     changerMenu(menuAccueil); // ici il faudrait faire le lien avec le main où on déclare l'extern
-                    printf("Menu sélectionné : %d\n", currentMenu);
+                    printf("Menu sélectionne : %d\n", currentMenu);
                     fflush(stdout);
             
 
@@ -463,13 +505,14 @@ void mouseClick(int button, int state, int x, int y) {
             // Vérification du clic sur les boutons
             if (xN >= 0.5*longueur_bouton && xN <= 2*5*longueur_bouton) {
                 if (yN >= 1*hauteur_bouton && yN <= 2*hauteur_bouton) {
-                    // Clic sur le bouton "Jouer"
-                    printf("Retour au menu!\n");
+                    if (currentDifficulte != 4)
+                        currentDifficulte++;
+                    else
+                        currentDifficulte=1;
+                printf("Nouvelle difficulté : %i\n", currentDifficulte);
+                fflush(stdout);
+                glutPostRedisplay();
 
-                    changerMenu(menuAccueil); // ici il faudrait faire le lien avec le main où on déclare l'extern
-                    printf("Menu sélectionné : %d\n", currentMenu);
-                    fflush(stdout);
-            
 
                 }
 
@@ -498,13 +541,14 @@ void mouseClick(int button, int state, int x, int y) {
                
                
                 if (yN >= 0.35 && yN <= 0.45) { 
-
+ printf("reinit value après bouton pause : %i\n", reInit);fflush(stdout);
                     printf("désactivation de la pause\n");
 
                     if (gameOver == false){ 
                         enPause = !enPause;
                         printf("Bool enPause = %i\n", enPause);
                         fflush(stdout);
+
                         if (enPause == false){
                             gameTimers();
                             int end_pause_time = time(NULL);
@@ -525,11 +569,12 @@ void mouseClick(int button, int state, int x, int y) {
                
 
                 if (yN >= 0.55 && yN <= 0.65) {
-                    printf("Terminer la partie et retourner au menu principal\n");
+                    printf("Retourner au menu principal\n");
                     fflush(stdout);
                     // ajouter la fonction de sauvegarde des scores
                     // ajotuer la fonction de réinitialisation
-            		updateBestScores(score);
+            		//updateBestScores(score);
+                    enPause = 1;
                     changerMenu(menuAccueil); // ici il faudrait faire le lien avec le main où on déclare l'extern
                  
                     
@@ -553,14 +598,15 @@ void mouseClick(int button, int state, int x, int y) {
                
                
                 if (yN >= 0.35 && yN <= 0.45) { 
+                            
                     
-                    hasReInit = false;
-                    gameOver = false;
+
                     reinitializeGame();
+                    gameTimers();
 
                     changerMenu(nouvellePartie);
+
                    // reinitializeGame();
-                    hasReInit = true;
 
 
 

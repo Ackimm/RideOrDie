@@ -20,6 +20,8 @@
 
 #include "obstacles.h"
 #include "bubbles.h"
+#include "fireEnnemi.h"
+
 
 #include "textures.h"
 
@@ -476,6 +478,68 @@ void drawAllBubbles(listeBub liste_bub)
 
 
 
+void drawTirsEnnemi(tirEnn tir_enn)  ///
+{
+	int i, j, l, h;
+	i = tir_enn->pos.x;
+	j = tir_enn->pos.y;
+	l = tir_enn->largeur;
+	h = tir_enn->hauteur;
+
+
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glTranslatef(i*Square_size,j*Square_size,0.0f);
+	
+
+	glBindTexture(GL_TEXTURE_2D, texture_tir_ennemi); 
+			
+
+	glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE); // ajout
+	glEnable( GL_BLEND );// rajout pour tester la transparence
+	glEnable(GL_TEXTURE_2D); // aj
+
+    glBegin(GL_QUADS);
+		glTexCoord2f(0.0f, 0.0f); glVertex2f(-(l/2) * Square_size, (h/2) * Square_size);
+		glTexCoord2f(1.0f, 0.0f); glVertex2f((l/2) * Square_size, (h/2) * Square_size);
+		glTexCoord2f(1.0f, 1.0f); glVertex2f((l/2) * Square_size,-(h/2) * Square_size);
+		glTexCoord2f(0.0f, 1.0f); glVertex2f(-(l/2) * Square_size, -(h/2) * Square_size);
+    glEnd();
+
+	glDisable( GL_BLEND );
+
+	glDisable(GL_TEXTURE_2D); // add
+
+
+}
+
+
+void drawAllTirsEnnemi(listeTirEnn liste_tir_enn)
+{
+	
+	tirEnn first;
+	tirEnn next;
+	first = liste_tir_enn->premier;
+	if (liste_tir_enn->premier != NULL && liste_tir_enn->premier->suivant != NULL)
+	{
+	next = liste_tir_enn->premier->suivant;
+	}
+	if (liste_tir_enn->premier != NULL)
+	{
+		drawTirsEnnemi(first);
+		if (liste_tir_enn->premier->suivant != NULL)
+		{
+			drawTirsEnnemi(next);
+			while (next->suivant != NULL)
+			{
+				next = next->suivant;
+				drawTirsEnnemi(next);
+			}
+		}
+	}
+}
+
 
 
 
@@ -521,6 +585,28 @@ void drawObstacle(obstacle obs)
 	
 	if (obs->bubbled == true)
 		glBindTexture(GL_TEXTURE_2D, texture_obstacle_bubbled); 
+	else if (obs->bonus == true){
+		if (obs->bonusType == 1){
+			glBindTexture(GL_TEXTURE_2D, texture_obstacle_rien); 
+	
+		}
+		if (obs->bonusType == 2){
+			glBindTexture(GL_TEXTURE_2D, texture_obstacle_coeur); 
+	
+		}
+		else if (obs->bonusType == 3){
+			glBindTexture(GL_TEXTURE_2D, texture_obstacle_dollar); 
+
+		}
+		else if (obs->bonusType == 4){
+			glBindTexture(GL_TEXTURE_2D, texture_obstacle_star); 
+
+		}
+		else if (obs->bonusType == 5){
+			glBindTexture(GL_TEXTURE_2D, texture_obstacle_recharge_bubble); 
+
+		}
+	}	
 	else 
 		glBindTexture(GL_TEXTURE_2D, texture_obstacle); 
 
@@ -646,19 +732,15 @@ void displayHUD() {
 	}
 
 
- 
-//TIMER fonctionnelle mais besoin de rajouter le pause timer --> pour plus tard, non prioritaire
+ /*
+//TIMER abandonné car pas capable de gérer les temps de pause 
 
     // Afficher le temps écoulé
       glRasterPos2f(0.7, 0.025); 
     char time_text[50];
 
-
 	int last_paused_time = end_pause_time - start_pause_time;
 	int total_paused_time =+ last_paused_time;
-
-
-
 
 	if (enPause != true && gameOver != true){
 		time_elapsed = time(NULL) - start_time - total_paused_time;
@@ -676,13 +758,13 @@ void displayHUD() {
 			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, time_text[i]);
 		}
 	}	
-    
+    */
 
 	
 
 
  	// Afficher le score
-    glRasterPos2f(0.9, 0.025); 
+    glRasterPos2f(0.82, 0.025); 
     char score_text[50];
     sprintf(score_text, "Score: %d", score);
     for (int i = 0; score_text[i] != '\0'; i++) {

@@ -68,11 +68,20 @@ void DisplayNewGame()
 
 	glClearColor(0.0f,0.0f,0.0f,0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  
+	
+
+
+	if (reInit==true){
+		reInit == false;
+	}
+
+
+		
+
 	game(&mX, &mY, scrolling_value, p, e, t); // save
 	
 	displayHUD(); 
-
+	
 	//displayGameOver(); 
 
 	glutSwapBuffers();
@@ -86,6 +95,7 @@ void DisplayGameOverMenu()
 
 	glClearColor(0.0f,0.0f,0.0f,0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	gameOver=true;
 	game(&mX, &mY, scrolling_value, p, e, t); // save
 	displayHUD(); 
 	displayGameOver(); 
@@ -147,12 +157,13 @@ void Display()
 	case nouvellePartie:
 	//	startTimer();
 	//	initGameParametres();
-	//	gameTimers();
+		
 
 			// introduire une nouvelle fonction destroy all qui détruit toutes le slistes chaines + remise à zero du timer, de la vie, position etc... 
 
 
 //	glutReshapeFunc(handleResize);
+	
 
 		DisplayNewGame();
 		
@@ -161,7 +172,6 @@ void Display()
 	case continuerPartie:
 		//startTimer(); // ne fonctionne pas
 		//initGameParametres();
-		//gameTimers();
 		//	glutReshapeFunc(handleResize);
 
 
@@ -246,7 +256,7 @@ int main(int argc, char *argv[])
 
 		startTimer();
 		initGameParametres();
-		gameTimers();
+	//	gameTimers();
 
 
 

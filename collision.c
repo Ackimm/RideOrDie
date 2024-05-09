@@ -13,6 +13,9 @@
 
 #include "bubbles.h"
 
+#include "fireEnnemi.h"
+
+
 #include "constantes.h"
 #include "drawMap.h"
 #include "game.h"
@@ -46,7 +49,7 @@ void checkCollisionTirVSennemi(int valeur) {
 
                         currentEnemy->vie--;
                         if (currentEnemy->vie == 0){
-                            score++;
+                            score+=100*currentDifficulte;
                         }   
 
                         currentTir->pos.y = 0;
@@ -88,8 +91,9 @@ void checkCollisionJoueurVSennemi(int valeur) {
                     p->vie--;
                     currentEnemy->vie--;
                     if (p->vie == 0){
-                        gameOver = true;
-                        displayGameOver();
+                        	updateBestScores(score);
+                            changerMenu(gameOverMenu);
+                        //displayGameOver();
                     }
                 }
             
@@ -110,18 +114,81 @@ void checkCollisionJoueurVSobstacle(int valeur) {
 
     while (currentObstacle != NULL) {
            
-                  int distanceX = abs(p->pos.x - currentObstacle->pos.x);
+                int distanceX = abs(p->pos.x - currentObstacle->pos.x);
                 int distanceY = abs(p->pos.y - currentObstacle->pos.y);
 
                 if ((distanceY <= ((p->hauteur / 2) + (currentObstacle->hauteur / 2))) &&
                     (distanceX <= ((p->largeur / 2) + (currentObstacle->largeur / 2))))  {
-                
-                    p->vie--;
-                    currentObstacle->vie--;
-                    if (p->vie == 0){
-                        gameOver = true;
-                        displayGameOver();
+
+                    if (currentObstacle->bonus == false){
+                        currentObstacle->bonusType = 1;
+                        currentObstacle->vie--;
+                        p->vie--;
+                        if (p->vie == 0){
+                            updateBestScores(score);
+                            changerMenu(gameOverMenu);
+                        }
                     }
+
+                    else if (currentObstacle->bonusType == 1) 
+                        currentObstacle->vie--;                        
+                    else if (currentObstacle->bonusType == 2){ 
+                       // currentObstacle->bonusType = 1;
+                        currentObstacle->vie--;
+                        if (currentDifficulte>=3)
+                            p->vie = p->vie + 1;
+                        else
+                            p->vie = p->vie + 2;
+                        
+                    }
+                    else if (currentObstacle->bonusType == 3){ // bonus point
+                      //  currentObstacle->bonusType = 1;
+                        currentObstacle->vie--;
+                        score = (score + (500*currentDifficulte));
+                    }
+                    else if (currentObstacle->bonusType == 4) { // star TBD
+                        //currentObstacle->bonusType = 1;
+                        currentObstacle->vie--;
+
+                        switch (currentDifficulte)
+                        {
+                        case 2:
+                            p->vie = p->vie+3;
+                            p->bubbles = p->bubbles+3;
+                            score = (score + (500*currentDifficulte));
+                            break;
+                        case 3:
+                            p->vie = p->vie+2;
+                            p->bubbles = p->bubbles+2;
+                            score = (score + (500*currentDifficulte));
+                        break;
+                        case 4:
+                            p->vie = p->vie+2;
+                            p->bubbles = p->bubbles+2;
+                            score = (score + (500*currentDifficulte));
+                            printf("Vous êtes une star !!!!\n");
+                            fflush(stdout); 
+
+                        break;
+                        default:
+                            p->vie = p->vie+4;
+                            p->bubbles = p->bubbles+4;
+                            score = (score + (500*currentDifficulte));
+                            break;
+                        }
+
+
+
+                          
+                    }
+                     else if (currentObstacle->bonusType == 5) { 
+                      //  currentObstacle->bonusType = 1;
+                        currentObstacle->vie--;
+                        p->bubbles++;
+                        
+                               
+                    }
+                         
                 }
             
 
@@ -129,7 +196,7 @@ void checkCollisionJoueurVSobstacle(int valeur) {
     }
 
 	if (enPause == false && gameOver == false) 
-        glutTimerFunc(updateFrequency, checkCollisionJoueurVSobstacle, 0);
+        glutTimerFunc(100, checkCollisionJoueurVSobstacle, 0);
         
 }
 
@@ -155,7 +222,6 @@ void checkCollisionEnnemiVSobstacle(int valeur) {
             if ((distanceY <= ((currentObstacle->hauteur / 2) + (currentEnemy->hauteur / 2))) &&
                 (distanceX <= ((currentObstacle->largeur / 2) + (currentEnemy->largeur / 2)))) 
                 {
-                currentEnemy->vie--;
                 currentObstacle->vie--;
             }
 
@@ -180,7 +246,7 @@ void checkCollisionTirVSobstacle(int valeur) {
      
         while (currentObstacle != NULL) {
 
-            if (currentObstacle->bubbled == true){
+            if ((currentObstacle->bubbled == true) && (currentObstacle->bonus == false)){
 
                 while (currentTir != NULL) {
 
@@ -191,7 +257,9 @@ void checkCollisionTirVSobstacle(int valeur) {
                     (distanceX <= ((currentTir->largeur / 2) + (currentObstacle->largeur / 2)))) 
                 {
 
-                        currentObstacle->vie--;
+                        currentObstacle->bubbled = false;
+                        currentObstacle->bonus = true;
+                        currentObstacle->bonusType = rand()%5+1;
                         currentTir->pos.y = 0;
 
                     }
@@ -223,8 +291,10 @@ void checkCollisionBubbleVSobstacle(int valeur) {
      
         while (currentObstacle != NULL) {
 
-        
-                while (currentBubble != NULL) {
+            if (currentObstacle->bonus == false){
+                  while (currentBubble != NULL) {
+
+                
 
                 int distanceX = abs(currentBubble->pos.x - currentObstacle->pos.x);
                 int distanceY = abs(currentBubble->pos.y - currentObstacle->pos.y);
@@ -242,6 +312,9 @@ void checkCollisionBubbleVSobstacle(int valeur) {
                 }
                 
             currentBubble = liste_bub->premier; 
+            }        
+        
+              
             currentObstacle = currentObstacle->suivant;
         }
 
@@ -252,3 +325,52 @@ void checkCollisionBubbleVSobstacle(int valeur) {
         glutTimerFunc(updateFrequency, checkCollisionBubbleVSobstacle, 0);
         
 }
+
+
+
+void checkCollisionJoueurVStirEnnemi(int valeur) {
+    //printf("0. Vérification collision joueur - tir ennemi\n");
+
+    //printf("0. tir ennemi : liste_tir_enn %p\n", (void*)liste_tir_enn->premier);
+    //fflush(stdout);
+
+    if (liste_tir_enn->premier != NULL){
+
+        tirEnn currentTirEnnemi = liste_tir_enn->premier;
+
+     //   printf("1. Vérification collision joueur - tir ennemi\n");
+       // fflush(stdout);    
+        while (currentTirEnnemi != NULL) {
+
+         //   printf("2. Vérification collision joueur - tir ennemi\n");
+           // fflush(stdout);    
+            
+            int distanceX = abs(p->pos.x - currentTirEnnemi->pos.x);
+            int distanceY = abs(p->pos.y - currentTirEnnemi->pos.y);
+
+            if ((distanceY <= ((p->hauteur / 2) + (currentTirEnnemi->hauteur / 2))) &&
+                (distanceX <= ((p->largeur / 2) + (currentTirEnnemi->largeur / 2))))  {
+
+                    printf("Joueur touché par ennemi\n");
+                    fflush(stdout);      
+                    p->vie--;
+                    currentTirEnnemi->active = false;
+                    if (p->vie == 0){
+                        updateBestScores(score);
+                        changerMenu(gameOverMenu);
+                    }
+                    
+            }
+        currentTirEnnemi = currentTirEnnemi->suivant;  
+
+        }
+    
+        
+
+
+       
+    }   
+    if (enPause == false && gameOver == false) 
+        glutTimerFunc(updateFrequency, checkCollisionJoueurVStirEnnemi, 0);   
+}
+

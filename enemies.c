@@ -19,6 +19,7 @@
 #include "constantes.h"
 #include "gameInitAndTimers.h"
 
+#include "fireEnnemi.h"
 
 
 
@@ -50,7 +51,10 @@ enemy createEnemy()
 	{
 		exit(EXIT_FAILURE);
 	} 
-	new->vie = 1;
+	if (currentDifficulte >= 3)
+		new->vie = 2;
+	else
+		new->vie = 1;
 	new->pos.x = x;
 	new->pos.y = 5;
 	new->speed = 100;
@@ -131,37 +135,58 @@ void updateEnemies(int valeur)
 	q = e->starList;
 	if (e->starList != NULL)
 	{
-		q->pos.y += 1;
+		if (gameOver == false)
+			q->pos.y += 1;
 
+		if ((currentDifficulte >= 2 && q->pos.y == 20) || (currentDifficulte == 4 && (q->pos.y == 20 || q->pos.y == 50  ))){
+	//	if (q->pos.y == 20 || q->pos.y == 50){ // pour le hardcore
 
-		if (q->pos.y > 120 || q->vie == 0 || reInit == true) 
-		{
-			//q->pos.y = 2;
-			q->active = false;
+			
+			if (reInit == false && enPause == false && gameOver == false){
+				tirEnn new = createTirEnnemi(q->pos.x, q->pos.y, p->pos.x, p->pos.y);
+				insertionTirsEnnemi(liste_tir_enn, new);
+				//glutPostRedisplay();
+			}
+			
+
 		}
+
+
+		if (q->pos.y > 120 || q->vie == 0 || reInit == true || gameOver == true) 
+//		if (q->pos.y > 120 || q->vie == 0) 
+			{
+				q->pos.y = 2;
+				q->active = false;
+			}
 		while (q->nextptr != NULL)
 		{
 			q = q->nextptr;
-			q->pos.y +=1;
+			if (gameOver == false)
+				q->pos.y += 1;
 
 
-			if (q->pos.y > 120 || q->vie == 0 || reInit == true) 
+			if (q->pos.y > 120 || q->vie == 0 || reInit == true || gameOver == true) 
+//			if (q->pos.y > 120 || q->vie == 0) 
+
 			{
-			//	q->pos.y = 2;
+				q->pos.y = 2;
 				q->active = false;
 			}
 		}
 	}
-	glutPostRedisplay();
+	//glutPostRedisplay();
 
+	//if (enPause == false && gameOver == false && reInit ==false) 
 	if (enPause == false && gameOver == false) 
 		glutTimerFunc(enemySpeed, updateEnemies, 0);
 	
-	if (reInit==true)
+	if (reInit==true){}
 		FinishedInitEnnemis = true;
 
-		
-	if (FinishedInitTirs==true && FinishedInitEnnemis==true && FinishedInitObstacles==true && FinishedInitBubbles==true)
+	//if (FinishedInitTirs==true && FinishedInitEnnemis==true && FinishedInitObstacles==true && FinishedInitBubbles==true && FinishedInitTirsEnnemi==true)	
+	if (FinishedInitTirs==true && FinishedInitEnnemis==true)	
+
+	//if (FinishedInitTirs==true && FinishedInitEnnemis==true && FinishedInitObstacles==true && FinishedInitBubbles==true)
 		reInit=false;
 
 

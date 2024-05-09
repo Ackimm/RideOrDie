@@ -12,12 +12,16 @@ struct positionO
 	int y;
 };
 
+typedef enum {noLuckToday = 1, VieSupp = 2, bonusPoints = 3, Star = 4, RechargeBubbles = 5} bonusType; 
+
 struct obstacles
 {
 	int vie;
 	struct positionO pos;
 	bool active;
 	bool bubbled;
+	bool bonus;
+	bonusType bonusType;
 	int hauteur;
 	int largeur;
 	struct obstacles *suivant;

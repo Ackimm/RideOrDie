@@ -32,6 +32,7 @@ GLuint texture_joueur_1;
 
 // tir joueur : 
 GLuint texture_tir_joueur;
+GLuint texture_tir_ennemi;
 
 // tir bubble : 
 GLuint texture_tir_bubble;
@@ -39,6 +40,11 @@ GLuint texture_tir_bubble;
 // obstacle: 
 GLuint texture_obstacle;
 GLuint texture_obstacle_bubbled;
+GLuint texture_obstacle_dollar;
+GLuint texture_obstacle_coeur;
+GLuint texture_obstacle_star;
+GLuint texture_obstacle_rien;
+GLuint texture_obstacle_recharge_bubble;
 
 
 
@@ -64,13 +70,20 @@ void initTextures() {
   
     // tirs
     texture_tir_joueur = loadTexture("images/tir/tank_bullet3.png");
-  
+    texture_tir_ennemi = loadTexture("images/tir/ballBlack_10.png");
+    
+
     // bubbles
     texture_tir_bubble = loadTexture("images/bubbles/planet00-b.png");
   
-    // obstacle
+    // obstacles
     texture_obstacle = loadTexture("images/obstacles/crate133.png");
     texture_obstacle_bubbled = loadTexture("images/obstacles/crate_bubbled133.png");
+    texture_obstacle_dollar = loadTexture("images/obstacles/coin_11.png");
+    texture_obstacle_coeur = loadTexture("images/obstacles/coeur133-c.png");
+    texture_obstacle_star = loadTexture("images/obstacles/star.png");
+    texture_obstacle_rien = loadTexture("images/obstacles/rien.png");
+    texture_obstacle_recharge_bubble = loadTexture("images/obstacles/bubble_planet.png");
 
 }
 

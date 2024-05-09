@@ -18,6 +18,7 @@
 #include "player.h"
 #include "constantes.h"
 #include "gameInitAndTimers.h"
+#include "fireEnnemi.h"
 
 bubble bub; // pour que d'autres fichiers puissent l'utiliser
 listeBub liste_bub; // pour que d'autres fichiers puissent l'utiliser
@@ -81,40 +82,78 @@ void insertionBubble(listeBub liste_bub, bubble nouveau)
     }
 
 	liste_bub->quantite += 1;
-    printf("Ajout bubble, nouvelle quantité : %i\n",liste_bub->quantite); // vérification de la quantité d'ennemis dans la chaine
-    fflush(stdout);
+   // printf("Ajout bubble, nouvelle quantité : %i\n",liste_bub->quantite); // vérification de la quantité d'ennemis dans la chaine
+   // fflush(stdout);
 }
 
-
+/*
 void suppressionBubbles(listeBub liste_bub){
     bool test = false;
     if (liste_bub->premier != NULL)
     {
         bubble tested = liste_bub->premier;
-        bubble previous = NULL;
-        while (tested != NULL)
+       	bubble next = tested->suivant; 
+
+		while (tested != NULL)
         {
-            bubble next = tested->suivant; 
-            if (tested->active == test)
-            {
-                if (previous == NULL)
-                {
+			if (tested->active == test)
+			{
+				
+					liste_bub->premier = tested->suivant;
+				if (tested->suivant->suivant != NULL)
+					liste_bub->premier->suivant = tested->suivant->suivant;
+				else 
+					liste_bub->premier->suivant = NULL;
+				
+				free(tested);
+				liste_bub->quantite--;
+				printf("Suppression Bubb, nouvelle quantité : %i\n",liste_bub->quantite); // vérification de la quantité d'ennemis dans la chaine
+				fflush(stdout);
+			}
+		
+		tested = next;
+    	}    
+    }
+}
+*/
+
+void suppressionBubbles(listeBub liste_bub) {
+    bool test = false;
+    if (liste_bub->premier != NULL) {
+        bubble tested = liste_bub->premier;
+        bubble previous = NULL;
+
+        while (tested != NULL) {
+            bubble next = tested->suivant; // Sauvegarde du prochain élément avant de supprimer celui-ci
+
+            if (tested->active == test) {
+                if (previous == NULL) {
+                    // Si le premier élément doit être supprimé
                     liste_bub->premier = tested->suivant;
-                }
-                else
-                {
+                } else {
+                    // Si un élément au milieu de la liste doit être supprimé
                     previous->suivant = tested->suivant;
                 }
-              	free(tested);
-				liste_bub->quantite--;
-               // printf("Suppression Bubb, nouvelle quantité : %i\n",liste_bub->quantite); // vérification de la quantité d'ennemis dans la chaine
-                //fflush(stdout);
-            }
-            else
-            {
+
+                free(tested);
+                liste_bub->quantite--;
+
+              //  printf("Suppression Bubble, nouvelle quantité : %i\n", liste_bub->quantite);
+
+			// listeBub liste_bubPRINT = liste_bub;
+             //   while (liste_bubPRINT->premier != NULL) {
+             //       printf("while1 : adresse et pos x et y d'un élément de la liste chainee %p : %i - %i\n", (void*)liste_bubPRINT->premier, liste_bubPRINT->premier->pos.x, liste_bubPRINT->premier->pos.y);
+              //      liste_bubPRINT->premier = liste_bubPRINT->premier->suivant;
+              //  }
+
+
+               // fflush(stdout);
+            } else {
+                // Mise à jour de l'élément précédent uniquement si l'élément actuel n'est pas supprimé
                 previous = tested;
             }
-            tested = next;
+
+            tested = next; // Passage à l'élément suivant dans la liste
         }
     }
 }
@@ -138,7 +177,7 @@ void updateBubbles(int valeur)
 
 		if (bub->pos.y < 2 || reInit == true) 
 		{
-			bub->pos.y = 0;
+			//bub->pos.y = 0;
 			bub->active = false;
 	//		printf("1. Bubble desactive\n");
 	//	fflush;
@@ -153,7 +192,7 @@ void updateBubbles(int valeur)
 
 			if (bub->pos.y < 2 || reInit == true) 
 			{
-				bub->pos.y = 0;
+				//bub->pos.y = 0;
 				bub->active = false;
 		//			printf("2. Bubble desactive\n");
 		//fflush;
@@ -170,8 +209,10 @@ void updateBubbles(int valeur)
 		FinishedInitBubbles = true;
 
 		
-	if (FinishedInitTirs==true && FinishedInitEnnemis==true && FinishedInitObstacles==true && FinishedInitBubbles==true)
-		reInit=false;
+//if (FinishedInitTirs==true && FinishedInitEnnemis==true && FinishedInitObstacles==true && FinishedInitBubbles==true && FinishedInitTirsEnnemi==true)	
+	if (FinishedInitTirs==true && FinishedInitEnnemis==true)	
+	//if (FinishedInitTirs==true && FinishedInitEnnemis==true && FinishedInitObstacles==true && FinishedInitBubbles==true)
+			reInit=false;
 
 
 }

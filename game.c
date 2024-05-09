@@ -17,7 +17,7 @@
 //#include "loadMap.h"
 #include "drawMap.h"
 #include "player.h"
-#include "enemies.h"
+//#include "enemies.h"
 #include "tirs.h"
 
 
@@ -29,6 +29,7 @@
 
 //#include "obstacles.h"
 //#include "bubbles.h"
+#include "fireEnnemi.h" // pourquoi il est nécessaire de le garder en include alors que ce n'est pas nécessaire pour bubble et obstacles ? 
 
 
 
@@ -38,83 +39,18 @@ bool RIGHT = false;
 bool DOWN = false;
 bool SHOOT = false;
 bool BUBBLE_SHOT = false;
+
 bool test;
 bool enPause;
 bool gameOver = false;
 bool reInit = false;
-bool hasReInit = false;
 
 int start_pause_time;
 int end_pause_time;
 
-//ajout pour keystate
+
 bool keyStates[256] = {false};  // Tableau pour suivre l'état des touches
 
-//listeBub liste_bub; 
-
-void Keyboard(unsigned char key, int x, int y)  // fonction allant gérer les input
-{
-	switch(key)
-	{
-		case 27: // ESC
-			
-
-			if (gameOver == false && (currentMenu==nouvellePartie || currentMenu == pauseMenu)){ 
-				enPause = !enPause;
-				printf("Bool enPause = %i\n", enPause);
-				fflush(stdout);
-				if (enPause == false){
-					gameTimers();
-					int end_pause_time = time(NULL);
-					if (currentMenu==pauseMenu){
-						changerMenu(nouvellePartie);
-
-					}
-				}		
-				else{
-					changerMenu(pauseMenu);
-					int start_pause_time = time(NULL);
-				}
-			}
-			break;
-
-		case'z':
-			if (enPause == false && gameOver == false) 
-				UP = true;
-			break;
-
-		case'q':
-			if (enPause == false && gameOver == false) 
-				LEFT = true;
-			break;
-
-		case'd':
-			if (enPause == false && gameOver == false) 
-				RIGHT = true;
-			break;
-
-		case's':
-			if (enPause == false && gameOver == false) 
-				DOWN = true;
-			break;
-
-		case'r':
-			if (enPause == false && gameOver == false) 
-				reinitializeGame();
-			break;
-
-
-		case 32:
-			if (enPause == false && gameOver == false) 
-				SHOOT = true;
-			break;	
-
-			case'e':
-		if (enPause == false && gameOver == false) 
-			BUBBLE_SHOT = true;
-		break;	
-	}	
-}
 
 
 
@@ -144,7 +80,11 @@ void game(int *maxX, int *maxY, float scrolling_value, player p, listeEn e, list
 	{
 		drawAllBubbles(liste_bub);
 	}
-    
+
+    if (liste_tir_enn->premier != NULL)
+	{
+		drawAllTirsEnnemi(liste_tir_enn);
+	}
     
 	glutKeyboardFunc(keyboardDown);
     glutKeyboardUpFunc(keyboardUp);
@@ -186,7 +126,11 @@ void updateFastMov(int value) {
 		}
 
 		if (keyStates['e']) {
-			shootBubble(p);
+			if (p->bubbles > 0){
+				shootBubble(p);
+				p->bubbles--;
+			}
+			
 			keyStates['e'] = false;	
 		}
 	}
@@ -200,8 +144,10 @@ void updateFastMov(int value) {
 			if (gameOver == false && (currentMenu==nouvellePartie || currentMenu == pauseMenu)){ 
 				enPause = !enPause;
 				printf("Bool enPause = %i\n", enPause);
+				 printf("reinit value après clic ESC pause : %i\n", reInit);fflush(stdout);
+
 				fflush(stdout);
-				if (enPause == false){
+				if (enPause == false){ // si vient de désactiver la pause 
 					gameTimers();
 					int end_pause_time = time(NULL);
 					if (currentMenu==pauseMenu){
@@ -209,7 +155,7 @@ void updateFastMov(int value) {
 
 					}
 				}		
-				else{
+				else{ /// si vient d'activer la pause 
 					changerMenu(pauseMenu);
 					int start_pause_time = time(NULL);
 				}
@@ -221,17 +167,9 @@ void updateFastMov(int value) {
 
 	
 
-
-	if (gameOver == true)
-		changerMenu(gameOverMenu);
-
-	if (hasReInit == false){
-		reinitializeGame();
-		hasReInit = true;
-	}
-
-
 if (enPause == false && gameOver == false) 
+//if (gameOver == false) 
+
    glutTimerFunc(updateFrequency, updateFastMov, 0);  
 
 

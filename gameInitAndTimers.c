@@ -12,14 +12,16 @@
 #include "player.h"
 #include "enemies.h"
 #include "loadMap.h"
+#include "fireEnnemi.h"
 
 #include "tirs.h"
 #include "drawMap.h"
 #include "time.h"
 #include "collision.h"
-#include "game.h"
 #include "obstacles.h"
 #include "bubbles.h"
+
+
 
 
 
@@ -42,6 +44,7 @@ void initGameParametres(){
 		t = initialListeTirs();
 		liste_obs = initialListObstacles();
 		liste_bub = initialListBubbles();
+		liste_tir_enn = initialListTirsEnnemi();
 }
 
 
@@ -53,6 +56,10 @@ void gameTimers(){
 		glutTimerFunc(updateNewEnemy, updateNewEnemies, 0);
 		glutTimerFunc(updateFrequency, updateDeleteEnemies, 0);
 
+		// Timers relatifs aux tirs ennemis
+		glutTimerFunc(tirsEnnemiSpeed, updateTirsEnnemi, 0);
+		glutTimerFunc(updateFrequency, updateDeleteTirsEnnemi, 0);
+
 		// Timers relatifs aux obstacles
 		glutTimerFunc(FreqUpdateObstacles, updateObstacles, 0);
 		glutTimerFunc(updateFrequency, updateNewObstacles, 0);
@@ -62,7 +69,7 @@ void gameTimers(){
 		glutTimerFunc(tirsSpeed, updateTirs, 0);
 		glutTimerFunc(updateFrequency, updateDeleteTirs, 0);
 
-		// Timers relatifs aux tirs normaux
+		// Timers relatifs aux bubbles
 		glutTimerFunc(tirsSpeed, updateBubbles, 0);
 		glutTimerFunc(updateFrequency, updateDeleteBubbles, 0);
 
@@ -72,8 +79,9 @@ void gameTimers(){
 		// Collisions
 			// concernant le joueur : 
 				glutTimerFunc(updateFrequency, checkCollisionJoueurVSennemi, 0);
-				glutTimerFunc(updateFrequency, checkCollisionJoueurVSobstacle, 0);
-				//glutTimerFunc(updateFrequency, checkCollisionJoueurVStirEnnemi, 0);
+				glutTimerFunc(100, checkCollisionJoueurVSobstacle, 0);
+				glutTimerFunc(updateFrequency, checkCollisionJoueurVStirEnnemi, 0);
+
 
 			// concernant la bubble : 
 				glutTimerFunc(updateFrequency, checkCollisionBubbleVSobstacle, 0);
@@ -99,27 +107,133 @@ void gameTimers(){
 void reinitializeGame(){
 	
 	// réinit du joueur
-	p->vie = 1000;
+	p->vie = 10;
 	p->pos.x = 62;
-	p->pos.y = 62 ;
-	p->bubbles = 5;
+	p->pos.y = 110;
+	p->bubbles = 10;
 
 	
 	// réinit du score
 	score = 0;
 
+	enPause = false;
+	gameOver = false;
+
+	if (currentDifficulte != 1 && currentDifficulte != 2 && currentDifficulte != 3 && currentDifficulte != 4 )
+		currentDifficulte = 1;
+
+
 	// reinit du timer
 	time_elapsed = 0; 
+	startTimer();
+	
+	
 
 
 
-	// réinit des tirs et des ennemis
-	reInit = true;
+	// réinit des tirs et des ennemis // SYSTEME ABANONNE 
+//	reInit = true;
+	//gameTimers();
 
 
+	
+/*
+	e->starList;
+	t = initialListeTirs();
+	liste_obs = initialListObstacles();
+	liste_bub = initialListBubbles();
+	liste_tir_enn = initialListTirsEnnemi();
+*/
+
+if (e->starList != NULL) {
+    enemy asupprimer = e->starList;
+    while (asupprimer != NULL) {
+        enemy next = asupprimer->nextptr;
+        free(asupprimer);
+        asupprimer = next;
+    }
+    e->starList = NULL;
+}
+e = initialListEnemies();
+
+
+if (t->starList != NULL) {
+    tirsP asupprimer = t->starList;
+    while (asupprimer != NULL) {
+        tirsP next = asupprimer->nextptr;
+        free(asupprimer);
+        asupprimer = next;
+    }
+    t->starList = NULL;
+}
+t = initialListeTirs();
+
+
+if (liste_obs->premier != NULL) {
+    obstacle asupprimer = liste_obs->premier;
+    while (asupprimer != NULL) {
+        obstacle next = asupprimer->suivant;
+        free(asupprimer);
+        asupprimer = next;
+    }
+    liste_obs->premier = NULL;
+}
+		liste_obs = initialListObstacles();
+
+
+		if (liste_bub->premier != NULL) {
+    bubble asupprimer = liste_bub->premier;
+    while (asupprimer != NULL) {
+        bubble next = asupprimer->suivant;
+        free(asupprimer);
+        asupprimer = next;
+    }
+    liste_bub->premier = NULL;
+}
+		liste_bub = initialListBubbles();
+
+
+		if (liste_tir_enn->premier != NULL) {
+    tirEnn asupprimer = liste_tir_enn->premier;
+    while (asupprimer != NULL) {
+        tirEnn next = asupprimer->suivant;
+        free(asupprimer);
+        asupprimer = next;
+    }
+    liste_tir_enn->premier = NULL;
+}
+		liste_tir_enn = initialListTirsEnnemi();
+/*
+
+		if (liste_bub->premier !=NULL){
+			obstacle asupprimer = liste_bub->premier;
+			obstacle next = asupprimer->suivant;
+			while (asupprimer != NULL){
+				asupprimer = liste_bub->premier->suivant;
+				free(asupprimer); 
+				asupprimer = next;
+			}
+			liste_bub->premier = NULL;
+		}
+		//liste_bub = initialListBubbles();
+
+
+		if (liste_tir_enn->premier !=NULL){
+			obstacle asupprimer = liste_tir_enn->premier;
+			obstacle next = asupprimer->suivant;
+			while (asupprimer != NULL){
+				asupprimer = liste_tir_enn->premier->suivant;
+				free(asupprimer); 
+				asupprimer = next;
+			}
+			liste_tir_enn->premier = NULL;
+		}
+		//liste_tir_enn = initialListTirsEnnemi();
+		*/
+
+
+	
 
 }
-
-
 
 

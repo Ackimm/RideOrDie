@@ -93,9 +93,9 @@ void updateBestScores(int score) {
     }
 
     // Tri des meilleurs scores
-    tri_bulle(bestScores, nbBestScores);
+   // tri_bulle(bestScores, nbBestScores);
 
-    printf("Après tri à bulle :\n");
+   // printf("Après tri à bulle :\n");
 
     for (i = 0; i < nbBestScores; i++) {
         printf("Meilleur score %d : %d\n", i, bestScores[i]);

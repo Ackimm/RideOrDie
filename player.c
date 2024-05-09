@@ -37,12 +37,12 @@ player p = malloc(sizeof(player));
 	p->vie = 1000;
 //	p->pos.x = x;
 //	p->pos.y = y;
-	p->pos.x = 20;
-	p->pos.y = 20;
+	p->pos.x = 1;
+	p->pos.y = 1;
 
 	p->largeur = 4;
 	p->hauteur = 12;
-	p->bubbles = 5;
+	p->bubbles = 666;
 	return p;
 }
 

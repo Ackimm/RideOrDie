@@ -23,6 +23,8 @@ extern GLuint texture_bord_route_droite;
 
 // tir joueur : 
 extern GLuint texture_tir_joueur;
+extern GLuint texture_tir_ennemi;
+
 
 
 // tir bubble : 
@@ -32,6 +34,12 @@ extern GLuint texture_tir_bubble;
 // obstacle: 
 extern GLuint texture_obstacle;
 extern GLuint texture_obstacle_bubbled;
+extern GLuint texture_obstacle_dollar;
+extern GLuint texture_obstacle_coeur;
+extern GLuint texture_obstacle_star;
+extern GLuint texture_obstacle_rien;
+extern GLuint texture_obstacle_recharge_bubble;
+
 
 
 

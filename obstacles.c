@@ -17,6 +17,7 @@
 #include "game.h"
 #include "constantes.h"
 #include "gameInitAndTimers.h"
+#include "fireEnnemi.h"
 
 obstacle obs; // pour que d'autres fichiers puissent l'utiliser
 listeObs liste_obs; // pour que d'autres fichiers puissent l'utiliser
@@ -47,6 +48,8 @@ obstacle createObstacle(){
 	nouveau->pos.y = 5;
 	nouveau->active = true;
 	nouveau->bubbled = false;
+	nouveau->bonus = false;
+	nouveau->bonusType = 0;
 	nouveau->hauteur = 12;
 	nouveau->largeur = 9;
     nouveau->suivant = NULL;
@@ -123,9 +126,10 @@ void updateObstacles(int valeur)
 	obs = liste_obs->premier;
 	if (liste_obs->premier != NULL)
 	{
+		if (gameOver == false)
 		obs->pos.y += 1;
 
-		if (obs->pos.y > 120 || obs->vie == 0 || reInit == true) 
+		if (obs->pos.y > 120 || obs->vie == 0 || reInit == true || gameOver == true) 
 		{
 			obs->pos.y = 2;
 			obs->active = false;
@@ -133,9 +137,10 @@ void updateObstacles(int valeur)
 		while (obs->suivant != NULL)
 		{
 			obs = obs->suivant;
+			if (gameOver == false)
 			obs->pos.y +=1;
 
-			if (obs->pos.y > 120 || obs->vie == 0 || reInit == true) 
+			if (obs->pos.y > 120 || obs->vie == 0 || reInit == true || gameOver == true) 
 			{
 				obs->pos.y = 2;
 				obs->active = false;
@@ -147,12 +152,14 @@ void updateObstacles(int valeur)
 	if (enPause == false && gameOver == false) 
 		glutTimerFunc(FreqUpdateObstacles, updateObstacles, 0);
 	
-	if (reInit==true)
-		FinishedInitObstacles = true;
+//	if (reInit==true)
+//		FinishedInitObstacles = true;
 
 		
-	if (FinishedInitTirs==true && FinishedInitEnnemis==true && FinishedInitObstacles==true && FinishedInitBubbles==true)
-		reInit=false;
+//if (FinishedInitTirs==true && FinishedInitEnnemis==true && FinishedInitObstacles==true && FinishedInitBubbles==true && FinishedInitTirsEnnemi==true)	
+//	if (FinishedInitTirs==true && FinishedInitEnnemis==true)		
+	//if (FinishedInitTirs==true && FinishedInitEnnemis==true && FinishedInitObstacles==true && FinishedInitBubbles==true)
+//			reInit=false;
 
 
 }

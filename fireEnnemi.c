@@ -147,9 +147,8 @@ void suppressionTirsEnnemi(listeTirEnn liste_tir_enn) {
 
 
 */
-
+/*
 void suppressionTirsEnnemi(listeTirEnn liste_tir_enn) {
-    bool test = false;
     if (liste_tir_enn->premier != NULL) {
         tirEnn tested = liste_tir_enn->premier;
         tirEnn previous = NULL;
@@ -157,34 +156,59 @@ void suppressionTirsEnnemi(listeTirEnn liste_tir_enn) {
         while (tested != NULL) {
             tirEnn next = tested->suivant; // Sauvegarde du prochain élément avant de supprimer celui-ci
 
-            if (tested->active == test) {
+            if (!(tested->active)) {
                 if (previous == NULL) {
                     // Si le premier élément doit être supprimé
                     liste_tir_enn->premier = tested->suivant;
+                    free(tested);
+                    tested = liste_tir_enn->premier; // Avancer au prochain élément
                 } else {
-                    // Si un élément au milieu de la liste doit être supprimé
+                    // Si un élément au milieu ou en fin de la liste doit être supprimé
                     previous->suivant = tested->suivant;
+                    free(tested);
+                    tested = next; // Avancer au prochain élément
                 }
-
-                free(tested);
                 liste_tir_enn->quantite--;
-
-           //     printf("Suppression TirEnnemi, nouvelle quantité : %i\n", liste_tir_enn->quantite);
-
-		//	 listeTirEnn liste_bubPRINT = liste_tir_enn;
-         //      while (liste_bubPRINT->premier != NULL) {
-          //         printf("while1 : adresse et pos x et y d'un élément de la liste chainee %p : %f - %f\n", (void*)liste_bubPRINT->premier, liste_bubPRINT->premier->pos.x, liste_bubPRINT->premier->pos.y);
-           //       liste_bubPRINT->premier = liste_bubPRINT->premier->suivant;
-           //   }
-
-
+                printf("Suppression TirEnnemi, nouvelle quantité : %i\n", liste_tir_enn->quantite);
                 fflush(stdout);
             } else {
                 // Mise à jour de l'élément précédent uniquement si l'élément actuel n'est pas supprimé
                 previous = tested;
+                tested = next; // Avancer au prochain élément
             }
+        }
+    }
+}*/
 
-            tested = next; // Passage à l'élément suivant dans la liste
+void suppressionTirsEnnemi(listeTirEnn liste_tir_enn){
+    bool test = false;
+    if (liste_tir_enn->premier != NULL)
+    {
+        tirEnn tested = liste_tir_enn->premier;
+        tirEnn prevTirEn = NULL;
+        while (tested != NULL)
+        {
+            tirEnn TirEn_suivant = tested->suivant; 
+            if (tested->active == test)
+            {
+                if (prevTirEn == NULL)
+                {
+                    liste_tir_enn->premier = tested->suivant;
+                }
+                else
+                {
+                    prevTirEn->suivant = tested->suivant;
+                }
+              	free(tested);
+				liste_tir_enn->quantite--;
+                printf("Suppression TirEn, nouvelle quantité : %i\n",liste_tir_enn->quantite); // vérification de la quantité d'ennemis dans la chaine
+                fflush(stdout);
+            }
+            else
+            {
+                prevTirEn = tested;
+            }
+            tested = TirEn_suivant;
         }
     }
 }

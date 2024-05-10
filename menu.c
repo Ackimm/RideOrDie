@@ -16,6 +16,8 @@
 #include "gameInitAndTimers.h"
 #include "bestScores.h"
 #include "collision.h"
+#include "textures.h"
+
 
 
 #include <stdlib.h>
@@ -45,24 +47,46 @@ void drawMenu() {
 	glMatrixMode(GL_MODELVIEW);
 	
 
-//-----------------
+
+
+
+
+
+   
+
+
+/*TEST TEXTURE*/
+    glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+	glBindTexture(GL_TEXTURE_2D, texture_ecran_depart); 
+	glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE); // ajout
+	glEnable( GL_BLEND );// rajout pour tester la transparence
+	glEnable(GL_TEXTURE_2D); // aj
+
+
+	glBegin(GL_QUADS);
+			glTexCoord2f(0.0f, 0.0f); glVertex2f(0,0);
+		glTexCoord2f(1.0f, 0.0f); glVertex2f(1,0);
+		glTexCoord2f(1.0f, 1.0f); glVertex2f(1,1);
+		glTexCoord2f(0.0f, 1.0f); glVertex2f(0,1);
+    glEnd();
+
+    glDisable( GL_BLEND );
+	glDisable(GL_TEXTURE_2D); 
+
+/*TEST TEXTURE*/
+/*SAVE---------
+
 	glPushMatrix();
 	glLoadIdentity();
-
-
-
-    glColor4f(0.0, 1.0, 1.0, 0.0); 	// transparence ne marche pas pour le moment, à vérifier
-
-
+ glColor4f(0.0, 1.0, 1.0, 0.0); 	// transparence ne marche pas pour le moment, à vérifier
 	glBegin(GL_QUADS);
 		glVertex2f(0.0, 0.0); // coin sup gauche (puis dans le sens des aiguilles d'une montre)
 		glVertex2f(1.0, 0.0); // coin sup droit
 		glVertex2f(1.0, 1.0); // coin inf droit
 		glVertex2f(0.0, 1.0); // coin inf gauche
     glEnd();
-
-
- 	
+------------SAVE*/
      glColor4f(0.0, 0.0, 5.0, 5.0);
 	glBegin(GL_QUADS);
 		glVertex2f(longueur_bouton, hauteur_bouton); // coin sup gauche (puis dans le sens des aiguilles d'une montre)
@@ -74,9 +98,9 @@ void drawMenu() {
 
     glColor3f(1.0f, 1.0f, 1.0f); // Couleur blanche pour le texte
     float position_texte_bouton = ((2)*hauteur_bouton);
-    glRasterPos2f(0.47, 0.1363636); // Position du texte pour le score
+    glRasterPos2f(0.43, 0.1363636); // Position du texte pour le score
     char label_jouer[50];
-    sprintf(label_jouer, "Jouer!");
+    sprintf(label_jouer, "Nouvelle partie!");
     for (int i = 0; label_jouer[i] != '\0'; i++) {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, label_jouer[i]);
     }
@@ -94,7 +118,7 @@ void drawMenu() {
     glColor3f(1.0f, 1.0f, 1.0f); // Couleur blanche pour le texte
        glRasterPos2f(0.38, 0.3181818);// Position du texte pour la vie
     char label_lastgame[100];
-    sprintf(label_lastgame, "Continue la dernière partie");
+    sprintf(label_lastgame, "Continue la partie en cours");
     for (int i = 0; label_lastgame[i] != '\0'; i++) {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, label_lastgame[i]);
     }
@@ -183,6 +207,31 @@ void drawScores() {
 	glMatrixMode(GL_MODELVIEW);
 
 //-----------------
+
+
+
+/*TEST TEXTURE*/
+    glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+	glBindTexture(GL_TEXTURE_2D, texture_ecran_depart); 
+	glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE); // ajout
+	glEnable( GL_BLEND );// rajout pour tester la transparence
+	glEnable(GL_TEXTURE_2D); // aj
+
+
+	glBegin(GL_QUADS);
+			glTexCoord2f(0.0f, 0.0f); glVertex2f(0,0);
+		glTexCoord2f(1.0f, 0.0f); glVertex2f(1,0);
+		glTexCoord2f(1.0f, 1.0f); glVertex2f(1,1);
+		glTexCoord2f(0.0f, 1.0f); glVertex2f(0,1);
+    glEnd();
+
+    glDisable( GL_BLEND );
+	glDisable(GL_TEXTURE_2D); 
+
+/*TEST TEXTURE*/
+
+/*
 	glPushMatrix();
 	glLoadIdentity();
 	
@@ -197,7 +246,7 @@ void drawScores() {
 		glVertex2f(1.0, 1.0); // coin inf droit
 		glVertex2f(0.0, 1.0); // coin inf gauche
     glEnd();
-
+*/
 
  		    glColor4f(0.0, 0.0, 5.0, 5.0);
 
@@ -286,6 +335,31 @@ void drawParametres() {
 	glMatrixMode(GL_MODELVIEW);
 
 //-----------------
+
+
+
+/*TEST TEXTURE*/
+    glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+	glBindTexture(GL_TEXTURE_2D, texture_ecran_depart); 
+	glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE); // ajout
+	glEnable( GL_BLEND );// rajout pour tester la transparence
+	glEnable(GL_TEXTURE_2D); // aj
+
+
+	glBegin(GL_QUADS);
+			glTexCoord2f(0.0f, 0.0f); glVertex2f(0,0);
+		glTexCoord2f(1.0f, 0.0f); glVertex2f(1,0);
+		glTexCoord2f(1.0f, 1.0f); glVertex2f(1,1);
+		glTexCoord2f(0.0f, 1.0f); glVertex2f(0,1);
+    glEnd();
+
+    glDisable( GL_BLEND );
+	glDisable(GL_TEXTURE_2D); 
+
+/*TEST TEXTURE*/
+
+/*
 	glPushMatrix();
 	glLoadIdentity();
 	
@@ -301,7 +375,7 @@ void drawParametres() {
 		glVertex2f(0.0, 1.0); // coin inf gauche
     glEnd();
 
-
+*/
 
 		    glColor4f(0.0, 0.0, 5.0, 5.0);
 
@@ -446,6 +520,7 @@ void mouseClick(int button, int state, int x, int y) {
                 else if (yN >= 5*hauteur_bouton && yN <= 6*hauteur_bouton) {
                     printf("X : %f, Y = %f\n", xN, yN); // test en attendant de mettre des autres boutons 
                     changerMenu(highScores); // ici il faudrait faire le lien avec le main où on déclare l'extern
+                    updateBestScores(0);
                     printf("Menu sélectionné : %d\n", currentMenu);
                     fflush(stdout);
 

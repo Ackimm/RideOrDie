@@ -1,6 +1,8 @@
 #ifndef TEXTURES_H
 #define TEXTURES_H
 
+// Ecran démarrage : 
+extern GLuint texture_ecran_depart;
 
 // voitures
 extern GLuint texture_voiture_1;

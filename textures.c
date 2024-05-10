@@ -12,6 +12,9 @@
 
 #include "textures.h"
 
+// Ecran démarrage : 
+GLuint texture_ecran_depart;
+
 // terrain : 
 GLuint texture_herbe_1;
 GLuint texture_route_dirt;
@@ -50,6 +53,9 @@ GLuint texture_obstacle_recharge_bubble;
 
 void initTextures() {
     // Charger les textures
+
+    // Ecran démarrage : 
+    texture_ecran_depart = loadTexture("images/menu/demarrage.png");
     
     // terrain : 
     texture_herbe_1 = loadTexture("images/terrain/land_grass.png");

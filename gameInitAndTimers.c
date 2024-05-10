@@ -107,7 +107,7 @@ void gameTimers(){
 void reinitializeGame(){
 	
 	// réinit du joueur
-	p->vie = 10;
+	p->vie = 50;
 	p->pos.x = 62;
 	p->pos.y = 110;
 	p->bubbles = 10;

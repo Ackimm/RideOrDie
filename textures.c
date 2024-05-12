@@ -12,8 +12,33 @@
 
 #include "textures.h"
 
+// Menu: 
 // Ecran démarrage : 
 GLuint texture_ecran_depart;
+// Ecran de jeu : HUD : 
+GLuint texture_HUD;
+// Ecran paramètres : 
+GLuint texture_ecran_parametres;
+// scores
+GLuint texture_ecran_scores;
+// pause et gameOver
+GLuint texture_gameover;
+GLuint texture_pause;
+
+// Boutons
+GLuint texture_bouton_facile;
+GLuint texture_bouton_moyen;
+GLuint texture_bouton_difficile;
+GLuint texture_bouton_hardcore;
+
+GLuint texture_bouton_revenir_menu;
+GLuint texture_bouton_reprendre;
+
+GLuint texture_bouton_nouvelle;
+GLuint texture_bouton_continuer;
+GLuint texture_bouton_hall_of_fame;
+GLuint texture_bouton_parametres;
+GLuint texture_bouton_quitter;
 
 // terrain : 
 GLuint texture_herbe_1;
@@ -54,9 +79,37 @@ GLuint texture_obstacle_recharge_bubble;
 void initTextures() {
     // Charger les textures
 
-    // Ecran démarrage : 
+    // Menu : 
+    // Ecran de démarrage
     texture_ecran_depart = loadTexture("images/menu/demarrage.png");
-    
+    // Ecran de jeu : HUD : 
+    texture_HUD  = loadTexture("images/menu/hud.png");
+    // regles & parametres 
+    texture_ecran_parametres = loadTexture("images/menu/fame_parametres/fond_regles.png");
+    // scores
+    texture_ecran_scores = loadTexture("images/menu/fame_parametres/fond_scores.png");
+
+    // pause et gameOver
+    texture_gameover = loadTexture("images/menu/pause_gameover/texture_gameover.png");
+    texture_pause = loadTexture("images/menu/pause_gameover/texture_pause.png");
+
+    // Boutons
+    texture_bouton_facile = loadTexture("images/menu/boutons/bouton_facile.png");
+    texture_bouton_moyen = loadTexture("images/menu/boutons/bouton_moyen.png");
+    texture_bouton_difficile = loadTexture("images/menu/boutons/bouton_difficile.png");
+    texture_bouton_hardcore = loadTexture("images/menu/boutons/bouton_hardcore.png");
+
+    texture_bouton_revenir_menu = loadTexture("images/menu/boutons/bouton_revenir_menu.png");
+    texture_bouton_reprendre = loadTexture("images/menu/boutons/bouton_reprendre.png");
+
+    texture_bouton_nouvelle = loadTexture("images/menu/boutons/bouton_new_game3.png");
+    texture_bouton_continuer = loadTexture("images/menu/boutons/bouton_continuer.png");
+    texture_bouton_hall_of_fame = loadTexture("images/menu/boutons/bouton_hall_of_fame.png");
+    texture_bouton_parametres = loadTexture("images/menu/boutons/bouton_parametres.png");
+    texture_bouton_quitter= loadTexture("images/menu/boutons/bouton_quitter.png");
+
+
+
     // terrain : 
     texture_herbe_1 = loadTexture("images/terrain/land_grass.png");
     texture_route_dirt = loadTexture("images/terrain/land_dirt.png");

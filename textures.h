@@ -1,8 +1,34 @@
 #ifndef TEXTURES_H
 #define TEXTURES_H
 
+
+// Menu: 
 // Ecran démarrage : 
 extern GLuint texture_ecran_depart;
+// Ecran de jeu : HUD : 
+extern GLuint texture_HUD;
+// Ecran paramètres : 
+extern GLuint texture_ecran_parametres;
+// scores
+extern GLuint texture_ecran_scores;
+// pause et gameOver
+extern GLuint texture_gameover;
+extern GLuint texture_pause;
+
+// Boutons
+extern GLuint texture_bouton_facile;
+extern GLuint texture_bouton_moyen;
+extern GLuint texture_bouton_difficile;
+extern GLuint texture_bouton_hardcore;
+
+extern GLuint texture_bouton_revenir_menu;
+extern GLuint texture_bouton_reprendre;
+
+extern GLuint texture_bouton_nouvelle;
+extern GLuint texture_bouton_continuer;
+extern GLuint texture_bouton_hall_of_fame;
+extern GLuint texture_bouton_parametres;
+extern GLuint texture_bouton_quitter;
 
 // voitures
 extern GLuint texture_voiture_1;

@@ -20,7 +20,7 @@
 
 #include "obstacles.h"
 #include "bubbles.h"
-#include "fireEnnemi.h"
+#include "tirEnnemi.h"
 
 
 #include "textures.h"
@@ -36,7 +36,7 @@ en sachant que la position (i, j) est la position (y, x) et non (x, y)
 
 ------------------------*/
 
-
+// fonction d'affichage de la partie en jeu sur base de la map.txt la fonction récupérer la taille de la map (hauteur x longueur) et la valeur de scrolling à appliquer aux différents éléments de décor
 void drawWall(int *maxX, int *maxY, float scrolling_value){			// fonction qui affiche les murs et les plateformes	
 
 	for (int i = 0; i < (*maxY); i++)
@@ -49,8 +49,7 @@ void drawWall(int *maxX, int *maxY, float scrolling_value){			// fonction qui af
 				glMatrixMode(GL_MODELVIEW);
 				
 			    glLoadIdentity();
-				glTranslatef(j*Square_size,i*Square_size,0.0f); // ici j et i sont inversés, il faudra encore un peu creuser pour comprendre pourquoi ça marche mieux ainsi
-				
+				glTranslatef(j*Square_size,i*Square_size,0.0f); // ici j et i sont inversés (voir commentaire ci-dessus)
 				
 				glBegin(GL_QUADS);
 					glVertex3f(0.0f, 0.0f, 0.0f);
@@ -60,7 +59,7 @@ void drawWall(int *maxX, int *maxY, float scrolling_value){			// fonction qui af
 
 				glEnd();	
 			}
-			
+	// ensuite les autres éléments que !		
 
 			if(*(*(map + i) + j) == 'b'){
 
@@ -72,7 +71,7 @@ void drawWall(int *maxX, int *maxY, float scrolling_value){			// fonction qui af
 				
 			
 			glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE); // ajout
-			glDisable( GL_BLEND );// rajout pour tester la transparence
+			//glDisable( GL_BLEND );// rajout pour tester la transparence
 			glEnable(GL_TEXTURE_2D); // aj
 
 			glBegin(GL_QUADS);
@@ -98,7 +97,7 @@ void drawWall(int *maxX, int *maxY, float scrolling_value){			// fonction qui af
 				
 			
 			glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE); // ajout
-			glDisable( GL_BLEND );// rajout pour tester la transparence
+		//	glDisable( GL_BLEND );// rajout pour tester la transparence
 			glEnable(GL_TEXTURE_2D); // aj
 
 			glBegin(GL_QUADS);
@@ -129,7 +128,7 @@ void drawWall(int *maxX, int *maxY, float scrolling_value){			// fonction qui af
 				
 			
 			glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE); // ajout
-			glDisable( GL_BLEND );// rajout pour tester la transparence
+		//	glDisable( GL_BLEND );// rajout pour tester la transparence
 			glEnable(GL_TEXTURE_2D); // aj
 
 			glBegin(GL_QUADS);
@@ -157,7 +156,7 @@ void drawWall(int *maxX, int *maxY, float scrolling_value){			// fonction qui af
 				
 			
 			glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE); // ajout
-			glDisable( GL_BLEND );// rajout pour tester la transparence
+			//glDisable( GL_BLEND );// rajout pour tester la transparence
 			glEnable(GL_TEXTURE_2D); // aj
 
 			glBegin(GL_QUADS);
@@ -185,7 +184,7 @@ void drawWall(int *maxX, int *maxY, float scrolling_value){			// fonction qui af
 				
 			
 			glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE); // ajout
-			glDisable( GL_BLEND );// rajout pour tester la transparence
+		//	glDisable( GL_BLEND );// rajout pour tester la transparence
 			glEnable(GL_TEXTURE_2D); // aj
 
 			glBegin(GL_QUADS);
@@ -202,6 +201,8 @@ void drawWall(int *maxX, int *maxY, float scrolling_value){			// fonction qui af
 	}
 }	
 
+
+// fonction qui augumente la valeur de scrolling jusqu'à ce que les éléments se superposent avec les éléments intiaux. La foncion réinitialise alors la veleur à 0. 
 void updateScrolling(){
 	scrolling_value += 5.15;
 	if (scrolling_value >=92 ){
@@ -210,7 +211,6 @@ void updateScrolling(){
 	
 	if (enPause == false && gameOver == false) 
 		glutTimerFunc(updateFrequencyScrolling, updateScrolling, 0);
-
 }
 
 
@@ -223,8 +223,6 @@ void drawPlayer(player p)
 	j = p->pos.y;
 	l = p->largeur;
 	h = p->hauteur;
-
-
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -248,7 +246,6 @@ void drawPlayer(player p)
 	glDisable( GL_BLEND );
 
 	glDisable(GL_TEXTURE_2D); // add
-
 
 }
 
@@ -343,7 +340,6 @@ void drawTirs(tirsP p)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	glTranslatef(i*Square_size,j*Square_size,0.0f);
-	
 
 	glBindTexture(GL_TEXTURE_2D, texture_tir_joueur); 
 			
@@ -363,19 +359,12 @@ void drawTirs(tirsP p)
 
 	glDisable(GL_TEXTURE_2D); 
 
-
-
-
-
-
-
 }
 
 
 void drawAllTirs(listetirsP t)
 {
-	//tirsP first = malloc(sizeof(tirs));//save
-	//tirsP next = malloc(sizeof(tirs));//save
+
 	tirsP first;//tentative
 	tirsP next;//tentative
 	first = t->starList;
@@ -397,10 +386,6 @@ void drawAllTirs(listetirsP t)
 		}
 	}
 }
-
-
-
-
 
 
 
@@ -470,14 +455,6 @@ void drawAllBubbles(listeBub liste_bub)
 
 
 
-
-
-
-
-
-
-
-
 void drawTirsEnnemi(tirEnn tir_enn)  ///
 {
 	int i, j, l, h;
@@ -542,35 +519,6 @@ void drawAllTirsEnnemi(listeTirEnn liste_tir_enn)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 void drawObstacle(obstacle obs)
 {
 	int i, j, l, h;
@@ -610,11 +558,11 @@ void drawObstacle(obstacle obs)
 	else 
 		glBindTexture(GL_TEXTURE_2D, texture_obstacle); 
 
-	glEnable(GL_BLEND);
+	/*glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE); 
-	
+	*/
 	glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_TEXTURE_2D); 
@@ -655,25 +603,7 @@ void drawAllObstacles(listeObs liste_obs)
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// affichage du bandeau contenant les scores, la vie, les bubbles
 void displayHUD() {
 
     glMatrixMode(GL_PROJECTION);
@@ -681,6 +611,52 @@ void displayHUD() {
 	glLoadIdentity();
 	gluOrtho2D(0.0, 1.0, 1.0, 0.0);
 
+
+
+
+
+
+
+
+
+/*TEST TEXTURE*/
+    glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+	glBindTexture(GL_TEXTURE_2D, texture_HUD); 
+	glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE); // ajout
+	glEnable( GL_BLEND );// rajout pour tester la transparence
+	glEnable(GL_TEXTURE_2D); // aj
+
+
+	glBegin(GL_QUADS);
+			glTexCoord2f(0.0, 0.0); glVertex2f(0.0, 0.0);
+		glTexCoord2f(1.0, 0.0); glVertex2f(1, 0.0);
+		glTexCoord2f(1.0, 1.0); glVertex2f(1, 0.085f);
+		glTexCoord2f(0.0, 1.0); glVertex2f(0.0, 0.085f);
+    glEnd();
+
+    glDisable( GL_BLEND );
+	glDisable(GL_TEXTURE_2D); 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 	glLoadIdentity();
@@ -698,23 +674,23 @@ void displayHUD() {
 
 
 
+
+ */
     glColor3f(1.0f, 1.0f, 1.0f); 
-	
 
-
-    
+   
     // Afficher la vie
-       glRasterPos2f(0.1, 0.025);
+       glRasterPos2f(0.2, 0.045);
     char life_text[100];
     sprintf(life_text, "Vie: %d", p->vie);
     for (int i = 0; life_text[i] != '\0'; i++) {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, life_text[i]);
     }
     
-	   // Affiche le nombre de MagicBubbles
-       glRasterPos2f(0.3, 0.025);
+	   // Affiche le nombre de Bubbles
+       glRasterPos2f(0.4, 0.045);
     char bubbles_text[100];
-    sprintf(bubbles_text, "Magic Bubbles: %d", p->bubbles);
+    sprintf(bubbles_text, "Bubbles: %d", p->bubbles);
     for (int i = 0; bubbles_text[i] != '\0'; i++) {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, bubbles_text[i]);
     }
@@ -723,7 +699,7 @@ void displayHUD() {
 
 	   // Afficher le statut de pause
 	if (enPause == true){
-		glRasterPos2f(0.5, 0.025);
+		glRasterPos2f(0.6, 0.045);
 		char pause_text[100];
 		sprintf(pause_text, "Pause !");
 		for (int i = 0; pause_text[i] != '\0'; i++) {
@@ -731,7 +707,15 @@ void displayHUD() {
 		}
 	}
 
+	// Afficher le score
+		glRasterPos2f(0.8, 0.045); 
+		char score_text[50];
+		sprintf(score_text, "Score: %d", score);
+		for (int i = 0; score_text[i] != '\0'; i++) {
+			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, score_text[i]);
+		}
 
+		
  /*
 //TIMER abandonné car pas capable de gérer les temps de pause 
 
@@ -760,19 +744,6 @@ void displayHUD() {
 	}	
     */
 
-	
-
-
- 	// Afficher le score
-    glRasterPos2f(0.82, 0.025); 
-    char score_text[50];
-    sprintf(score_text, "Score: %d", score);
-    for (int i = 0; score_text[i] != '\0'; i++) {
-        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, score_text[i]);
-    }
-
-	
-
 
 	glMatrixMode(GL_PROJECTION);
 	glPopMatrix();
@@ -792,11 +763,75 @@ void displayGameOver() {
 	glLoadIdentity();
 	gluOrtho2D(0.0, 1.0, 1.0, 0.0);
 
-	glMatrixMode(GL_MODELVIEW);
+/*	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 	glLoadIdentity();
 
     glColor4f(0.5, 0.5, 0.5, 0.0); 	// transparence ne marche pas pour le moment, à vérifier
+*/
+
+
+/*TEST TEXTURE*/
+    glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+	glBindTexture(GL_TEXTURE_2D, texture_gameover); 
+	glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE); // ajout
+	glEnable( GL_BLEND );// rajout pour tester la transparence
+	glEnable(GL_TEXTURE_2D); // aj
+
+
+	glBegin(GL_QUADS);
+		glTexCoord2f(0.0, 0.0); glVertex2f(0.35, 0.15);
+		glTexCoord2f(1.0, 0.0); glVertex2f(0.65, 0.15);
+		glTexCoord2f(1.0, 1.0); glVertex2f(0.65, 0.25);
+		glTexCoord2f(0.0, 1.0); glVertex2f(0.35, 0.25);
+    glEnd();
+
+    glDisable( GL_BLEND );
+	glDisable(GL_TEXTURE_2D); 
+
+
+	/*TEST TEXTURE*/
+    glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+glBindTexture(GL_TEXTURE_2D, texture_bouton_nouvelle); 
+	glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE); // ajout
+	glEnable( GL_BLEND );// rajout pour tester la transparence
+	glEnable(GL_TEXTURE_2D); // aj
+
+
+	glBegin(GL_QUADS);
+		glTexCoord2f(0.0, 0.0); glVertex2f(0.35, 0.35);
+		glTexCoord2f(1.0, 0.0); glVertex2f(0.65, 0.35);
+		glTexCoord2f(1.0, 1.0); glVertex2f(0.65, 0.45);
+		glTexCoord2f(0.0, 1.0); glVertex2f(0.35, 0.45);
+    glEnd();
+
+    glDisable( GL_BLEND );
+	glDisable(GL_TEXTURE_2D); 
+
+	/*TEST TEXTURE*/
+    glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+		glBindTexture(GL_TEXTURE_2D, texture_bouton_revenir_menu); 
+
+	glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE); // ajout
+	glEnable( GL_BLEND );// rajout pour tester la transparence
+	glEnable(GL_TEXTURE_2D); // aj
+
+
+	glBegin(GL_QUADS);
+		glTexCoord2f(0.0, 0.0); glVertex2f(0.35, 0.55);
+		glTexCoord2f(1.0, 0.0); glVertex2f(0.65, 0.55);
+		glTexCoord2f(1.0, 1.0); glVertex2f(0.65, 0.65);
+		glTexCoord2f(0.0, 1.0); glVertex2f(0.35, 0.65);
+    glEnd();
+
+    glDisable( GL_BLEND );
+	glDisable(GL_TEXTURE_2D); 
+
+
+/*
 
 	glBegin(GL_QUADS);
 		glVertex2f(0.35, 0.15); // coin sup gauche (puis dans le sens des aiguilles d'une montre)
@@ -850,7 +885,7 @@ glBegin(GL_QUADS);
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, revenir_menu_texte[i]);
     }
 
-
+*/
  
 
 	glMatrixMode(GL_PROJECTION);
@@ -861,8 +896,6 @@ glBegin(GL_QUADS);
 }
 
 
-
-
 void displayPauseButtons() {
 
 
@@ -871,19 +904,93 @@ void displayPauseButtons() {
 	glLoadIdentity();
 	gluOrtho2D(0.0, 1.0, 1.0, 0.0);
 
-	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
-	glLoadIdentity();
+	//glMatrixMode(GL_MODELVIEW);
+//	glPushMatrix();
+//	glLoadIdentity();
 
-    glColor4f(0.5, 0.5, 0.5, 0.0); 	// transparence ne marche pas pour le moment, à vérifier
+  //  glColor4f(0.5, 0.5, 0.5, 0.0); 	// transparence ne marche pas pour le moment, à vérifier
 
 
+/*TEST TEXTURE*/
+    glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+	glBindTexture(GL_TEXTURE_2D, texture_pause); 
+	glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE); // ajout
+	glEnable( GL_BLEND );// rajout pour tester la transparence
+	glEnable(GL_TEXTURE_2D); // aj
+
+
+	glBegin(GL_QUADS);
+		glTexCoord2f(0.0, 0.0); glVertex2f(0.35, 0.15);
+		glTexCoord2f(1.0, 0.0); glVertex2f(0.65, 0.15);
+		glTexCoord2f(1.0, 1.0); glVertex2f(0.65, 0.25);
+		glTexCoord2f(0.0, 1.0); glVertex2f(0.35, 0.25);
+    glEnd();
+
+    glDisable( GL_BLEND );
+	glDisable(GL_TEXTURE_2D); 
+
+
+	/*TEST TEXTURE*/
+    glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+glBindTexture(GL_TEXTURE_2D, texture_bouton_reprendre); 
+	glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE); // ajout
+	glEnable( GL_BLEND );// rajout pour tester la transparence
+	glEnable(GL_TEXTURE_2D); // aj
+
+
+	glBegin(GL_QUADS);
+		glTexCoord2f(0.0, 0.0); glVertex2f(0.35, 0.35);
+		glTexCoord2f(1.0, 0.0); glVertex2f(0.65, 0.35);
+		glTexCoord2f(1.0, 1.0); glVertex2f(0.65, 0.45);
+		glTexCoord2f(0.0, 1.0); glVertex2f(0.35, 0.45);
+    glEnd();
+
+    glDisable( GL_BLEND );
+	glDisable(GL_TEXTURE_2D); 
+
+	/*TEST TEXTURE*/
+    glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+		glBindTexture(GL_TEXTURE_2D, texture_bouton_revenir_menu); 
+
+	glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE); // ajout
+	glEnable( GL_BLEND );// rajout pour tester la transparence
+	glEnable(GL_TEXTURE_2D); // aj
+
+
+	glBegin(GL_QUADS);
+		glTexCoord2f(0.0, 0.0); glVertex2f(0.35, 0.55);
+		glTexCoord2f(1.0, 0.0); glVertex2f(0.65, 0.55);
+		glTexCoord2f(1.0, 1.0); glVertex2f(0.65, 0.65);
+		glTexCoord2f(0.0, 1.0); glVertex2f(0.35, 0.65);
+    glEnd();
+
+    glDisable( GL_BLEND );
+	glDisable(GL_TEXTURE_2D); 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 	glBegin(GL_QUADS);
 		glVertex2f(0.35, 0.15); // coin sup gauche (puis dans le sens des aiguilles d'une montre)
 		glVertex2f(0.65, 0.15); // coin sup droit
 		glVertex2f(0.65, 0.25); // coin inf droit
 		glVertex2f(0.35, 0.25); // coin inf gauche
     glEnd();
+
 
 	glBegin(GL_QUADS);
 		glVertex2f(0.35, 0.65); // coin sup gauche (puis dans le sens des aiguilles d'une montre)
@@ -899,22 +1006,23 @@ glBegin(GL_QUADS);
 		glVertex2f(0.35, 0.35); // coin inf gauche
     glEnd();
 
-
+*/
+/*
    glColor3f(1.0f, 1.0f, 1.0f); 
 
 
-     	// Game OVER
+     	// Pause
     glRasterPos2f(0.45, 0.20); 
-    char game_over_text[50];
-    sprintf(game_over_text, "Pause !");
-    for (int i = 0; game_over_text[i] != '\0'; i++) { 
-        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, game_over_text[i]);
+    char pause_text[50];
+    sprintf(pause_text, "Pause !");
+    for (int i = 0; pause_text[i] != '\0'; i++) { 
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, pause_text[i]);
     }
 	
 	// Reprendre la partie
     glRasterPos2f(0.45, 0.40); 
     char reprendre_text[50];
-    sprintf(reprendre_text, "Reprendre la partie (p)");
+    sprintf(reprendre_text, "Reprendre la partie");
     for (int i = 0; reprendre_text[i] != '\0'; i++) { 
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, reprendre_text[i]);
     }
@@ -928,7 +1036,7 @@ glBegin(GL_QUADS);
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, revenir_menu_texte[i]);
     }
 
-
+*/
  
 
 	glMatrixMode(GL_PROJECTION);

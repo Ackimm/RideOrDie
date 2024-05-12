@@ -48,13 +48,6 @@ void drawMenu() {
 	
 
 
-
-
-
-
-   
-
-
 /*TEST TEXTURE*/
     glMatrixMode(GL_MODELVIEW);
 			glLoadIdentity();
@@ -87,6 +80,112 @@ void drawMenu() {
 		glVertex2f(0.0, 1.0); // coin inf gauche
     glEnd();
 ------------SAVE*/
+
+
+/*TEST TEXTURE*/
+    glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+			glLoadIdentity();
+glBindTexture(GL_TEXTURE_2D, texture_bouton_nouvelle); 
+	glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE); // ajout
+	glEnable( GL_BLEND );// rajout pour tester la transparence
+	glEnable(GL_TEXTURE_2D); // aj
+
+
+	glBegin(GL_QUADS);
+		glTexCoord2f(0.0, 0.0); glVertex2f(longueur_bouton, hauteur_bouton);
+		glTexCoord2f(1.0, 0.0); glVertex2f((2*longueur_bouton), hauteur_bouton);
+		glTexCoord2f(1.0, 1.0); glVertex2f((2*longueur_bouton), (2*hauteur_bouton));
+		glTexCoord2f(0.0, 1.0); glVertex2f(longueur_bouton, (2*hauteur_bouton));
+    glEnd();
+
+    glDisable( GL_BLEND );
+	glDisable(GL_TEXTURE_2D); 
+
+
+/*TEST TEXTURE*/
+    glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+glBindTexture(GL_TEXTURE_2D, texture_bouton_continuer); 
+	glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE); // ajout
+	glEnable( GL_BLEND );// rajout pour tester la transparence
+	glEnable(GL_TEXTURE_2D); // aj
+
+
+	glBegin(GL_QUADS);
+		glTexCoord2f(0.0, 0.0); glVertex2f(longueur_bouton, 3*hauteur_bouton);
+		glTexCoord2f(1.0, 0.0); glVertex2f((2*longueur_bouton), 3*hauteur_bouton);
+		glTexCoord2f(1.0, 1.0); glVertex2f((2*longueur_bouton), (4*hauteur_bouton));
+		glTexCoord2f(0.0, 1.0); glVertex2f(longueur_bouton, (4*hauteur_bouton));
+    glEnd();
+
+    glDisable( GL_BLEND );
+	glDisable(GL_TEXTURE_2D); 
+
+/*TEST TEXTURE*/
+    glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+glBindTexture(GL_TEXTURE_2D, texture_bouton_hall_of_fame); 
+	glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE); // ajout
+	glEnable( GL_BLEND );// rajout pour tester la transparence
+	glEnable(GL_TEXTURE_2D); // aj
+
+
+	glBegin(GL_QUADS);
+		glTexCoord2f(0.0, 0.0); glVertex2f(longueur_bouton, 5*hauteur_bouton);
+		glTexCoord2f(1.0, 0.0); glVertex2f((2*longueur_bouton), 5*hauteur_bouton);
+		glTexCoord2f(1.0, 1.0); glVertex2f((2*longueur_bouton), (6*hauteur_bouton));
+		glTexCoord2f(0.0, 1.0); glVertex2f(longueur_bouton, (6*hauteur_bouton));
+    glEnd();
+
+    glDisable( GL_BLEND );
+	glDisable(GL_TEXTURE_2D); 
+
+
+
+/*TEST TEXTURE*/
+    glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+glBindTexture(GL_TEXTURE_2D, texture_bouton_parametres); 
+	glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE); // ajout
+	glEnable( GL_BLEND );// rajout pour tester la transparence
+	glEnable(GL_TEXTURE_2D); // aj
+
+
+	glBegin(GL_QUADS);
+		glTexCoord2f(0.0, 0.0); glVertex2f(longueur_bouton, 7*hauteur_bouton);
+		glTexCoord2f(1.0, 0.0); glVertex2f((2*longueur_bouton), 7*hauteur_bouton);
+		glTexCoord2f(1.0, 1.0); glVertex2f((2*longueur_bouton), (8*hauteur_bouton));
+		glTexCoord2f(0.0, 1.0); glVertex2f(longueur_bouton, (8*hauteur_bouton));
+    glEnd();
+
+    glDisable( GL_BLEND );
+	glDisable(GL_TEXTURE_2D); 
+
+
+
+/*TEST TEXTURE*/
+    glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+glBindTexture(GL_TEXTURE_2D, texture_bouton_quitter); 
+	glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE); // ajout
+	glEnable( GL_BLEND );// rajout pour tester la transparence
+	glEnable(GL_TEXTURE_2D); // aj
+
+
+	glBegin(GL_QUADS);
+		glTexCoord2f(0.0, 0.0); glVertex2f(longueur_bouton, 9*hauteur_bouton);
+		glTexCoord2f(1.0, 0.0); glVertex2f((2*longueur_bouton), 9*hauteur_bouton);
+		glTexCoord2f(1.0, 1.0); glVertex2f((2*longueur_bouton), (10*hauteur_bouton));
+		glTexCoord2f(0.0, 1.0); glVertex2f(longueur_bouton, (10*hauteur_bouton));
+    glEnd();
+
+    glDisable( GL_BLEND );
+	glDisable(GL_TEXTURE_2D); 
+
+
+/*
+
      glColor4f(0.0, 0.0, 5.0, 5.0);
 	glBegin(GL_QUADS);
 		glVertex2f(longueur_bouton, hauteur_bouton); // coin sup gauche (puis dans le sens des aiguilles d'une montre)
@@ -155,9 +254,9 @@ void drawMenu() {
     
         glColor3f(1.0f, 1.0f, 1.0f); // Couleur blanche pour le texte
 
-      glRasterPos2f(0.47, 0.68181818); // Position du texte pour le temps écoulé
+      glRasterPos2f(0.42, 0.68181818); // Position du texte pour le temps écoulé
     char label_parametres[50];
-    sprintf(label_parametres, "Parametres");
+    sprintf(label_parametres, "Regles et parametres");
     for (int i = 0; label_parametres[i] != '\0'; i++) {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, label_parametres[i]);
     }
@@ -181,7 +280,7 @@ void drawMenu() {
     for (int i = 0; label_quitter[i] != '\0'; i++) {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, label_quitter[i]);
     }
-
+*/
 	glMatrixMode(GL_PROJECTION);
 	glPopMatrix();
 	glMatrixMode(GL_MODELVIEW);
@@ -229,26 +328,37 @@ void drawScores() {
     glDisable( GL_BLEND );
 	glDisable(GL_TEXTURE_2D); 
 
-/*TEST TEXTURE*/
+
+
+
+
+    /*TEST TEXTURE*/
+        glMatrixMode(GL_MODELVIEW);
+                glLoadIdentity();
+        glBindTexture(GL_TEXTURE_2D, texture_ecran_scores); 
+        glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE); // ajout
+        glEnable( GL_BLEND );// rajout pour tester la transparence
+        glEnable(GL_TEXTURE_2D); // aj
+
+
+        glBegin(GL_QUADS);
+                glTexCoord2f(0.0, 0.0); glVertex2f(0.33333, 0.12f);
+            glTexCoord2f(1.0, 0.0); glVertex2f(0.66666, 0.12f);
+            glTexCoord2f(1.0, 1.0); glVertex2f(0.66666, 0.70f);
+            glTexCoord2f(0.0, 1.0); glVertex2f(0.33333, 0.70f);
+        glEnd();
+
+        glDisable( GL_BLEND );
+        glDisable(GL_TEXTURE_2D); 
+
+
 
 /*
-	glPushMatrix();
-	glLoadIdentity();
-	
 
 
-    glColor4f(1.0, 0.0, 1.0, 0.0); 	// transparence ne marche pas pour le moment, à vérifier
 
 
-	glBegin(GL_QUADS);
-		glVertex2f(0.0, 0.0); // coin sup gauche (puis dans le sens des aiguilles d'une montre)
-		glVertex2f(1.0, 0.0); // coin sup droit
-		glVertex2f(1.0, 1.0); // coin inf droit
-		glVertex2f(0.0, 1.0); // coin inf gauche
-    glEnd();
-*/
-
- 		    glColor4f(0.0, 0.0, 5.0, 5.0);
+ 		
 
       glBegin(GL_QUADS);
 		glVertex2f(0.5*longueur_bouton, hauteur_bouton); // coin sup gauche (puis dans le sens des aiguilles d'une montre)
@@ -257,6 +367,33 @@ void drawScores() {
 		glVertex2f(0.5*longueur_bouton, (8*hauteur_bouton)); // coin inf gauche
     glEnd();
 
+*/   
+
+/*TEST TEXTURE*/
+    glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+glBindTexture(GL_TEXTURE_2D, texture_bouton_revenir_menu); 
+	glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE); // ajout
+	glEnable( GL_BLEND );// rajout pour tester la transparence
+	glEnable(GL_TEXTURE_2D); // aj
+
+
+	glBegin(GL_QUADS);
+		glTexCoord2f(0.0, 0.0); glVertex2f(longueur_bouton, 9*hauteur_bouton);
+		glTexCoord2f(1.0, 0.0); glVertex2f((2*longueur_bouton), 9*hauteur_bouton);
+		glTexCoord2f(1.0, 1.0); glVertex2f((2*longueur_bouton), (10*hauteur_bouton));
+		glTexCoord2f(0.0, 1.0); glVertex2f(longueur_bouton, (10*hauteur_bouton));
+    glEnd();
+
+    glDisable( GL_BLEND );
+	glDisable(GL_TEXTURE_2D); 
+
+
+
+
+/*
+
+ glColor4f(0.0, 0.0, 5.0, 5.0);
 
     glBegin(GL_QUADS);
 		glVertex2f(0.5*longueur_bouton, 9*hauteur_bouton); // coin sup gauche (puis dans le sens des aiguilles d'une montre)
@@ -264,7 +401,7 @@ void drawScores() {
 		glVertex2f((2.5*longueur_bouton), (10*hauteur_bouton)); // coin inf droit
 		glVertex2f(0.5*longueur_bouton, (10*hauteur_bouton)); // coin inf gauche
     glEnd();
-    
+    */
         glColor3f(1.0f, 1.0f, 1.0f); // Couleur blanche pour le texte
 
 
@@ -303,14 +440,14 @@ void drawScores() {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, best_score_5_label[i]);
     }
 
-
+/*
 
       glRasterPos2f(0.47, 0.86363636); 
     char label_retour_menu[50];
     sprintf(label_retour_menu, "Revenir au menu principal");
     for (int i = 0; label_retour_menu[i] != '\0'; i++) {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, label_retour_menu[i]);
-    }
+    }*/
 
 	glMatrixMode(GL_PROJECTION);
 	glPopMatrix();
@@ -357,26 +494,99 @@ void drawParametres() {
     glDisable( GL_BLEND );
 	glDisable(GL_TEXTURE_2D); 
 
+
+
+
+
+
+
+
 /*TEST TEXTURE*/
-
-/*
-	glPushMatrix();
-	glLoadIdentity();
-	
-
-
-    glColor4f(0.3, 0.2, 0.8, 0.0); 	// transparence ne marche pas pour le moment, à vérifier
+    glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+	glBindTexture(GL_TEXTURE_2D, texture_ecran_parametres); 
+	glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE); // ajout
+	glEnable( GL_BLEND );// rajout pour tester la transparence
+	glEnable(GL_TEXTURE_2D); // aj
 
 
 	glBegin(GL_QUADS);
-		glVertex2f(0.0, 0.0); // coin sup gauche (puis dans le sens des aiguilles d'une montre)
-		glVertex2f(1.0, 0.0); // coin sup droit
-		glVertex2f(1.0, 1.0); // coin inf droit
-		glVertex2f(0.0, 1.0); // coin inf gauche
+			glTexCoord2f(0.0, 0.0); glVertex2f(0.161616f, 0.161616f);
+		glTexCoord2f(1.0, 0.0); glVertex2f(0.833333f, 0.161616f);
+		glTexCoord2f(1.0, 1.0); glVertex2f(0.833333f, 0.833333f);
+		glTexCoord2f(0.0, 1.0); glVertex2f(0.161616f, 0.833333f);
     glEnd();
 
-*/
+    glDisable( GL_BLEND );
+	glDisable(GL_TEXTURE_2D); 
 
+
+
+
+
+
+
+
+/*TEST TEXTURE*/
+    glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+
+    switch(currentDifficulte)
+	{
+		case 1: 
+	        glBindTexture(GL_TEXTURE_2D, texture_bouton_facile); 
+		break;
+
+		case 2: 
+	        glBindTexture(GL_TEXTURE_2D, texture_bouton_moyen); 
+		break;
+
+        case 3: 
+	        glBindTexture(GL_TEXTURE_2D, texture_bouton_difficile); 
+		break;
+
+        case 4: 
+	        glBindTexture(GL_TEXTURE_2D, texture_bouton_hardcore); 
+		break;
+
+        default: 
+	        glBindTexture(GL_TEXTURE_2D, texture_bouton_facile); 
+		break;
+    }
+
+
+	glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE); // ajout
+	glEnable( GL_BLEND );// rajout pour tester la transparence
+	glEnable(GL_TEXTURE_2D); // aj
+
+
+	glBegin(GL_QUADS);
+		glTexCoord2f(0.0, 0.0); glVertex2f(longueur_bouton, hauteur_bouton);
+		glTexCoord2f(1.0, 0.0); glVertex2f((2*longueur_bouton), hauteur_bouton);
+		glTexCoord2f(1.0, 1.0); glVertex2f((2*longueur_bouton), (2*hauteur_bouton));
+		glTexCoord2f(0.0, 1.0); glVertex2f(longueur_bouton, (2*hauteur_bouton));
+    glEnd();
+
+    glDisable( GL_BLEND );
+	glDisable(GL_TEXTURE_2D); 
+
+/*
+	glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE); // ajout
+	glEnable( GL_BLEND );// rajout pour tester la transparence
+	glEnable(GL_TEXTURE_2D); // aj
+
+
+	glBegin(GL_QUADS);
+		glTexCoord2f(0.0, 0.0); glVertex2f(0.38888, 0.0375);
+		glTexCoord2f(1.0, 0.0); glVertex2f(0.61111, 0.0375);
+		glTexCoord2f(1.0, 1.0); glVertex2f(0.61111, 0.12916);
+		glTexCoord2f(0.0, 1.0); glVertex2f(0.38888, 0.12916);
+    glEnd();
+
+    glDisable( GL_BLEND );
+	glDisable(GL_TEXTURE_2D); */
+
+/*
 		    glColor4f(0.0, 0.0, 5.0, 5.0);
 
     glBegin(GL_QUADS);
@@ -394,10 +604,10 @@ void drawParametres() {
 
 	switch(currentDifficulte)
 	{
-		/*case 1: 
+		case 1: 
 			sprintf(label_changer_difficulte, "Trop facile");
 		break;
-*/
+
 		case 2: 
 			sprintf(label_changer_difficulte, "Mouais");
 		break;
@@ -418,9 +628,28 @@ void drawParametres() {
     for (int i = 0; label_changer_difficulte[i] != '\0'; i++) {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, label_changer_difficulte[i]);
     }
+*/
+
+/*TEST TEXTURE*/
+    glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+glBindTexture(GL_TEXTURE_2D, texture_bouton_revenir_menu); 
+	glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE); // ajout
+	glEnable( GL_BLEND );// rajout pour tester la transparence
+	glEnable(GL_TEXTURE_2D); // aj
 
 
+	glBegin(GL_QUADS);
+		glTexCoord2f(0.0, 0.0); glVertex2f(longueur_bouton, 9*hauteur_bouton);
+		glTexCoord2f(1.0, 0.0); glVertex2f((2*longueur_bouton), 9*hauteur_bouton);
+		glTexCoord2f(1.0, 1.0); glVertex2f((2*longueur_bouton), (10*hauteur_bouton));
+		glTexCoord2f(0.0, 1.0); glVertex2f(longueur_bouton, (10*hauteur_bouton));
+    glEnd();
 
+    glDisable( GL_BLEND );
+	glDisable(GL_TEXTURE_2D); 
+
+/*
 
  		    glColor4f(0.0, 0.0, 5.0, 5.0);
 
@@ -438,7 +667,7 @@ void drawParametres() {
     sprintf(label_retour_menu, "Revenir au menu principal");
     for (int i = 0; label_retour_menu[i] != '\0'; i++) {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, label_retour_menu[i]);
-    }
+    }*/
 
 	glMatrixMode(GL_PROJECTION);
 	glPopMatrix();
@@ -495,14 +724,14 @@ void mouseClick(int button, int state, int x, int y) {
                    // reInit = false;
 
                     changerMenu(nouvellePartie); // ici il faudrait faire le lien avec le main où on déclare l'extern
-                    printf("Menu sélectionné : %d\n", currentMenu);
-                    fflush(stdout);
+            //        printf("Menu sélectionné : %d\n", currentMenu);
+              //      fflush(stdout);
                 
                     
                 }
                 else if (yN >= 3*hauteur_bouton && yN <= 4*hauteur_bouton) {
 
-                    printf("X : %f, Y = %f\n", xN, yN); // test en attendant de mettre des autres boutons 
+                //    printf("X : %f, Y = %f\n", xN, yN); // test en attendant de mettre des autres boutons 
                   //  if (gameOver != true && p->pos.x != 1)
                      //  gameTimers();
                     if (gameOver == true || p->pos.x == 1)
@@ -512,34 +741,34 @@ void mouseClick(int button, int state, int x, int y) {
                                            gameTimers();
 
                     changerMenu(nouvellePartie); // ici il faudrait faire le lien avec le main où on déclare l'extern
-                    printf("Menu sélectionné : %d\n", currentMenu);
-                    fflush(stdout);
+                 //   printf("Menu sélectionné : %d\n", currentMenu);
+                   // fflush(stdout);
 
                 }    
             
                 else if (yN >= 5*hauteur_bouton && yN <= 6*hauteur_bouton) {
-                    printf("X : %f, Y = %f\n", xN, yN); // test en attendant de mettre des autres boutons 
+                   // printf("X : %f, Y = %f\n", xN, yN); // test en attendant de mettre des autres boutons 
                     changerMenu(highScores); // ici il faudrait faire le lien avec le main où on déclare l'extern
                     updateBestScores(0);
-                    printf("Menu sélectionné : %d\n", currentMenu);
-                    fflush(stdout);
+                 //   printf("Menu sélectionné : %d\n", currentMenu);
+                  //  fflush(stdout);
 
                 }    
 
                 else if (yN >= 7*hauteur_bouton && yN <= 8*hauteur_bouton) {
-                    printf("X : %f, Y = %f\n", xN, yN); // test en attendant de mettre des autres boutons 
+              //      printf("X : %f, Y = %f\n", xN, yN); // test en attendant de mettre des autres boutons 
                     changerMenu(parametres); // ici il faudrait faire le lien avec le main où on déclare l'extern
-                    printf("Menu sélectionné : %d\n", currentMenu);
-                    fflush(stdout);
+               //     printf("Menu sélectionné : %d\n", currentMenu);
+ //                   fflush(stdout);
 
                 }    
 
 
                 else if (yN >= 9*hauteur_bouton && yN <= 10*hauteur_bouton) {
-                    printf("X : %f, Y = %f\n", xN, yN); // test en attendant de mettre des autres boutons 
-                    changerMenu(quitter); // ici il faudrait faire le lien avec le main où on déclare l'extern
-                    printf("Menu sélectionné : %d\n", currentMenu);
-                    fflush(stdout);
+              //      printf("X : %f, Y = %f\n", xN, yN); // test en attendant de mettre des autres boutons 
+                  changerMenu(quitter); // ici il faudrait faire le lien avec le main où on déclare l'extern
+                 //   printf("Menu sélectionné : %d\n", currentMenu);
+                  //  fflush(stdout);
 
                 }    
 
@@ -555,13 +784,13 @@ void mouseClick(int button, int state, int x, int y) {
         
 
             // Vérification du clic sur les boutons
-            if (xN >= 0.5*longueur_bouton && xN <= 2*5*longueur_bouton) {
+            if (xN >= longueur_bouton && xN <= 2*longueur_bouton) {
                 if (yN >= 9*hauteur_bouton && yN <= 10*hauteur_bouton) {
-                    printf("Retour au menu!\n");
+                  //  printf("Retour au menu!\n");
 
                     changerMenu(menuAccueil); // ici il faudrait faire le lien avec le main où on déclare l'extern
-                    printf("Menu sélectionne : %d\n", currentMenu);
-                    fflush(stdout);
+               //     printf("Menu sélectionne : %d\n", currentMenu);
+                //    fflush(stdout);
             
 
                 }
@@ -578,14 +807,18 @@ void mouseClick(int button, int state, int x, int y) {
         
 
             // Vérification du clic sur les boutons
-            if (xN >= 0.5*longueur_bouton && xN <= 2*5*longueur_bouton) {
-                if (yN >= 1*hauteur_bouton && yN <= 2*hauteur_bouton) {
+         /*   if (xN >= 0.5*longueur_bouton && xN <= 2*5*longueur_bouton) {
+                if (yN >= 1*hauteur_bouton && yN <= 2*hauteur_bouton) {*/
+            if (xN >= longueur_bouton && xN <= 2*longueur_bouton) {
+              //  if (yN >= 0.0375 && yN <= 0.12916) {
+                if (yN >= hauteur_bouton && yN <= 2*hauteur_bouton) {
+
                     if (currentDifficulte != 4)
                         currentDifficulte++;
                     else
                         currentDifficulte=1;
-                printf("Nouvelle difficulté : %i\n", currentDifficulte);
-                fflush(stdout);
+         //       printf("Nouvelle difficulté : %i\n", currentDifficulte);
+           //     fflush(stdout);
                 glutPostRedisplay();
 
 
@@ -593,11 +826,11 @@ void mouseClick(int button, int state, int x, int y) {
 
                 if (yN >= 9*hauteur_bouton && yN <= 10*hauteur_bouton) {
                     // Clic sur le bouton "Jouer"
-                    printf("Retour au menu!\n");
+             //       printf("Retour au menu!\n");
 
                     changerMenu(menuAccueil); // ici il faudrait faire le lien avec le main où on déclare l'extern
-                    printf("Menu sélectionné : %d\n", currentMenu);
-                    fflush(stdout);
+               //     printf("Menu sélectionné : %d\n", currentMenu);
+                 //   fflush(stdout);
                 }
             }
 
@@ -616,17 +849,15 @@ void mouseClick(int button, int state, int x, int y) {
                
                
                 if (yN >= 0.35 && yN <= 0.45) { 
- printf("reinit value après bouton pause : %i\n", reInit);fflush(stdout);
-                    printf("désactivation de la pause\n");
 
                     if (gameOver == false){ 
                         enPause = !enPause;
-                        printf("Bool enPause = %i\n", enPause);
-                        fflush(stdout);
+                     //   printf("Bool enPause = %i\n", enPause);
+                       // fflush(stdout);
 
                         if (enPause == false){
                             gameTimers();
-                            int end_pause_time = time(NULL);
+                        //    int end_pause_time = time(NULL);
                             if (currentMenu==pauseMenu){
                                 changerMenu(nouvellePartie);
 
@@ -634,7 +865,7 @@ void mouseClick(int button, int state, int x, int y) {
                         }		
                         else{
                             changerMenu(pauseMenu);
-                            int start_pause_time = time(NULL);
+                          //  int start_pause_time = time(NULL);
                         }
                     }
 
@@ -644,8 +875,8 @@ void mouseClick(int button, int state, int x, int y) {
                
 
                 if (yN >= 0.55 && yN <= 0.65) {
-                    printf("Retourner au menu principal\n");
-                    fflush(stdout);
+             //       printf("Retourner au menu principal\n");
+               //     fflush(stdout);
                     // ajouter la fonction de sauvegarde des scores
                     // ajotuer la fonction de réinitialisation
             		//updateBestScores(score);
@@ -690,8 +921,8 @@ void mouseClick(int button, int state, int x, int y) {
                
 
                 if (yN >= 0.55 && yN <= 0.65) {
-                    printf("Retourner au menu principal\n");
-                    fflush(stdout);
+               //     printf("Retourner au menu principal\n");
+                 //   fflush(stdout);
                     // ajouter la fonction de sauvegarde des scores
                     // ajotuer la fonction de réinitialisation
 

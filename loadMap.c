@@ -25,7 +25,7 @@ bool loadMap(int *maxX, int *maxY)		//fonction qui ouvre le fichier txt et charg
     FILE *f = NULL;
     // f = fopen("map1.txt", "r");
 	// f = fopen("map124x124.txt", "r");
-	f = fopen("map120x140.txt", "r");
+	f = fopen("map.txt", "r");
     if(f == NULL)
     {
         printf("file empty");

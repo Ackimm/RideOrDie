@@ -16,7 +16,8 @@
         "obstacles.h": "c",
         "fireennemi.h": "c",
         "bestscores.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "textures.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

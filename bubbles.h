@@ -45,7 +45,6 @@ void suppressionBubbles(listeBub liste_bub);
 
 extern bubble bub; 
 extern listeBub liste_bub; 
-extern bool FinishedInitBubbles;
 
 
 void updateBubbles(int valeur);

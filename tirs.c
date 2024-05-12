@@ -11,7 +11,7 @@
 #include "player.h"
 #include "constantes.h"
 #include "gameInitAndTimers.h"
-#include "fireEnnemi.h"
+#include "tirEnnemi.h"
 
 
 #include <stdlib.h>
@@ -151,7 +151,7 @@ void updateTirs(int valeur)
 	if (t->starList != NULL)
 	{
 		r->pos.y -= 1;
-		if (r->pos.y < 2 || reInit == true) 
+		if (r->pos.y < 2 ) 
 		{
 			r->pos.y = 0;
 			r->active = false;
@@ -161,7 +161,7 @@ void updateTirs(int valeur)
 		{
 			r = r->nextptr;
 			r->pos.y -= 1;
-			if (r->pos.y < 2 || reInit == true) 
+			if (r->pos.y < 2 ) 
 			{
 				r->pos.y = 0;
 				r->active = false;
@@ -169,17 +169,12 @@ void updateTirs(int valeur)
 		}
 	}
 	
-	glutPostRedisplay();
+//	glutPostRedisplay();
 	
 	if (enPause == false && gameOver == false) 
 		glutTimerFunc(tirsSpeed, updateTirs, 0);
 	
-	if (reInit==true)
-		FinishedInitTirs = true;
-	//if (FinishedInitTirs==true && FinishedInitEnnemis==true && FinishedInitObstacles==true && FinishedInitBubbles==true && FinishedInitTirsEnnemi==true)	
-//if (FinishedInitTirs==true && FinishedInitEnnemis==true && FinishedInitObstacles==true && FinishedInitBubbles==true && FinishedInitTirsEnnemi==true)	
-	if (FinishedInitTirs==true && FinishedInitEnnemis==true)	
-				reInit=false;
+
 
 }
 
@@ -190,7 +185,7 @@ void updateDeleteTirs(int valeur)
 	{
 		suppressionTirs(t, test);
 	}
-	glutPostRedisplay();
+	//glutPostRedisplay();
 
 	if (enPause == false && gameOver == false) 
 		glutTimerFunc(updateFrequency, updateDeleteTirs, 0);

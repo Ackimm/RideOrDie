@@ -7,14 +7,13 @@
 #include "time.h"
 
 
-
+/*
 extern time_t start_time;
-
 extern int time_elapsed;
-
+void startTimer();
+*/
 void initGameParametres();
 void gameTimers();
-void startTimer();
 void reinitializeGame();
 
 

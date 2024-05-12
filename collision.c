@@ -13,7 +13,7 @@
 
 #include "bubbles.h"
 
-#include "fireEnnemi.h"
+#include "tirEnnemi.h"
 
 
 #include "constantes.h"
@@ -32,7 +32,6 @@ void checkCollisionTirVSennemi(int valeur) {
     tirsP currentTir = t->starList;
     enemy currentEnemy = e->starList;
 
-    // entre tir joueur et ennemi
 
     if (e->starList != NULL && t->starList != NULL) {
      
@@ -72,15 +71,10 @@ void checkCollisionTirVSennemi(int valeur) {
 
 void checkCollisionJoueurVSennemi(int valeur) {
   
-// Entre ennemi et joueur
     enemy currentEnemy = e->starList;
 
     while (currentEnemy != NULL) {
-           
-                
-
-
-
+        
                 int distanceX = abs(p->pos.x - currentEnemy->pos.x);
                 int distanceY = abs(p->pos.y - currentEnemy->pos.y);
 
@@ -133,38 +127,37 @@ void checkCollisionJoueurVSobstacle(int valeur) {
                     else if (currentObstacle->bonusType == 1) 
                         currentObstacle->vie--;                        
                     else if (currentObstacle->bonusType == 2){ 
-                       // currentObstacle->bonusType = 1;
                         currentObstacle->vie--;
                         if (currentDifficulte>=3)
-                            p->vie = p->vie + 1;
-                        else
                             p->vie = p->vie + 2;
+                        else
+                            p->vie = p->vie + 3;
                         
                     }
-                    else if (currentObstacle->bonusType == 3){ // bonus point
-                      //  currentObstacle->bonusType = 1;
+                    else if (currentObstacle->bonusType == 3){ // bonus score
+                      
                         currentObstacle->vie--;
                         score = (score + (500*currentDifficulte));
                     }
                     else if (currentObstacle->bonusType == 4) { // star TBD
-                        //currentObstacle->bonusType = 1;
+                      
                         currentObstacle->vie--;
 
                         switch (currentDifficulte)
                         {
                         case 2:
                             p->vie = p->vie+3;
-                            p->bubbles = p->bubbles+3;
+                            p->bubbles = p->bubbles+4;
                             score = (score + (500*currentDifficulte));
                             break;
                         case 3:
                             p->vie = p->vie+2;
-                            p->bubbles = p->bubbles+2;
+                            p->bubbles = p->bubbles+3;
                             score = (score + (500*currentDifficulte));
                         break;
                         case 4:
                             p->vie = p->vie+2;
-                            p->bubbles = p->bubbles+2;
+                            p->bubbles = p->bubbles+3;
                             score = (score + (500*currentDifficulte));
                             printf("Vous êtes une star !!!!\n");
                             fflush(stdout); 
@@ -182,7 +175,6 @@ void checkCollisionJoueurVSobstacle(int valeur) {
                           
                     }
                      else if (currentObstacle->bonusType == 5) { 
-                      //  currentObstacle->bonusType = 1;
                         currentObstacle->vie--;
                         p->bubbles++;
                         
@@ -351,8 +343,8 @@ void checkCollisionJoueurVStirEnnemi(int valeur) {
             if ((distanceY <= ((p->hauteur / 2) + (currentTirEnnemi->hauteur / 2))) &&
                 (distanceX <= ((p->largeur / 2) + (currentTirEnnemi->largeur / 2))))  {
 
-                    printf("Joueur touché par ennemi\n");
-                    fflush(stdout);      
+               //     printf("Joueur touché par ennemi\n");
+                 //   fflush(stdout);      
                     p->vie--;
                     currentTirEnnemi->active = false;
                     if (p->vie == 0){
@@ -373,4 +365,6 @@ void checkCollisionJoueurVStirEnnemi(int valeur) {
     if (enPause == false && gameOver == false) 
         glutTimerFunc(updateFrequency, checkCollisionJoueurVStirEnnemi, 0);   
 }
+
+
 

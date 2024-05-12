@@ -26,7 +26,6 @@ struct enemies
 	int vie;
 	struct positionE pos;
 	bool active;
-	int speed; // inutile pour le moment
 	int hauteur;
 	int largeur;
 	couleurV couleur;
@@ -56,7 +55,6 @@ void suppressionEnemies(listeEn e, bool test);
 extern enemy q; // pour que d'autres fichiers puissent l'utiliser
 extern listeEn e; // pour que d'autres fichiers puissent l'utiliser
 
-extern bool FinishedInitEnnemis;
 
 void updateEnemies(int valeur);
 void updateNewEnemies(int valeur);

@@ -29,7 +29,7 @@
 
 //#include "obstacles.h"
 //#include "bubbles.h"
-#include "fireEnnemi.h" // pourquoi il est nécessaire de le garder en include alors que ce n'est pas nécessaire pour bubble et obstacles ? 
+#include "tirEnnemi.h" // pourquoi il est nécessaire de le garder en include alors que ce n'est pas nécessaire pour bubble et obstacles ? 
 
 
 
@@ -43,13 +43,14 @@ bool BUBBLE_SHOT = false;
 bool test;
 bool enPause;
 bool gameOver = false;
-bool reInit = false;
 
-int start_pause_time;
-int end_pause_time;
+//bool reInit = false;
+
+//int start_pause_time;
+//int end_pause_time;
 
 
-bool keyStates[256] = {false};  // Tableau pour suivre l'état des touches
+bool keyStates[256] = {false};  // tableau pour suivre l'état des touches
 
 
 
@@ -135,21 +136,15 @@ void updateFastMov(int value) {
 		}
 	}
 
-
-
-
 		if (keyStates[27]) {
 
 
 			if (gameOver == false && (currentMenu==nouvellePartie || currentMenu == pauseMenu)){ 
 				enPause = !enPause;
-				printf("Bool enPause = %i\n", enPause);
-				 printf("reinit value après clic ESC pause : %i\n", reInit);fflush(stdout);
-
-				fflush(stdout);
+				
 				if (enPause == false){ // si vient de désactiver la pause 
 					gameTimers();
-					int end_pause_time = time(NULL);
+				//	int end_pause_time = time(NULL);
 					if (currentMenu==pauseMenu){
 						changerMenu(nouvellePartie);
 
@@ -157,7 +152,7 @@ void updateFastMov(int value) {
 				}		
 				else{ /// si vient d'activer la pause 
 					changerMenu(pauseMenu);
-					int start_pause_time = time(NULL);
+					//int start_pause_time = time(NULL);
 				}
 			}
 		keyStates[27] = false;	
@@ -168,7 +163,6 @@ void updateFastMov(int value) {
 	
 
 if (enPause == false && gameOver == false) 
-//if (gameOver == false) 
 
    glutTimerFunc(updateFrequency, updateFastMov, 0);  
 

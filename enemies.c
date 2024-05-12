@@ -19,13 +19,12 @@
 #include "constantes.h"
 #include "gameInitAndTimers.h"
 
-#include "fireEnnemi.h"
+#include "tirEnnemi.h"
 
 
 
 enemy q;
 listeEn e;
-bool FinishedInitEnnemis;
 
 
 
@@ -57,7 +56,6 @@ enemy createEnemy()
 		new->vie = 1;
 	new->pos.x = x;
 	new->pos.y = 5;
-	new->speed = 100;
 	new->largeur = 6;
 	new->hauteur = 18;
 
@@ -139,20 +137,20 @@ void updateEnemies(int valeur)
 			q->pos.y += 1;
 
 		if ((currentDifficulte >= 2 && q->pos.y == 20) || (currentDifficulte == 4 && (q->pos.y == 20 || q->pos.y == 50  ))){
-	//	if (q->pos.y == 20 || q->pos.y == 50){ // pour le hardcore
+	
 
 			
-			if (reInit == false && enPause == false && gameOver == false){
+			if (enPause == false && gameOver == false){
 				tirEnn new = createTirEnnemi(q->pos.x, q->pos.y, p->pos.x, p->pos.y);
 				insertionTirsEnnemi(liste_tir_enn, new);
-				//glutPostRedisplay();
+				
 			}
 			
 
 		}
 
 
-		if (q->pos.y > 120 || q->vie == 0 || reInit == true || gameOver == true) 
+		if (q->pos.y > 120 || q->vie == 0 || gameOver == true) 
 //		if (q->pos.y > 120 || q->vie == 0) 
 			{
 				q->pos.y = 2;
@@ -165,7 +163,7 @@ void updateEnemies(int valeur)
 				q->pos.y += 1;
 
 
-			if (q->pos.y > 120 || q->vie == 0 || reInit == true || gameOver == true) 
+			if (q->pos.y > 120 || q->vie == 0 || gameOver == true) 
 //			if (q->pos.y > 120 || q->vie == 0) 
 
 			{
@@ -174,32 +172,20 @@ void updateEnemies(int valeur)
 			}
 		}
 	}
-	//glutPostRedisplay();
 
-	//if (enPause == false && gameOver == false && reInit ==false) 
 	if (enPause == false && gameOver == false) 
 		glutTimerFunc(enemySpeed, updateEnemies, 0);
 	
-	if (reInit==true){}
-		FinishedInitEnnemis = true;
-
-	//if (FinishedInitTirs==true && FinishedInitEnnemis==true && FinishedInitObstacles==true && FinishedInitBubbles==true && FinishedInitTirsEnnemi==true)	
-	if (FinishedInitTirs==true && FinishedInitEnnemis==true)	
-
-	//if (FinishedInitTirs==true && FinishedInitEnnemis==true && FinishedInitObstacles==true && FinishedInitBubbles==true)
-		reInit=false;
-
 
 }
 
 void updateNewEnemies(int valeur)
 {
-	if (reInit == false && enPause == false ){
+	if (enPause == false ){
 		enemy new = createEnemy();
 		insertionEnemies(e, new);
-		glutPostRedisplay();
 	}
-	if (enPause == false && gameOver == false  && reInit == false) 
+	if (enPause == false && gameOver == false ) 
 		glutTimerFunc(updateNewEnemy, updateNewEnemies, 0);
 }
 
@@ -209,7 +195,6 @@ void updateDeleteEnemies(int valeur)
 	{
 		suppressionEnemies(e, test);
 	}
-	glutPostRedisplay();
 
 	if (enPause == false && gameOver == false) 
 		glutTimerFunc(updateFrequency, updateDeleteEnemies, 0);

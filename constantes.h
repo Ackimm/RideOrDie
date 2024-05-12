@@ -25,7 +25,7 @@
 
 
 #define FreqUpdateNewObstacles 800 //800
-#define FreqUpdateObstacles 25
+#define FreqUpdateObstacles 22.5
 
 
 #define Square_size 10.0

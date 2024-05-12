@@ -17,26 +17,11 @@ player p;
 player createPlayer(int *maxX, int *maxY)
 {
 	
-//	player p;
 
-//	int x = 0, y = 0;
-//
-//	for (int i = 0; i < *maxX; ++i)
-//	{
-//		for (int j = 0; j < *maxY; ++j)
-//		{
-//			if(*(*(map + i) + j) == 'X')
-//			{
-//				x = i;
-//				y = j;
-//			}
-//		}
-//	}
 player p = malloc(sizeof(player));
 
 	p->vie = 1000;
-//	p->pos.x = x;
-//	p->pos.y = y;
+
 	p->pos.x = 1;
 	p->pos.y = 1;
 

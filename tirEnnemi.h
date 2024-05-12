@@ -1,5 +1,5 @@
-#ifndef _FIREENNEMI_H_
-#define _FIREENNEMI_H_
+#ifndef _TIRENNEMI_H_
+#define _TIRENNEMI_H_
 
 
 #include <stdlib.h>
@@ -49,7 +49,6 @@ extern tirEnn tir_enn;
 extern listeTirEnn liste_tir_enn; 
 extern bool FinishedInitTirsEnnemi;
 
-// void updateNewTirsEnnemi(int valeur);
 void updateTirsEnnemi(int valeur);
 void updateDeleteTirsEnnemi(int valeur);
 

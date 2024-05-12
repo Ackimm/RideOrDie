@@ -17,11 +17,11 @@
 #include "game.h"
 #include "constantes.h"
 #include "gameInitAndTimers.h"
-#include "fireEnnemi.h"
+#include "tirEnnemi.h"
 
 obstacle obs; // pour que d'autres fichiers puissent l'utiliser
 listeObs liste_obs; // pour que d'autres fichiers puissent l'utiliser
-bool FinishedInitObstacles;
+//bool FinishedInitObstacles;
 
 
 
@@ -65,7 +65,6 @@ void insertionObstacles(listeObs liste_obs, obstacle nouveau)
         exit(EXIT_FAILURE);
     }
    
-    /* Insertion de l'élément au début de la liste */
    
     if (liste_obs->premier == NULL){
         liste_obs->premier = nouveau;
@@ -129,7 +128,7 @@ void updateObstacles(int valeur)
 		if (gameOver == false)
 		obs->pos.y += 1;
 
-		if (obs->pos.y > 120 || obs->vie == 0 || reInit == true || gameOver == true) 
+		if (obs->pos.y > 120 || obs->vie == 0 || gameOver == true) 
 		{
 			obs->pos.y = 2;
 			obs->active = false;
@@ -140,38 +139,30 @@ void updateObstacles(int valeur)
 			if (gameOver == false)
 			obs->pos.y +=1;
 
-			if (obs->pos.y > 120 || obs->vie == 0 || reInit == true || gameOver == true) 
+			if (obs->pos.y > 120 || obs->vie == 0 || gameOver == true) 
 			{
 				obs->pos.y = 2;
 				obs->active = false;
 			}
 		}
 	}
-	glutPostRedisplay();
+	//glutPostRedisplay();
 
 	if (enPause == false && gameOver == false) 
 		glutTimerFunc(FreqUpdateObstacles, updateObstacles, 0);
 	
-//	if (reInit==true)
-//		FinishedInitObstacles = true;
-
-		
-//if (FinishedInitTirs==true && FinishedInitEnnemis==true && FinishedInitObstacles==true && FinishedInitBubbles==true && FinishedInitTirsEnnemi==true)	
-//	if (FinishedInitTirs==true && FinishedInitEnnemis==true)		
-	//if (FinishedInitTirs==true && FinishedInitEnnemis==true && FinishedInitObstacles==true && FinishedInitBubbles==true)
-//			reInit=false;
 
 
 }
 
 void updateNewObstacles(int valeur)
 {
-	if (reInit == false && enPause == false ){
+	if (enPause == false ){
 		obstacle new = createObstacle();
 		insertionObstacles(liste_obs, new);
-		glutPostRedisplay();
+		//glutPostRedisplay();
 	}
-	if (enPause == false && gameOver == false  && reInit == false) 
+	if (enPause == false && gameOver == false) 
 		glutTimerFunc(FreqUpdateNewObstacles, updateNewObstacles, 0);
 }
 
@@ -181,7 +172,7 @@ void updateDeleteObstacles(int valeur)
 	{
 		suppressionObstacles(liste_obs);
 	}
-	glutPostRedisplay();
+	//glutPostRedisplay();
 
 	if (enPause == false && gameOver == false) 
 		glutTimerFunc(updateFrequency, updateDeleteObstacles, 0);

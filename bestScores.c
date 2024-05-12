@@ -34,7 +34,6 @@ void tri_bulle(int tableau[], int taille) {
     for (i = 0; i < taille - 1; i++) {
         for (j = 0; j < taille - i - 1; j++) {
             if (tableau[j] > tableau[j + 1]) {
-                // Échange des éléments
                 temp = tableau[j];
                 tableau[j] = tableau[j + 1];
                 tableau[j + 1] = temp;
@@ -72,7 +71,6 @@ void sauvegardeFichierScores(const char *nom_fichier, int entiers[], int taille)
         return;
     }
 
-    // Écrire les entiers dans le fichier, un par ligne
     for (i = 0; i < taille; i++) {
         fprintf(fichier, "%d\n", entiers[i]);
     }
@@ -80,26 +78,23 @@ void sauvegardeFichierScores(const char *nom_fichier, int entiers[], int taille)
     fclose(fichier);
 }
 
-// Fonction pour mettre à jour les meilleurs scores
+// Fonction qui permet de mettre à jour le fichier des scores si le score en paramètre est plus grand que le plus petit score du fichier
 void updateBestScores(int score) {
     int i;
 
-    printf("Valeur à insérer : %d\n", score);
 
-    // Lecture des meilleurs scores depuis le fichier
+//    printf("Valeur à insérer : %d\n", score);
+
     lireFichierScores("meilleursScores.txt", bestScores);
+ /*-----boucle de vérification----
     for (i = 0; i < nbBestScores; i++) {
         printf("Meilleur score %d : %d\n", i, bestScores[i]);
     }
 
-    // Tri des meilleurs scores
-   // tri_bulle(bestScores, nbBestScores);
-
-   // printf("Après tri à bulle :\n");
-
     for (i = 0; i < nbBestScores; i++) {
         printf("Meilleur score %d : %d\n", i, bestScores[i]);
     }
+-----boucle de vérification----*/
 
     // Vérification si la valeur est supérieure au plus petit score
     if (score > min(bestScores, nbBestScores)) {
@@ -109,12 +104,14 @@ void updateBestScores(int score) {
         // Tri des meilleurs scores après insertion
         tri_bulle(bestScores, nbBestScores);
     }
-
+/*
     printf("Après INSERTION et tri à bulle :\n");
     for (i = 0; i < nbBestScores; i++) {
         printf("Meilleur score %d : %d\n", i, bestScores[i]);
     }
-
+*/
     // Sauvegarde des meilleurs scores dans le fichier
     sauvegardeFichierScores("meilleursScores.txt", bestScores, nbBestScores);
 }
+
+

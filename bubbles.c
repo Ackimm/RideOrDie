@@ -18,14 +18,12 @@
 #include "player.h"
 #include "constantes.h"
 #include "gameInitAndTimers.h"
-#include "fireEnnemi.h"
 
-bubble bub; // pour que d'autres fichiers puissent l'utiliser
-listeBub liste_bub; // pour que d'autres fichiers puissent l'utiliser
-bool FinishedInitBubbles;
+bubble bub; 
+listeBub liste_bub; 
 
 
-
+// initialisation de la liste chainée bubbles vide avec allocation de mémoire pour la structure de liste
 listeBub initialListBubbles(){
 	listeBub liste_bub = malloc(sizeof(listeBubbles));
 	if (liste_bub == NULL)
@@ -37,6 +35,7 @@ listeBub initialListBubbles(){
 	return liste_bub;
 }
 
+// création d'un éléménent bubble avec allocation de mémoire pour l'élément
 bubble createBubble(player p){
     
 	int x = (p->pos.x);
@@ -59,6 +58,7 @@ bubble createBubble(player p){
 
   }
 
+// insertion d'un éléménent bubble dans la liste chainée
 void insertionBubble(listeBub liste_bub, bubble nouveau)
 {
 
@@ -67,13 +67,20 @@ void insertionBubble(listeBub liste_bub, bubble nouveau)
         exit(EXIT_FAILURE);
     }
    
-    /* Insertion de l'élément au début de la liste */
-   
+
+// dans le cas où la liste est vide
     if (liste_bub->premier == NULL){
         liste_bub->premier = nouveau;
     }
+
+// dans le cas où la liste est n'est pas vide, 
+//création d'un élément temporaire qui stock le début de la liste
+
     else{
         bubble temp = liste_bub->premier;
+// on parcourt ensuite la liste jusqu'à trouver le dernier élément
+// de la liste 	et on y insére l'élément nouveau en paramètre de la fonction d'insertion
+
         while (temp->suivant != NULL)
         {
             temp = temp->suivant;
@@ -82,150 +89,128 @@ void insertionBubble(listeBub liste_bub, bubble nouveau)
     }
 
 	liste_bub->quantite += 1;
-   // printf("Ajout bubble, nouvelle quantité : %i\n",liste_bub->quantite); // vérification de la quantité d'ennemis dans la chaine
-   // fflush(stdout);
+
 }
 
-/*
-void suppressionBubbles(listeBub liste_bub){
-    bool test = false;
-    if (liste_bub->premier != NULL)
-    {
-        bubble tested = liste_bub->premier;
-       	bubble next = tested->suivant; 
-
-		while (tested != NULL)
-        {
-			if (tested->active == test)
-			{
-				
-					liste_bub->premier = tested->suivant;
-				if (tested->suivant->suivant != NULL)
-					liste_bub->premier->suivant = tested->suivant->suivant;
-				else 
-					liste_bub->premier->suivant = NULL;
-				
-				free(tested);
-				liste_bub->quantite--;
-				printf("Suppression Bubb, nouvelle quantité : %i\n",liste_bub->quantite); // vérification de la quantité d'ennemis dans la chaine
-				fflush(stdout);
-			}
-		
-		tested = next;
-    	}    
-    }
-}
-*/
 
 void suppressionBubbles(listeBub liste_bub) {
     bool test = false;
+	// on s'assure que la liste contient bien un élément
     if (liste_bub->premier != NULL) {
+
+	// on créé un élément qui sera testé et qui commence au premier élément de la liste
+	// on créé un élément temporaire qui nous permettra de relier la chaine suite à une suppression d'élément	
         bubble tested = liste_bub->premier;
         bubble previous = NULL;
+
 
         while (tested != NULL) {
             bubble next = tested->suivant; // Sauvegarde du prochain élément avant de supprimer celui-ci
 
             if (tested->active == test) {
                 if (previous == NULL) {
-                    // Si le premier élément doit être supprimé
+                    // si le premier élément doit être supprimé alors le premier devient son suivant
                     liste_bub->premier = tested->suivant;
                 } else {
-                    // Si un élément au milieu de la liste doit être supprimé
+                    // si un élément au milieu de la liste doit être supprimé alors je le remplace par son élément suivant
                     previous->suivant = tested->suivant;
                 }
 
                 free(tested);
                 liste_bub->quantite--;
 
-              //  printf("Suppression Bubble, nouvelle quantité : %i\n", liste_bub->quantite);
+/*---------- ici, quelques lignes permettant de vérifier le nombre d'éléments dans ma liste, 
+-------------ça m'a surtout permis de vérifier que mon code fonctionnait bien
 
-			// listeBub liste_bubPRINT = liste_bub;
-             //   while (liste_bubPRINT->premier != NULL) {
-             //       printf("while1 : adresse et pos x et y d'un élément de la liste chainee %p : %i - %i\n", (void*)liste_bubPRINT->premier, liste_bubPRINT->premier->pos.x, liste_bubPRINT->premier->pos.y);
-              //      liste_bubPRINT->premier = liste_bubPRINT->premier->suivant;
-              //  }
+				printf("Suppression Bubble, nouvelle quantité : %i\n", liste_bub->quantite);
+				listeBub liste_bubPRINT = liste_bub;
+            	while (liste_bubPRINT->premier != NULL){
+                    printf("while1 : adresse et pos x et y d'un élément de la liste chainee %p : %i - %i\n", (void*)liste_bubPRINT->premier, liste_bubPRINT->premier->pos.x, liste_bubPRINT->premier->pos.y);
+                    liste_bubPRINT->premier = liste_bubPRINT->premier->suivant;
+                }
+				fflush(stdout);
 
+---------*/
 
-               // fflush(stdout);
-            } else {
-                // Mise à jour de l'élément précédent uniquement si l'élément actuel n'est pas supprimé
+            } 
+
+			else {
+                // je mets à jour l'élément précédent uniquement si l'élément actuel n'est pas supprimé
                 previous = tested;
             }
-
-            tested = next; // Passage à l'élément suivant dans la liste
+            tested = next; // je passe à l'élément suivant dans la liste
         }
     }
 }
 
-
+// fonction pour créer un nouvel élément de la liste et l'insérer directement dans la liste
 void shootBubble(player p)
 {
 	bubble nouveau = createBubble(p);
 	insertionBubble(liste_bub, nouveau);
 }
 
-
+// mise à jour des éléments de la liste pour les mouvements et le passage en active = false lorsque les conditions de suppressions sont rencontrées
 void updateBubbles(int valeur)
 {
 	bub = liste_bub->premier;
 	if (liste_bub->premier != NULL)
 	{
+		// le premier élément change de position
 		bub->pos.y -= 1;
-	//	printf("1. Bubble position y = %i\n", bub->pos.y);
-	//	fflush;
-
-		if (bub->pos.y < 2 || reInit == true) 
+		// il est désactivé sous certaines conditions
+		if (bub->pos.y < 2)  // avant : if (bub->pos.y < 2 || reInit == true)
 		{
-			//bub->pos.y = 0;
 			bub->active = false;
-	//		printf("1. Bubble desactive\n");
-	//	fflush;
+	
 		}
 
+		// tant qu'il reste des éléments dans la liste, on refait le même traitement
 		while (bub->suivant != NULL)
 		{
 			bub = bub->suivant;
 			bub->pos.y -=1;
-	//		printf("2. Bubble position y = %i\n", bub->pos.y);
-	//	fflush;
 
-			if (bub->pos.y < 2 || reInit == true) 
+			if (bub->pos.y < 2 ) // avant : if (bub->pos.y < 2 || reInit == true)
 			{
-				//bub->pos.y = 0;
 				bub->active = false;
-		//			printf("2. Bubble desactive\n");
-		//fflush;
 			}
 		}
 	}
 
-	glutPostRedisplay();
+//	glutPostRedisplay();
 
+	// on empêche de poursuivre la mise à jour des éléments si on est en pause ou gameover
 	if (enPause == false && gameOver == false) 
 		glutTimerFunc(tirsSpeed, updateBubbles, 0);
 	
+
+	/*-------------------------
+
+	ça n'est plus utilisé mais avant de faire des fonctions qui détruise proprement toutes mes listes, 
+	j'avais imaginé une solution moins efficace que je laisse ici pour montrer ce que j'avais initialllement prévu
+
 	if (reInit==true)
 		FinishedInitBubbles = true;
 
 		
-//if (FinishedInitTirs==true && FinishedInitEnnemis==true && FinishedInitObstacles==true && FinishedInitBubbles==true && FinishedInitTirsEnnemi==true)	
-	if (FinishedInitTirs==true && FinishedInitEnnemis==true)	
-	//if (FinishedInitTirs==true && FinishedInitEnnemis==true && FinishedInitObstacles==true && FinishedInitBubbles==true)
+	if (FinishedInitTirs==true && FinishedInitEnnemis==true && FinishedInitObstacles==true && FinishedInitBubbles==true && FinishedInitTirsEnnemi==true)	
 			reInit=false;
 
+	--------------------------*/
 
 }
 
-
+ 
 void updateDeleteBubbles(int valeur)
 {
 	if (liste_bub->premier != NULL)
 	{
 		suppressionBubbles(liste_bub);
 	}
-	glutPostRedisplay();
 
 	if (enPause == false && gameOver == false) 
 		glutTimerFunc(updateFrequency, updateDeleteBubbles, 0);
 }
+
+

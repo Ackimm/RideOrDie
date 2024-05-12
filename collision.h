@@ -17,7 +17,6 @@ void checkCollisionJoueurVStirEnnemi(int valeur);
 
 void checkCollisionEnnemiVSobstacle(int valeur);
 
-
 void checkCollisionBubbleVSobstacle(int valeur);
 
 void checkCollisionTirVSennemi(int valeur);
